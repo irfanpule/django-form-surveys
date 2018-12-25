@@ -1,5 +1,4 @@
 include LICENSE
 include README.rst
-recursive-include surveys/static *
 recursive-include surveys/templates *
 recursive-include docs *

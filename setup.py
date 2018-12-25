@@ -15,8 +15,8 @@ setup(
     license='MIT License',
     description='A simple Django app to conduct Web-based survey.',
     long_description=README,
-    url='https://www.example.com/',
-    author='Muhammad Irfan',
+    url='https://github.com/irfanpule/django-form-surveys',
+    author='irfanpule',
     author_email='irfan.pule2@gmail.com',
     classifiers=[
         'Environment :: Web Environment',
