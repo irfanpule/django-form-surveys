@@ -8,13 +8,13 @@ from surveys.forms import SurveyForm
 
 class SurveyListView(ListView):
     model = Survey
-    paginate_by = 20
 
 
 class SurveyFormView(FormMixin, DetailView):
     model = Survey
     template_name = 'surveys/form.html'
     form_class = SurveyForm
+    success_url = "/"
 
     def get_form(self, form_class=None):
         if form_class is None:
