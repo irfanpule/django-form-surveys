@@ -17,6 +17,17 @@ Quick start
     ]
 
 2. Run `python manage.py migrate` to create the surveys models.
+3. Include url `surveys` in your root url::
 
-3. Start the development server and visit http://127.0.0.1:8000/admin/
+    ....
+
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        .....
+        path('surveys', include('surveys.urls'))
+    ]
+
+4. Start the development server and visit `http://127.0.0.1:8000/admin/`
    to create a survey.
+5. Access `http://127.0.0.1:8000/surveys/` get list of survey
+6. Access `http://127.0.0.1:8000/surveys/{id}` get form of survey
