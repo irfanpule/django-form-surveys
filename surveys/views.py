@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.edit import FormMixin
 from django.views.generic.detail import DetailView
@@ -22,16 +21,10 @@ class SurveyFormView(FormMixin, DetailView):
             form_class = self.get_form_class()
         return form_class(survey=self.get_object(), **self.get_form_kwargs())
 
-
-def detail(request):
-    survey = Survey.objects.last()
-    form = SurveyForm(data=request.POST or None, survey=survey)
-
-    if form.is_valid():
-        form.save()
-
-    context = {
-        'title': survey.name,
-        'form': form
-    }
-    return render(request, 'surveys/index.html', context)
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            form.save()
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
