@@ -2,6 +2,9 @@
 
 <form method="post">
 {% csrf_token %}
-    {{ form.as_table }}
+    {% for field in form %}
+        {{ field.label }} <br>
+        {{ field }} <hr>
+    {% endfor %}
     <input type="submit" value="Submit">
 </form>
