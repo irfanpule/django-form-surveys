@@ -1,5 +1,5 @@
 from django import forms
-from surveys.models import Survey, Answer, TYPE_FIELD
+from surveys.models import Answer, TYPE_FIELD
 from surveys.utils import make_choices
 
 
