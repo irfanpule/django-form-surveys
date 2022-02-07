@@ -4,8 +4,8 @@ from django.views.generic.detail import DetailView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-from surveys.models import Survey
-from surveys.forms import SurveyForm
+from surveys.models import Survey, Answer
+from surveys.forms import CreateSurveyForm, EditSurveyForm
 
 
 @method_decorator(login_required, name='dispatch')
@@ -14,10 +14,10 @@ class SurveyListView(ListView):
 
 
 @method_decorator(login_required, name='dispatch')
-class SurveyFormView(FormMixin, DetailView):
+class CreateSurveyFormView(FormMixin, DetailView):
     model = Survey
     template_name = 'surveys/form.html'
-    form_class = SurveyForm
+    form_class = CreateSurveyForm
     success_url = "/"
 
     def get_form(self, form_class=None):
@@ -28,7 +28,28 @@ class SurveyFormView(FormMixin, DetailView):
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
-            form.save(user=request.user, editable=True)
+            form.save(user=request.user)
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
+
+
+@method_decorator(login_required, name='dispatch')
+class EditSurveyFormView(CreateSurveyFormView):
+    form_class = EditSurveyForm
+
+    def get_form(self, form_class=None):
+        if form_class is None:
+            form_class = self.get_form_class()
+        return form_class(survey=self.get_object(), user=self.request.user, **self.get_form_kwargs())
+
+
+@method_decorator(login_required, name='dispatch')
+class DetailSurveyFormView(DetailView):
+    model = Survey
+
+    def get_context_data(self, **kwargs):
+        answers = Answer.get_answer(survey=self.get_object(), user=self.request.user)
+        context = super().get_context_data(**kwargs)
+        context['answers'] = answers
+        return context

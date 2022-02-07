@@ -39,9 +39,14 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    question = models.OneToOneField(Question, related_name='answer', on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
     value = models.CharField(max_length=200)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users', blank=True, null=True)
 
     def __str__(self):
         return f'{self.question}: {self.value}'
+
+    @classmethod
+    def get_answer(cls, survey, user):
+        question_ids = Question.objects.filter(survey=survey).values_list('id', flat=True)
+        return cls.objects.filter(user=user, question_id__in=question_ids)

@@ -3,7 +3,7 @@ from surveys.models import Answer, TYPE_FIELD
 from surveys.utils import make_choices
 
 
-class SurveyForm(forms.Form):
+class BaseSurveyForm(forms.Form):
 
     def __init__(self, survey, *args, **kwargs):
         self.survey = survey
@@ -41,13 +41,6 @@ class SurveyForm(forms.Form):
             self.fields[field_name].help_text = question.help_text
             self.field_names.append(field_name)
 
-            # to set initial data
-            if hasattr(question, 'answer'):
-                if question.type_field == TYPE_FIELD.multi_select:
-                    self.fields[field_name].initial = question.answer.value.split(',')
-                else:
-                    self.fields[field_name].initial = question.answer.value
-
     def clean(self):
         cleaned_data = super().clean()
 
@@ -57,7 +50,42 @@ class SurveyForm(forms.Form):
 
         return cleaned_data
 
-    def save(self, user=None, editable=False):
+
+class CreateSurveyForm(BaseSurveyForm):
+
+    def save(self, user):
+        cleaned_data = super().clean()
+
+        for question in self.questions:
+            field_name = f'field_survey_{question.id}'
+
+            if question.type_field == TYPE_FIELD.multi_select:
+                value = ",".join(cleaned_data[field_name])
+            else:
+                value = cleaned_data[field_name]
+
+            Answer.objects.create(
+                question=question, value=value, user=user
+            )
+
+
+class EditSurveyForm(BaseSurveyForm):
+
+    def __init__(self, survey, user, *args, **kwargs):
+        self.user = user
+        self.survey = survey
+        super().__init__(survey=survey, *args, **kwargs)
+        self._set_initial_data()
+
+    def _set_initial_data(self):
+        answers = Answer.get_answer(survey=self.survey, user=self.user)
+
+        for answer in answers:
+            # to generate field name
+            field_name = f'field_survey_{answer.question.id}'
+            self.fields[field_name].initial = answer.value
+
+    def save(self, user=None):
         cleaned_data = super().clean()
 
         for question in self.questions:
@@ -72,6 +100,6 @@ class SurveyForm(forms.Form):
                 question=question, defaults={'value': value, 'user': user}
             )
 
-            if editable and answer:
+            if answer:
                 answer.value = value
                 answer.save()
