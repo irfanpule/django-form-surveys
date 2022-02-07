@@ -1,15 +1,19 @@
 from django.views.generic.list import ListView
 from django.views.generic.edit import FormMixin
 from django.views.generic.detail import DetailView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 from surveys.models import Survey
 from surveys.forms import SurveyForm
 
 
+@method_decorator(login_required, name='dispatch')
 class SurveyListView(ListView):
     model = Survey
 
 
+@method_decorator(login_required, name='dispatch')
 class SurveyFormView(FormMixin, DetailView):
     model = Survey
     template_name = 'surveys/form.html'
