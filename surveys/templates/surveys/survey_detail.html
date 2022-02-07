@@ -1,8 +1,0 @@
-<h1>Result Survey</h1>
-<ul>
-{% for answer in answers %}
-    <li>{{ answer.question.label }}: {{ answer.value }}</li>
-{% empty %}
-    <li>No surveys yet.</li>
-{% endfor %}
-</ul>

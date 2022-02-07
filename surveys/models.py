@@ -1,7 +1,7 @@
 from collections import namedtuple
 
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 
 TYPE_FIELD = namedtuple(
@@ -41,12 +41,12 @@ class Question(models.Model):
 class Answer(models.Model):
     question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
     value = models.CharField(max_length=200)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users', blank=True, null=True)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return f'{self.question}: {self.value}'
 
     @classmethod
-    def get_answer(cls, survey, user):
+    def get_answer(cls, survey, user=None):
         question_ids = Question.objects.filter(survey=survey).values_list('id', flat=True)
         return cls.objects.filter(user=user, question_id__in=question_ids)

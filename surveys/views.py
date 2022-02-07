@@ -3,6 +3,7 @@ from django.views.generic.edit import FormMixin
 from django.views.generic.detail import DetailView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.contrib.auth import get_user_model
 
 from surveys.models import Survey, Answer
 from surveys.forms import CreateSurveyForm, EditSurveyForm
@@ -44,12 +45,19 @@ class EditSurveyFormView(CreateSurveyFormView):
         return form_class(survey=self.get_object(), user=self.request.user, **self.get_form_kwargs())
 
 
-@method_decorator(login_required, name='dispatch')
-class DetailSurveyFormView(DetailView):
+class DetailSurveyView(DetailView):
     model = Survey
+    template_name = "surveys/answer_list.html"
 
     def get_context_data(self, **kwargs):
-        answers = Answer.get_answer(survey=self.get_object(), user=self.request.user)
+        users = get_user_model().objects.all()
+        objects = []
+        for user in users:
+            objects.append({
+                'create_by': user,
+                'answers': Answer.get_answer(survey=self.get_object(), user=user)
+            })
+
         context = super().get_context_data(**kwargs)
-        context['answers'] = answers
+        context['objects'] = objects
         return context

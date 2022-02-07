@@ -1,0 +1,25 @@
+<h1>Result Survey</h1>
+<h3>Menu</h3>
+<ul>
+    <li><a href="{% url 'surveys:create' survey.id %}">Add Survey</a></li>
+</ul>
+<hr>
+<ul>
+{% for object in objects %}
+    <li>
+        <p>
+            {{ object.create_by }}
+            {% if object.create_by == user %}
+                | <a href="{% url 'surveys:edit' survey.id %}">Edit</a>
+            {% endif %}
+        </p>
+        <ul>
+        {% for answer in object.answers %}
+            <li>{{ answer.question.label }}: {{ answer.value }}</li>
+        {% endfor %}
+        </ul>
+    </li>
+{% empty %}
+    <li>No surveys yet.</li>
+{% endfor %}
+</ul>

@@ -1,7 +1,7 @@
 <h1>Surveys</h1>
 <ul>
 {% for survey in object_list %}
-    <li><a href="{% url 'surveys:detail' survey.id %}">{{ survey.name }}</a> | <a href="{% url 'surveys:edit' survey.id %}">Edit</a></li>
+    <li><a href="{% url 'surveys:detail' survey.id %}">{{ survey.name }}</a></li>
 {% empty %}
     <li>No surveys yet.</li>
 {% endfor %}
