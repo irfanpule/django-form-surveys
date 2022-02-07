@@ -1,6 +1,7 @@
 from collections import namedtuple
 
 from django.db import models
+from django.contrib.auth.models import User
 
 
 TYPE_FIELD = namedtuple(
@@ -40,6 +41,7 @@ class Question(models.Model):
 class Answer(models.Model):
     question = models.OneToOneField(Question, related_name='answer', on_delete=models.CASCADE)
     value = models.CharField(max_length=200)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users', blank=True, null=True)
 
     def __str__(self):
         return f'{self.question}: {self.value}'

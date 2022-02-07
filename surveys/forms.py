@@ -57,7 +57,7 @@ class SurveyForm(forms.Form):
 
         return cleaned_data
 
-    def save(self):
+    def save(self, user=None, editable=False):
         cleaned_data = super().clean()
 
         for question in self.questions:
@@ -69,9 +69,9 @@ class SurveyForm(forms.Form):
                 value = cleaned_data[field_name]
 
             answer, created = Answer.objects.get_or_create(
-                question=question, defaults={'value': value}
+                question=question, defaults={'value': value, 'user': user}
             )
 
-            if answer:
+            if editable and answer:
                 answer.value = value
                 answer.save()
