@@ -81,9 +81,11 @@ class EditSurveyForm(BaseSurveyForm):
         answers = Answer.get_answer(survey=self.survey, user=self.user)
 
         for answer in answers:
-            # to generate field name
             field_name = f'field_survey_{answer.question.id}'
-            self.fields[field_name].initial = answer.value
+            if answer.question.type_field == TYPE_FIELD.multi_select:
+                self.fields[field_name].initial = answer.value.split(',')
+            else:
+                self.fields[field_name].initial = answer.value
 
     def save(self, user=None):
         cleaned_data = super().clean()
