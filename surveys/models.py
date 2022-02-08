@@ -11,6 +11,7 @@ TYPE_FIELD = namedtuple(
 
 class Survey(models.Model):
     name = models.CharField(max_length=200)
+    description = models.TextField(default='')
 
     def __str__(self):
         return self.name
