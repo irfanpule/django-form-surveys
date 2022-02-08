@@ -1,0 +1,25 @@
+<div>
+    <a
+            class="relative block p-8 overflow-hidden border border-gray-100 rounded-lg"
+            href="{% url 'surveys:detail' survey.id %}"
+    >
+  <span
+          class="absolute inset-x-0 bottom-0 h-2  bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"
+  ></span>
+
+        <div class="justify-between sm:flex">
+            <div>
+                <h5 class="text-xl font-bold text-gray-900">
+                    {{ survey.name }}
+                </h5>
+            </div>
+        </div>
+
+        <div class="mt-4 sm:pr-8">
+            <p class="text-sm text-gray-500">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. At velit illum
+                provident a, ipsa maiores deleniti consectetur nobis et eaque.
+            </p>
+        </div>
+    </a>
+</div>

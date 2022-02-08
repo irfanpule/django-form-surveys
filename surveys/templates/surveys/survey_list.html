@@ -1,8 +1,14 @@
-<h1>Surveys</h1>
-<ul>
-{% for survey in object_list %}
-    <li><a href="{% url 'surveys:detail' survey.id %}">{{ survey.name }}</a></li>
-{% empty %}
-    <li>No surveys yet.</li>
-{% endfor %}
-</ul>
+{% extends 'surveys/master.html' %}
+{% block content %}
+
+    {% include 'surveys/components/section_welcome.html' %}
+
+    <div class="grid grid-cols-3 gap-4">
+        {% for survey in object_list %}
+            {% include 'surveys/components/card_list_survey.html' %}
+            {% empty %}
+            <h1>No surveys yet.</h1>
+        {% endfor %}
+    </div>
+
+{% endblock %}
