@@ -96,9 +96,7 @@ class EditSurveyForm(BaseSurveyForm):
             else:
                 value = cleaned_data[field_name]
 
-            answer, created = Answer.objects.get_or_create(
-                question=question, defaults={'value': value, 'user': user}
-            )
+            answer = Answer.objects.get(question=question, user=user)
 
             if answer:
                 answer.value = value
