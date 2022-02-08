@@ -20,6 +20,12 @@ class CreateSurveyFormView(FormMixin, DetailView):
     template_name = 'surveys/form.html'
     form_class = CreateSurveyForm
     success_url = "/"
+    title_page = "Add Survey"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title_page'] = self.title_page
+        return context
 
     def get_form(self, form_class=None):
         if form_class is None:
@@ -38,6 +44,7 @@ class CreateSurveyFormView(FormMixin, DetailView):
 @method_decorator(login_required, name='dispatch')
 class EditSurveyFormView(CreateSurveyFormView):
     form_class = EditSurveyForm
+    title_page = "Edit Survey"
 
     def get_form(self, form_class=None):
         if form_class is None:
