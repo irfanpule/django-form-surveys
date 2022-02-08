@@ -10,8 +10,8 @@
       {{ object.description }}
     </p>
 
-    <form action="" class="p-8 mt-6 mb-0 space-y-4 rounded-lg shadow-2xl">
-
+    <form method="post" class="p-8 mt-6 mb-0 space-y-4 rounded-lg shadow-2xl">
+        {% csrf_token %}
         {% for field in form %}
             <div>
                 <label for="email" class="text-sm font-medium">{{ field.label }}</label>
