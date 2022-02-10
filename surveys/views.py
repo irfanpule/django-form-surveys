@@ -3,9 +3,8 @@ from django.views.generic.edit import FormMixin
 from django.views.generic.detail import DetailView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.contrib.auth import get_user_model
 
-from surveys.models import Survey, Answer
+from surveys.models import Survey, Answer, UserAnswer
 from surveys.forms import CreateSurveyForm, EditSurveyForm
 
 
@@ -57,12 +56,12 @@ class DetailSurveyView(DetailView):
     template_name = "surveys/answer_list.html"
 
     def get_context_data(self, **kwargs):
-        users = get_user_model().objects.all()
+        user_answers = UserAnswer.objects.all()
         objects = []
-        for user in users:
+        for ua in user_answers:
             objects.append({
-                'create_by': user,
-                'answers': Answer.get_answer(survey=self.get_object(), user=user)
+                'create_by': ua.user,
+                'answers': Answer.get_answer(survey=ua.survey, user=ua.user)
             })
 
         context = super().get_context_data(**kwargs)
