@@ -13,11 +13,13 @@
         </div>
     </section>
 
-    <div class="grid grid-cols-3 gap-4">
-    {% for object in objects %}
-        {% include 'surveys/components/card_list_answer.html' %}
-    {% empty %}
-        <li>No surveys yet.</li>
-    {% endfor %}
+    {% if objects %}
+        <div class="grid grid-cols-3 gap-4">
+        {% for object in objects %}
+            {% include 'surveys/components/card_list_answer.html' %}
+        {% endfor %}
+    {% else %}
+        {% include 'surveys/components/empty_state.html' %}
+    {% endif %}
     </div>
 {% endblock %}

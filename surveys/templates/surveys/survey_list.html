@@ -3,12 +3,14 @@
 
     {% include 'surveys/components/section_welcome.html' %}
 
+    {% if object_list %}
     <div class="grid grid-cols-3 gap-4">
         {% for survey in object_list %}
             {% include 'surveys/components/card_list_survey.html' %}
-            {% empty %}
-            <h1>No surveys yet.</h1>
         {% endfor %}
     </div>
+    {% else %}
+        {% include 'surveys/components/empty_state.html' %}
+    {% endif %}
 
 {% endblock %}
