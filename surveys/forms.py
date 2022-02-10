@@ -74,10 +74,11 @@ class CreateSurveyForm(BaseSurveyForm):
 
 class EditSurveyForm(BaseSurveyForm):
 
-    def __init__(self, survey, user, *args, **kwargs):
-        self.user = user
-        self.survey = survey
-        super().__init__(survey=survey, *args, **kwargs)
+    def __init__(self, user_answer, *args, **kwargs):
+        self.user = user_answer.user
+        self.survey = user_answer.survey
+        self.user_answer = user_answer
+        super().__init__(survey=self.survey, *args, **kwargs)
         self._set_initial_data()
 
     def _set_initial_data(self):
@@ -92,9 +93,10 @@ class EditSurveyForm(BaseSurveyForm):
 
     def save(self, user=None):
         cleaned_data = super().clean()
-        UserAnswer.objects.update(
-            survey=self.survey, user=user
-        )
+        self.user_answer = self.survey
+        self.user_answer = self.user
+        self.user_answer.save()
+
         for question in self.questions:
             field_name = f'field_survey_{question.id}'
 
