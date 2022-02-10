@@ -2,7 +2,7 @@
     <blockquote class="p-6 border border-gray-100 rounded-lg shadow-lg">
         {% if object.create_by == user %}
             <div class="flex -space-x-4 hover:space-x-1 float-right">
-                <a href="{% url 'surveys:edit' survey.id %}" class="z-20 block p-4 text-blue-700 transition-all bg-blue-100 border-2 border-white rounded-full active:bg-blue-50 hover:scale-110 focus:outline-none focus:ring"
+                <a href="{% url 'surveys:edit' object.id %}" class="z-20 block p-4 text-blue-700 transition-all bg-blue-100 border-2 border-white rounded-full active:bg-blue-50 hover:scale-110 focus:outline-none focus:ring"
                         type="button">
                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor">

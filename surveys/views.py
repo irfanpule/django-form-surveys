@@ -44,11 +44,13 @@ class CreateSurveyFormView(FormMixin, DetailView):
 class EditSurveyFormView(CreateSurveyFormView):
     form_class = EditSurveyForm
     title_page = "Edit Survey"
+    model = UserAnswer
 
     def get_form(self, form_class=None):
         if form_class is None:
             form_class = self.get_form_class()
-        return form_class(survey=self.get_object(), user=self.request.user, **self.get_form_kwargs())
+        user_answer = self.get_object()
+        return form_class(survey=user_answer.survey, user=user_answer.user, **self.get_form_kwargs())
 
 
 class DetailSurveyView(DetailView):
@@ -60,6 +62,7 @@ class DetailSurveyView(DetailView):
         objects = []
         for ua in user_answers:
             objects.append({
+                'id': ua.id,
                 'create_by': ua.user,
                 'answers': Answer.get_answer(survey=ua.survey, user=ua.user)
             })
