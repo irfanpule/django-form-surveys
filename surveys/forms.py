@@ -1,12 +1,15 @@
 from django import forms
+from django.db import transaction
+
 from surveys.models import Answer, TYPE_FIELD, UserAnswer
 from surveys.utils import make_choices
 
 
 class BaseSurveyForm(forms.Form):
 
-    def __init__(self, survey, *args, **kwargs):
+    def __init__(self, survey, user, *args, **kwargs):
         self.survey = survey
+        self.user = user
         self.field_names = []
         self.questions = self.survey.questions.all()
         super().__init__(*args, **kwargs)
@@ -53,11 +56,12 @@ class BaseSurveyForm(forms.Form):
 
 class CreateSurveyForm(BaseSurveyForm):
 
-    def save(self, user):
+    @transaction.atomic
+    def save(self):
         cleaned_data = super().clean()
 
-        UserAnswer.objects.create(
-            survey=self.survey, user=user
+        user_answer = UserAnswer.objects.create(
+            survey=self.survey, user=self.user
         )
         for question in self.questions:
             field_name = f'field_survey_{question.id}'
@@ -68,21 +72,20 @@ class CreateSurveyForm(BaseSurveyForm):
                 value = cleaned_data[field_name]
 
             Answer.objects.create(
-                question=question, value=value, user=user
+                question=question, value=value, user_answer=user_answer
             )
 
 
 class EditSurveyForm(BaseSurveyForm):
 
     def __init__(self, user_answer, *args, **kwargs):
-        self.user = user_answer.user
         self.survey = user_answer.survey
         self.user_answer = user_answer
-        super().__init__(survey=self.survey, *args, **kwargs)
+        super().__init__(survey=self.survey, user=user_answer.user, *args, **kwargs)
         self._set_initial_data()
 
     def _set_initial_data(self):
-        answers = Answer.get_answer(survey=self.survey, user=self.user)
+        answers = self.user_answer.answer_set.all()
 
         for answer in answers:
             field_name = f'field_survey_{answer.question.id}'
@@ -91,10 +94,11 @@ class EditSurveyForm(BaseSurveyForm):
             else:
                 self.fields[field_name].initial = answer.value
 
-    def save(self, user=None):
+    @transaction.atomic
+    def save(self):
         cleaned_data = super().clean()
-        self.user_answer = self.survey
-        self.user_answer = self.user
+        self.user_answer.survey = self.survey
+        self.user_answer.user = self.user
         self.user_answer.save()
 
         for question in self.questions:
@@ -105,7 +109,7 @@ class EditSurveyForm(BaseSurveyForm):
             else:
                 value = cleaned_data[field_name]
 
-            answer = Answer.objects.get(question=question, user=user)
+            answer = Answer.objects.get(question=question, user_answer=self.user_answer)
 
             if answer:
                 answer.value = value

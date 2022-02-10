@@ -8,7 +8,7 @@ class AdminQuestion(admin.ModelAdmin):
 
 
 class AdminAnswer(admin.ModelAdmin):
-    list_display = ('question', 'get_label', 'value', 'user')
+    list_display = ('question', 'get_label', 'value', 'user_answer')
     search_fields = ('question__label', 'value',)
     list_filter = ('question__survey',)
 

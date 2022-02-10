@@ -48,10 +48,18 @@ class Question(BaseModel):
         return self.survey.name
 
 
+class UserAnswer(BaseModel):
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.id)
+
+
 class Answer(BaseModel):
     question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
     value = models.CharField(max_length=200)
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, blank=True, null=True)
+    user_answer = models.ForeignKey(UserAnswer, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.question}: {self.value}'
@@ -60,11 +68,3 @@ class Answer(BaseModel):
     def get_answer(cls, survey, user=None):
         question_ids = Question.objects.filter(survey=survey).values_list('id', flat=True)
         return cls.objects.filter(user=user, question_id__in=question_ids)
-
-
-class UserAnswer(BaseModel):
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-
-    def __str__(self):
-        return str(self.id)

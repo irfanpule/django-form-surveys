@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.shortcuts import redirect
 
-from surveys.models import Survey, Answer, UserAnswer
+from surveys.models import Survey, UserAnswer
 from surveys.forms import CreateSurveyForm, EditSurveyForm
 
 
@@ -27,7 +27,7 @@ class SurveyFormView(FormMixin, DetailView):
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
-            form.save(user=request.user)
+            form.save()
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
@@ -50,7 +50,7 @@ class CreateSurveyFormView(SurveyFormView):
     def get_form(self, form_class=None):
         if form_class is None:
             form_class = self.get_form_class()
-        return form_class(survey=self.get_object(), **self.get_form_kwargs())
+        return form_class(survey=self.get_object(), user=self.request.user, **self.get_form_kwargs())
 
 
 @method_decorator(login_required, name='dispatch')
@@ -90,7 +90,7 @@ class DetailSurveyView(DetailView):
             objects.append({
                 'id': ua.id,
                 'create_by': ua.user,
-                'answers': Answer.get_answer(survey=ua.survey, user=ua.user)
+                'answers': ua.answer_set.all()
             })
 
         context = super().get_context_data(**kwargs)
