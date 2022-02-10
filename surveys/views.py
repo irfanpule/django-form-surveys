@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 
 from surveys.models import Survey, UserAnswer
 from surveys.forms import CreateSurveyForm, EditSurveyForm
+from surveys import app_settings
 
 
 @method_decorator(login_required, name='dispatch')
@@ -43,7 +44,8 @@ class CreateSurveyFormView(SurveyFormView):
     def dispatch(self, request, *args, **kwargs):
         # handle if user have answer survey
         survey = self.get_object()
-        if UserAnswer.objects.filter(survey=survey, user=request.user).exists():
+        if not app_settings.SURVEY_DUPLICATE_ENTRY and \
+                UserAnswer.objects.filter(survey=survey, user=request.user).exists():
             return redirect("surveys:detail", pk=survey.id)
         return super().dispatch(request, *args, **kwargs)
 
@@ -90,6 +92,7 @@ class DetailSurveyView(DetailView):
             objects.append({
                 'id': ua.id,
                 'create_by': ua.user,
+                'created_at': ua.created_at,
                 'answers': ua.answer_set.all()
             })
 

@@ -22,15 +22,11 @@
             </div>
         {% endif %}
         <cite class="flex items-center mb-8 not-italic">
-            <img
-                    src="https://www.hyperui.dev/photos/man-6.jpeg"
-                    alt=""
-                    class="object-cover w-12 h-12 rounded-full"
-            />
+            <img src="https://www.hyperui.dev/photos/man-6.jpeg" alt="" class="object-cover w-12 h-12 rounded-full"/>
 
             <p class="ml-3 leading-none">
                 <span class="block font-medium"> {{ object.create_by }} </span>
-                <span class="text-sm text-gray-500"> 31st Jane, 2021 </span>
+                <span class="text-sm text-gray-500"> {{ object.created_at }} </span>
             </p>
         </cite>
         <hr class="mt-3 mb-3">
