@@ -81,6 +81,23 @@ class EditSurveyFormView(SurveyFormView):
         return form_class(user_answer=user_answer, **self.get_form_kwargs())
 
 
+@method_decorator(login_required, name='dispatch')
+class DeleteSurveyAnswerView(DetailView):
+    model = UserAnswer
+
+    def dispatch(self, request, *args, **kwargs):
+        # handle if user not same
+        user_answer = self.get_object()
+        if user_answer.user != request.user:
+            return redirect("surveys:detail", pk=user_answer.survey.id)
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        user_answer = self.get_object()
+        user_answer.delete()
+        return redirect("surveys:detail", pk=user_answer.survey.id)
+
+
 class DetailSurveyView(DetailView):
     model = Survey
     template_name = "surveys/answer_list.html"
