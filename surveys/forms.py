@@ -1,5 +1,5 @@
 from django import forms
-from surveys.models import Answer, TYPE_FIELD
+from surveys.models import Answer, TYPE_FIELD, UserAnswer
 from surveys.utils import make_choices
 
 
@@ -56,6 +56,9 @@ class CreateSurveyForm(BaseSurveyForm):
     def save(self, user):
         cleaned_data = super().clean()
 
+        UserAnswer.objects.create(
+            survey=self.survey, user=user
+        )
         for question in self.questions:
             field_name = f'field_survey_{question.id}'
 
@@ -89,7 +92,9 @@ class EditSurveyForm(BaseSurveyForm):
 
     def save(self, user=None):
         cleaned_data = super().clean()
-
+        UserAnswer.objects.update(
+            survey=self.survey, user=user
+        )
         for question in self.questions:
             field_name = f'field_survey_{question.id}'
 

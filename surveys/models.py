@@ -1,3 +1,4 @@
+import uuid
 from collections import namedtuple
 
 from django.db import models
@@ -9,7 +10,15 @@ TYPE_FIELD = namedtuple(
 )._make(range(6))
 
 
-class Survey(models.Model):
+class BaseModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class Survey(BaseModel):
     name = models.CharField(max_length=200)
     description = models.TextField(default='')
 
@@ -17,7 +26,7 @@ class Survey(models.Model):
         return self.name
 
 
-class Question(models.Model):
+class Question(BaseModel):
     TYPE_FIELD = [(TYPE_FIELD.text, "text"), (TYPE_FIELD.number, "number"),
                   (TYPE_FIELD.radio, "radio"), (TYPE_FIELD.select, "select"),
                   (TYPE_FIELD.multi_select, "multi select"), (TYPE_FIELD.text_area, "text area")]
@@ -39,7 +48,7 @@ class Question(models.Model):
         return self.survey.name
 
 
-class Answer(models.Model):
+class Answer(BaseModel):
     question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
     value = models.CharField(max_length=200)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, blank=True, null=True)
@@ -51,3 +60,11 @@ class Answer(models.Model):
     def get_answer(cls, survey, user=None):
         question_ids = Question.objects.filter(survey=survey).values_list('id', flat=True)
         return cls.objects.filter(user=user, question_id__in=question_ids)
+
+
+class UserAnswer(BaseModel):
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.id)

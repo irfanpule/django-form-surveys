@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Survey, Question, Answer
+from .models import Survey, Question, Answer, UserAnswer
 
 
 class AdminQuestion(admin.ModelAdmin):
@@ -18,6 +18,11 @@ class AdminAnswer(admin.ModelAdmin):
     get_label.short_description = 'Label'
 
 
+class AdminUserAnswer(admin.ModelAdmin):
+    list_display = ('survey', 'user', 'created_at', 'updated_at')
+
+
 admin.site.register(Survey)
 admin.site.register(Question, AdminQuestion)
 admin.site.register(Answer, AdminAnswer)
+admin.site.register(UserAnswer, AdminUserAnswer)
