@@ -10,17 +10,17 @@
       {{ object.description }}
     </p>
 
-    <form method="post" class="p-8 mt-6 mb-0 space-y-4 rounded-lg shadow-2xl">
+    <form method="post">
         {% csrf_token %}
         {% for field in form %}
-            <div>
-                <label for="email" class="text-sm font-medium">{{ field.label }}</label>
+            <div class="p-8 mt-6 mb-0 space-y-4 rounded-lg shadow-md border border-gray-200">
+                <label for="email" class="text-base font-medium">{{ field.label }}</label>
 
                 <div class="relative mt-1">
                     {% if field.field.widget.input_type == 'radio' %}
                         {{ field }}
                     {% else %}
-                        {{ field|addclass:'w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm' }}
+                        {{ field|addclass:'w-full p-4 pr-12 text-sm border-gray-500 rounded-lg shadow-sm' }}
                     {% endif %}
                 </div>
                 <p class="text-xs text-gray-400">{{ field.help_text }}</p>
@@ -28,7 +28,7 @@
 
          {% endfor %}
 
-      <button type="submit" class="block w-full px-5 py-3 text-sm font-medium text-white bg-indigo-600 rounded-lg">
+      <button type="submit" class="block w-full mt-5 px-5 py-3 text-sm font-medium text-white bg-indigo-600 rounded-lg">
         Submit
       </button>
     </form>
