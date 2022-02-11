@@ -103,7 +103,7 @@ class DetailSurveyView(DetailView):
     template_name = "surveys/answer_list.html"
 
     def get_context_data(self, **kwargs):
-        user_answers = UserAnswer.objects.all()
+        user_answers = UserAnswer.objects.filter(survey=self.get_object())
         objects = []
         for ua in user_answers:
             objects.append({
