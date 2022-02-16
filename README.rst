@@ -16,8 +16,14 @@ Quick start
         'surveys',
     ]
 
-2. Run `python manage.py migrate` to create the surveys models.
-3. Include url `surveys` in your root url::
+2. Add context processor `'surveys.context_processors.surveys_context'`::
+
+    'context_processors': [
+        ....
+        'surveys.context_processors.surveys_context'
+    ],
+3. Run `python manage.py migrate` to create the surveys models.
+4. Include url `surveys` in your root url::
 
     ....
 
@@ -27,7 +33,7 @@ Quick start
         path('surveys', include('surveys.urls'))
     ]
 
-4. Start the development server and visit `http://127.0.0.1:8000/admin/`
+5. Start the development server and visit `http://127.0.0.1:8000/admin/`
    to create a survey.
-5. Access `http://127.0.0.1:8000/surveys/` get list of survey
-6. Access `http://127.0.0.1:8000/surveys/{id}` get form of survey
+6. Access `http://127.0.0.1:8000/surveys/` get list of survey
+7. Access `http://127.0.0.1:8000/surveys/{id}` get form of survey
