@@ -1,0 +1,33 @@
+{% extends 'surveys/admins/master.html' %}
+{% block content %}
+    <div class="container mb-10">
+        {% include 'surveys/components/section_welcome.html' %}
+
+        <section>
+            <div class="py-6 lg:items-end lg:justify-between lg:flex sm:px-6 lg:px-8">
+                <h2 class="max-w-xl text-2xl font-bold sm:text-3xl">
+                    Create a survey
+                </h2>
+
+                <a href="{% url 'surveys:admin_create_survey' %}" class="inline-block px-5 py-3 mt-4 font-medium text-white bg-blue-500 rounded-lg sm:m-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                    </svg>
+                </a>
+            </div>
+        </section>
+
+        {% if object_list %}
+        <div class="grid grid-cols-3 gap-4 py-6">
+            {% for survey in object_list %}
+                {% include 'surveys/components/card_list_survey.html' %}
+            {% endfor %}
+        </div>
+        {% else %}
+            {% include 'surveys/components/empty_state.html' %}
+        {% endif %}
+    </div>
+
+{% endblock %}

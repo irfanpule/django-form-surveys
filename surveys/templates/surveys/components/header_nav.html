@@ -1,0 +1,35 @@
+<header class="border-b border-gray-100">
+    <div class="flex items-center justify-between h-16 mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
+        <div class="flex items-center justify-end flex-1">
+            <nav class="hidden lg:uppercase lg:text-gray-500 lg:tracking-wide lg:font-bold lg:text-xs lg:space-x-4 lg:flex">
+                <a href="{% url 'surveys:admin_survey' %}"
+                   class="block h-16 leading-[4rem] border-b-4 border-transparent hover:text-blue-500 hover:border-current">
+                    Surveys
+                </a>
+
+                <a href="#"
+                   class="block h-16 leading-[4rem] border-b-4 border-transparent hover:text-blue-500 hover:border-current">
+                    About
+                </a>
+
+                <a href="#"
+                   class="block h-16 leading-[4rem] border-b-4 border-transparent hover:text-blue-500 hover:border-current">
+                    Setting
+                </a>
+            </nav>
+            <div class="flex items-center ml-8">
+                <div class="flex items-center border-gray-100 divide-x divide-gray-100 border-x">
+                    <span class="hidden sm:block">
+                         <a href="/" class="block p-6 border-b-4 border-transparent hover:border-blue-500">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 stroke-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                             </svg>
+
+                            <span class="sr-only"> Close </span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
