@@ -8,22 +8,19 @@ from django.shortcuts import redirect
 from surveys.models import Survey, UserAnswer
 from surveys.forms import CreateSurveyForm, EditSurveyForm
 from surveys import app_settings
+from surveys.views_mixin import ContextTitleMixin
 
 
 @method_decorator(login_required, name='dispatch')
-class SurveyListView(ListView):
+class SurveyListView(ContextTitleMixin, ListView):
     model = Survey
+    title_page = 'Survey List'
 
 
 @method_decorator(login_required, name='dispatch')
 class SurveyFormView(FormMixin, DetailView):
     template_name = 'surveys/form.html'
     success_url = "/"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title_page'] = self.title_page
-        return context
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
@@ -35,7 +32,7 @@ class SurveyFormView(FormMixin, DetailView):
 
 
 @method_decorator(login_required, name='dispatch')
-class CreateSurveyFormView(SurveyFormView):
+class CreateSurveyFormView(ContextTitleMixin, SurveyFormView):
     model = Survey
     form_class = CreateSurveyForm
     success_url = "/"
@@ -56,14 +53,13 @@ class CreateSurveyFormView(SurveyFormView):
 
 
 @method_decorator(login_required, name='dispatch')
-class EditSurveyFormView(SurveyFormView):
+class EditSurveyFormView(ContextTitleMixin, SurveyFormView):
     form_class = EditSurveyForm
     title_page = "Edit Survey"
     model = UserAnswer
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title_page'] = self.title_page
         context['object'] = self.get_object().survey
         return context
 
@@ -98,9 +94,10 @@ class DeleteSurveyAnswerView(DetailView):
         return redirect("surveys:detail", pk=user_answer.survey.id)
 
 
-class DetailSurveyView(DetailView):
+class DetailSurveyView(ContextTitleMixin, DetailView):
     model = Survey
     template_name = "surveys/answer_list.html"
+    title_page = "Result Survey"
 
     def get_context_data(self, **kwargs):
         user_answers = UserAnswer.objects.filter(survey=self.get_object())
