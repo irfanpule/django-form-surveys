@@ -3,6 +3,7 @@ from django.db import transaction
 
 from surveys.models import Answer, TYPE_FIELD, UserAnswer
 from surveys.utils import make_choices
+from surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey
 
 
 class BaseSurveyForm(forms.Form):
@@ -21,11 +22,12 @@ class BaseSurveyForm(forms.Form):
             if question.type_field == TYPE_FIELD.multi_select:
                 self.fields[field_name] = forms.MultipleChoiceField(
                     choices=make_choices(question), label=question.label,
+                    widget=CheckboxSelectMultipleSurvey,
                 )
             elif question.type_field == TYPE_FIELD.radio:
                 self.fields[field_name] = forms.ChoiceField(
                     choices=make_choices(question), label=question.label,
-                    widget=forms.RadioSelect
+                    widget=RadioSelectSurvey
                 )
             elif question.type_field == TYPE_FIELD.select:
                 self.fields[field_name] = forms.ChoiceField(
