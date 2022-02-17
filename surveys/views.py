@@ -8,7 +8,7 @@ from django.shortcuts import redirect
 from surveys.models import Survey, UserAnswer
 from surveys.forms import CreateSurveyForm, EditSurveyForm
 from surveys import app_settings
-from surveys.views_mixin import ContextTitleMixin
+from surveys.mixin import ContextTitleMixin
 
 
 @method_decorator(login_required, name='dispatch')
@@ -51,6 +51,12 @@ class CreateSurveyFormView(ContextTitleMixin, SurveyFormView):
             form_class = self.get_form_class()
         return form_class(survey=self.get_object(), user=self.request.user, **self.get_form_kwargs())
 
+    def get_title_page(self):
+        return self.get_object().name
+
+    def get_sub_title_page(self):
+        return self.get_object().description
+
 
 @method_decorator(login_required, name='dispatch')
 class EditSurveyFormView(ContextTitleMixin, SurveyFormView):
@@ -75,6 +81,12 @@ class EditSurveyFormView(ContextTitleMixin, SurveyFormView):
             form_class = self.get_form_class()
         user_answer = self.get_object()
         return form_class(user_answer=user_answer, **self.get_form_kwargs())
+
+    def get_title_page(self):
+        return self.get_object().survey.name
+
+    def get_sub_title_page(self):
+        return self.get_object().survey.description
 
 
 @method_decorator(login_required, name='dispatch')
