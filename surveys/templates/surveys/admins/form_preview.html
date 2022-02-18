@@ -43,7 +43,7 @@
       {{ sub_title_page }}
     </p>
 
-    <form method="post">
+    <form method="post" class="mt-12">
         {% csrf_token %}
         {% for field in form %}
             <div class="flex -space-x-4 hover:space-x-1 py-1">
@@ -76,7 +76,7 @@
                         {{ field|addclass:'w-full p-4 pr-12 text-sm border-gray-500 rounded-lg shadow-sm' }}
                     {% endif %}
                 </div>
-                <p class="text-xs text-gray-400">{{ field.help_text }}</p>
+                <p class="text-xs text-gray-400 mt-2">{{ field.help_text }}</p>
             </div>
 
          {% endfor %}
