@@ -1,5 +1,6 @@
 from django.urls import path
-from surveys import views, admin_views
+from surveys import views
+from surveys.admins import views as admin_views
 
 app_name = 'surveys'
 urlpatterns = [
@@ -13,5 +14,6 @@ urlpatterns = [
 urlpatterns += [
     path('dashboard/', admin_views.AdminSurveyListView.as_view(), name='admin_survey'),
     path('dashboard/create/survey/', admin_views.AdminCrateSurveyView.as_view(), name='admin_create_survey'),
-    path('dashboard/forms/<int:pk>', admin_views.AdminSurveyFormView.as_view(), name='admin_forms_survey'),
+    path('dashboard/forms/<int:pk>/', admin_views.AdminSurveyFormView.as_view(), name='admin_forms_survey'),
+    path('dashboard/question/add/', admin_views.AdminCreateQuestionView.as_view(), name='admin_create_question'),
 ]

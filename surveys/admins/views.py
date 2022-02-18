@@ -3,8 +3,9 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
 from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
+from django.urls import reverse
 
-from surveys.models import Survey
+from surveys.models import Survey, Question
 from surveys.mixin import ContextTitleMixin
 from surveys.views import SurveyListView
 from surveys.forms import BaseSurveyForm
@@ -14,9 +15,17 @@ from surveys.forms import BaseSurveyForm
 class AdminCrateSurveyView(ContextTitleMixin, CreateView):
     model = Survey
     template_name = 'surveys/admins/form.html'
-    success_url = "/"
     fields = '__all__'
     title_page = "Add New Survey"
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            survey = form.save()
+            self.success_url = reverse("surveys:admin_forms_survey", args=[survey.id])
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
 
 @method_decorator(staff_member_required, name='dispatch')
@@ -40,3 +49,12 @@ class AdminSurveyFormView(ContextTitleMixin, FormMixin, DetailView):
 
     def get_sub_title_page(self):
         return self.get_object().description
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class AdminCreateQuestionView(ContextTitleMixin, CreateView):
+    model = Question
+    template_name = 'surveys/admins/form.html'
+    success_url = "/"
+    fields = '__all__'
+    title_page = 'Add Question'
