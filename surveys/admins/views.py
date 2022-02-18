@@ -1,4 +1,4 @@
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
 from django.utils.decorators import method_decorator
@@ -26,6 +26,18 @@ class AdminCrateSurveyView(ContextTitleMixin, CreateView):
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class AdminEditSurveyView(ContextTitleMixin, UpdateView):
+    model = Survey
+    template_name = 'surveys/admins/form.html'
+    fields = '__all__'
+    title_page = "Edit Survey"
+
+    def get_success_url(self):
+        survey = self.get_object()
+        return reverse("surveys:admin_forms_survey", args=[survey.id])
 
 
 @method_decorator(staff_member_required, name='dispatch')
