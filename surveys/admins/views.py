@@ -4,7 +4,7 @@ from django.views.generic.edit import FormMixin
 from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 
 from surveys.models import Survey, Question
 from surveys.mixin import ContextTitleMixin
@@ -89,3 +89,37 @@ class AdminCreateQuestionView(ContextTitleMixin, CreateView):
 
     def get_success_url(self):
         return reverse("surveys:admin_forms_survey", args=[self.survey.pk])
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class AdminUpdateQuestionView(ContextTitleMixin, UpdateView):
+    model = Question
+    template_name = 'surveys/admins/form.html'
+    success_url = "/"
+    fields = ['label', 'type_field', 'choices', 'help_text', 'required']
+    title_page = 'Add Question'
+    survey = None
+
+    def dispatch(self, request, *args, **kwargs):
+        question = self.get_object()
+        self.survey = question.survey
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse("surveys:admin_forms_survey", args=[self.survey.pk])
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class AdminDeleteQuestionView(DetailView):
+    model = Question
+    survey = None
+
+    def dispatch(self, request, *args, **kwargs):
+        question = self.get_object()
+        self.survey = question.survey
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        question = self.get_object()
+        question.delete()
+        return redirect("surveys:admin_forms_survey", pk=self.survey.id)

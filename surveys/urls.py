@@ -18,4 +18,8 @@ urlpatterns += [
     path('dashboard/forms/<int:pk>/', admin_views.AdminSurveyFormView.as_view(), name='admin_forms_survey'),
     path('dashboard/question/add/<int:pk>',
          admin_views.AdminCreateQuestionView.as_view(), name='admin_create_question'),
+    path('dashboard/question/edit/<int:pk>',
+         admin_views.AdminUpdateQuestionView.as_view(), name='admin_edit_question'),
+    path('dashboard/question/delete/<int:pk>',
+         admin_views.AdminDeleteQuestionView.as_view(), name='admin_delete_question'),
 ]
