@@ -4,6 +4,7 @@ from django.views.generic.edit import FormMixin
 from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse
+from django.shortcuts import render, get_object_or_404
 
 from surveys.models import Survey, Question
 from surveys.mixin import ContextTitleMixin
@@ -68,5 +69,23 @@ class AdminCreateQuestionView(ContextTitleMixin, CreateView):
     model = Question
     template_name = 'surveys/admins/form.html'
     success_url = "/"
-    fields = '__all__'
+    fields = ['label', 'type_field', 'choices', 'help_text', 'required']
     title_page = 'Add Question'
+    survey = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.survey = get_object_or_404(Survey, id=kwargs['pk'])
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.survey = self.survey
+            question.save()
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def get_success_url(self):
+        return reverse("surveys:admin_forms_survey", args=[self.survey.pk])
