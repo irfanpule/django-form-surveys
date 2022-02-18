@@ -6,6 +6,7 @@
     <title>Survey - {{ title }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
     {% include 'surveys/components/header_nav.html' %}
