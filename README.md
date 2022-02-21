@@ -1,12 +1,8 @@
-# Getting started
+# Django Form Survey
 
-### Requirements
-- Python 3.6, 3.8 or latest
-- Django 2.2.x or latest
+Django form survey is an application Django to easier create form survey and easy integrated for your project.
 
-Surveys is a simple Django app to conduct Web-based to create survey. You can
-create custom survey from django admin.
-
+![image](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/dashboard-index.png)
 
 ### Installation
 - Install django-form-surveys using:
@@ -49,7 +45,3 @@ create custom survey from django admin.
    to create a survey.
 - Access `http://127.0.0.1:8000/surveys/` get list of survey 
 - Access `http://127.0.0.1:8000/surveys/{id}` get form of survey
-
-
-### Configuration
-....

@@ -1,10 +1,8 @@
 =====
-Form Survey
+Django Form Survey
 =====
 
-Surveys is a simple Django app to conduct Web-based to create survey. You can
-create custom survey from django admin.
-
+Django form survey is an application Django to easier create form survey and easy integrated for your project.
 
 Quick start
 -----------
