@@ -43,6 +43,7 @@ class Question(BaseModel):
         help_text='You can add a help text in here'
     )
     required = models.BooleanField(default=True)
+    ordering = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.survey.name

@@ -5,6 +5,8 @@ from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse
 from django.shortcuts import get_object_or_404, redirect
+from django.views.generic import View
+from django.http import JsonResponse
 
 from surveys.models import Survey, Question
 from surveys.mixin import ContextTitleMixin
@@ -123,3 +125,20 @@ class AdminDeleteQuestionView(DetailView):
         question = self.get_object()
         question.delete()
         return redirect("surveys:admin_forms_survey", pk=self.survey.id)
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class AdminChangeOrderQuestionView(View):
+    def post(self, request, *args, **kwargs):
+        ordering = request.POST['order_question'].split(",")
+        print(ordering)
+        for index, question_id in enumerate(ordering):
+            if question_id:
+                question = Question.objects.get(id=question_id)
+                question.ordering = index
+                question.save()
+
+        data = {
+            'message': 'Success update ordering question'
+        }
+        return JsonResponse(data, status=200)

@@ -1,16 +1,6 @@
 {% extends 'surveys/admins/master.html' %}
 {% load survey_tags %}
 
-{% block extra_css %}
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-    <script>
-    $(function () {
-        $("#sortable").sortable();
-    });
-    </script>
-{% endblock %}
-
 {% block content %}
 <div class="flex py-1 fixed bottom-10 right-10">
     <a href="{% url 'surveys:admin_create_question' object.id %}"
@@ -56,7 +46,7 @@
     <form method="post" class="mx-auto mt-12" id="sortable">
         {% csrf_token %}
         {% for field in form %}
-            <div class="ui-state-default">
+            <div class="ui-state-default" id="{{ field|get_id_field }}">
                 <div class="flex -space-x-4 hover:space-x-1 py-1">
                     <a href="{% url 'surveys:admin_edit_question' field|get_id_field %}" class="z-20 block p-4 text-blue-700 transition-all bg-blue-100 border-2 border-white rounded-full active:bg-blue-50 hover:scale-110 focus:outline-none focus:ring"
                        type="button">
@@ -103,4 +93,36 @@
 
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script>
+    $(function () {
+        $("#sortable").sortable({
+            opacity: 0.7,
+            update: function (event, ui) {
+                var order = $(this).sortable('toArray');
+                console.log(order);
+                $.ajax({
+                    url: "{% url 'surveys:admin_change_order_question' %}",
+                    type: 'POST',
+                    headers: { "X-CSRFToken": '{{csrf_token}}'},
+                    data: {
+                        'order_question': order.toString(),
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        {#alert(data.message);#}
+                        console.log(data.message);
+                    },
+                    error: function (data) {
+                        alert("Terjadi kesalahan, mohon refresh halaman.");
+                    }
+                });
+            }
+        });
+    });
+    </script>
 {% endblock %}

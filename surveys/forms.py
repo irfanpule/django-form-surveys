@@ -12,7 +12,7 @@ class BaseSurveyForm(forms.Form):
         self.survey = survey
         self.user = user
         self.field_names = []
-        self.questions = self.survey.questions.all()
+        self.questions = self.survey.questions.all().order_by('ordering')
         super().__init__(*args, **kwargs)
 
         for question in self.questions:

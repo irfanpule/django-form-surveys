@@ -22,4 +22,6 @@ urlpatterns += [
          admin_views.AdminUpdateQuestionView.as_view(), name='admin_edit_question'),
     path('dashboard/question/delete/<int:pk>',
          admin_views.AdminDeleteQuestionView.as_view(), name='admin_delete_question'),
+    path('dashboard/question/ordering/', admin_views.AdminChangeOrderQuestionView.as_view(),
+         name='admin_change_order_question'),
 ]
