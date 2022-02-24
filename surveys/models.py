@@ -3,6 +3,7 @@ from collections import namedtuple
 
 from django.db import models
 from django.contrib.auth import get_user_model
+from surveys import app_settings
 
 
 TYPE_FIELD = namedtuple(
@@ -55,6 +56,11 @@ class UserAnswer(BaseModel):
 
     def __str__(self):
         return str(self.id)
+
+    def get_user_photo(self):
+        if app_settings.SURVEY_USER_PHOTO_PROFILE:
+            return eval(app_settings.SURVEY_USER_PHOTO_PROFILE)
+        return "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
 
 
 class Answer(BaseModel):

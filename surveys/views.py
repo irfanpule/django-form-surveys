@@ -113,15 +113,6 @@ class DetailSurveyView(ContextTitleMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         user_answers = UserAnswer.objects.filter(survey=self.get_object())
-        objects = []
-        for ua in user_answers:
-            objects.append({
-                'id': ua.id,
-                'create_by': ua.user,
-                'created_at': ua.created_at,
-                'answers': ua.answer_set.all()
-            })
-
         context = super().get_context_data(**kwargs)
-        context['objects'] = objects
+        context['objects'] = user_answers
         return context
