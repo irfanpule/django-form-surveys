@@ -1,35 +1,71 @@
-<header class="border-b border-gray-100">
-    <div class="flex items-center justify-between h-16 mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
-        <div class="flex items-center justify-end flex-1">
-            <nav class="hidden lg:uppercase lg:text-gray-500 lg:tracking-wide lg:font-bold lg:text-xs lg:space-x-4 lg:flex">
-                <a href="{% url 'surveys:admin_survey' %}"
-                   class="block h-16 leading-[4rem] border-b-4 border-transparent hover:text-blue-500 hover:border-current">
-                    Surveys
-                </a>
-
-                <a href="#"
-                   class="block h-16 leading-[4rem] border-b-4 border-transparent hover:text-blue-500 hover:border-current">
-                    About
-                </a>
-
-{#                <a href="#"#}
-{#                   class="block h-16 leading-[4rem] border-b-4 border-transparent hover:text-blue-500 hover:border-current">#}
-{#                    Setting#}
-{#                </a>#}
-            </nav>
-            <div class="flex items-center ml-8">
-                <div class="flex items-center border-gray-100 divide-x divide-gray-100 border-x">
-                    <span class="hidden sm:block">
-                         <a href="/" class="block p-6 border-b-4 border-transparent hover:border-blue-500">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 stroke-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                             </svg>
-
-                            <span class="sr-only"> Close </span>
-                        </a>
-                    </span>
+<!-- Navbar goes here -->
+<nav class="bg-white shadow-lg">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="flex justify-between">
+            <div class="flex space-x-7">
+                <div>
+                    <!-- Website Logo -->
+                    <a href="/" class="flex items-center py-4 px-2">
+{#                        <img src="logo.png" alt="Logo" class="h-8 w-8 mr-2">#}
+                        <span class="font-semibold text-gray-500 text-lg">Home</span>
+                    </a>
                 </div>
+                <!-- Primary Navbar items -->
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="{% url 'surveys:admin_survey' %}" class="py-4 px-2 text-gray-500 hover:border-b-4 hover:border-blue-500 hover:text-blue-500 font-semibold">Surveys</a>
+                    <a href="#" class="py-4 px-2 text-gray-500 hover:border-b-4 hover:border-blue-500 hover:text-blue-500 font-semibold">About</a>
+                </div>
+            </div>
+            <!-- Secondary Navbar items -->
+            <div class="hidden md:flex items-center space-x-3 ">
+                <a href="/" class="py-2 px-2 font-medium text-gray-500 rounded hover:bg-blue-500 hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 stroke-gray-500 hover:stroke-white" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor">#}
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </a>
+{#                <a href=""#}
+{#                   class="py-2 px-2 font-medium text-gray-500 rounded hover:bg-blue-500 hover:text-white transition duration-300">Log#}
+{#                    In</a>#}
+{#                <a href=""#}
+{#                   class="py-2 px-2 font-medium text-white bg-blue-500 rounded hover:bg-blue-400 transition duration-300">Sign#}
+{#                    Up</a>#}
+            </div>
+            <!-- Mobile menu button -->
+            <div class="md:hidden flex items-center">
+                <button class="outline-none mobile-menu-button">
+                    <svg class=" w-6 h-6 text-gray-500 hover:text-blue-500 "
+                         x-show="!showMenu"
+                         fill="none"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         stroke-width="2"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor"
+                    >
+                        <path d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
-</header>
+    <!-- mobile menu -->
+    <div class="hidden mobile-menu">
+        <ul class="">
+            <li class="active">
+                <a href="{% url 'surveys:admin_survey' %}" class="block text-sm px-2 py-4 px-5 text-gray-500 hover:text-white hover:bg-blue-500 font-semibold">Surveys</a>
+            </li>
+            <li>
+                <a href="#" class="block text-sm px-2 py-4 px-5 text-gray-500 hover:text-white hover:bg-blue-500 font-semibold">About</a>
+            </li>
+        </ul>
+    </div>
+    <script>
+        const btn = document.querySelector("button.mobile-menu-button");
+        const menu = document.querySelector(".mobile-menu");
+
+        btn.addEventListener("click", () => {
+            menu.classList.toggle("hidden");
+        });
+    </script>
+</nav>
