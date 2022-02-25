@@ -14,14 +14,18 @@
             </div>
         </section>
 
-        {% if objects %}
+        {% if page_obj %}
             <div class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {% for object in objects %}
-                {% include 'surveys/components/card_list_answer.html' %}
-            {% endfor %}
+                {% for object in page_obj %}
+                    {% include 'surveys/components/card_list_answer.html' %}
+                {% endfor %}
+            </div>
+            <div class="py-10">
+                {% include 'surveys/components/pagination.html' %}
+            </div>
         {% else %}
             {% include 'surveys/components/empty_state.html' %}
         {% endif %}
-        </div>
+
     </div>
 {% endblock %}

@@ -20,11 +20,14 @@
         </section>
 
         {% if object_list %}
-        <div class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 py-6">
-            {% for survey in object_list %}
-                {% include 'surveys/components/card_list_survey.html' %}
-            {% endfor %}
-        </div>
+            <div class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {% for survey in page_obj %}
+                    {% include 'surveys/components/card_list_survey.html' %}
+                {% endfor %}
+            </div>
+            <div class="py-10">
+                {% include 'surveys/components/pagination.html' %}
+            </div>
         {% else %}
             {% include 'surveys/components/empty_state.html' %}
         {% endif %}

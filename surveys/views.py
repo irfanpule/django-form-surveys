@@ -4,6 +4,7 @@ from django.views.generic.detail import DetailView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.shortcuts import redirect
+from django.core.paginator import Paginator
 
 from surveys.models import Survey, UserAnswer
 from surveys.forms import CreateSurveyForm, EditSurveyForm
@@ -15,6 +16,7 @@ from surveys.mixin import ContextTitleMixin
 class SurveyListView(ContextTitleMixin, ListView):
     model = Survey
     title_page = 'Survey List'
+    paginate_by = 12
 
 
 @method_decorator(login_required, name='dispatch')
@@ -110,9 +112,13 @@ class DetailSurveyView(ContextTitleMixin, DetailView):
     model = Survey
     template_name = "surveys/answer_list.html"
     title_page = "Result Survey"
+    paginate_by = 6
 
     def get_context_data(self, **kwargs):
         user_answers = UserAnswer.objects.filter(survey=self.get_object())
+        paginator = Paginator(user_answers, self.paginate_by)
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         context = super().get_context_data(**kwargs)
-        context['objects'] = user_answers
+        context['page_obj'] = page_obj
         return context
