@@ -1,10 +1,10 @@
 {% extends 'surveys/admins/master.html' %}
 {% block content %}
-    <div class="container mb-10">
+    <div class="container px-5 py-5 ">
         {% include 'surveys/components/section_welcome.html' %}
 
         <section>
-            <div class="py-6 lg:items-end lg:justify-between lg:flex sm:px-6 lg:px-8">
+            <div class="py-6 lg:items-end justify-between flex sm:px-6 lg:px-8">
                 <h2 class="max-w-xl text-2xl font-bold sm:text-3xl">
                     Create a survey
                 </h2>
@@ -20,7 +20,7 @@
         </section>
 
         {% if object_list %}
-        <div class="grid grid-cols-3 gap-4 py-6">
+        <div class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 py-6">
             {% for survey in object_list %}
                 {% include 'surveys/components/card_list_survey.html' %}
             {% endfor %}

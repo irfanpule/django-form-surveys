@@ -1,7 +1,7 @@
 {% extends get_master_template %}
 
 {% block content %}
-    <div class="container mb-10">
+    <div class="container px-5 py-5">
         <section>
             <div class="py-16 lg:items-end lg:justify-between lg:flex sm:px-6 lg:px-8">
                 <h2 class="max-w-xl text-2xl font-bold sm:text-3xl">
@@ -15,7 +15,7 @@
         </section>
 
         {% if objects %}
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for object in objects %}
                 {% include 'surveys/components/card_list_answer.html' %}
             {% endfor %}
