@@ -1,6 +1,6 @@
 <div class="swiper-slide">
     <blockquote class="p-6 border border-gray-100 rounded-lg shadow-lg bg-white">
-        {% if object.create_by == user %}
+        {% if object.user == user %}
             <div class="flex -space-x-4 hover:space-x-1 float-right">
                 <a href="{% url 'surveys:edit' object.id %}" class="z-20 block p-4 text-blue-700 transition-all bg-blue-100 border-2 border-white rounded-full active:bg-blue-50 hover:scale-110 focus:outline-none focus:ring"
                         type="button">

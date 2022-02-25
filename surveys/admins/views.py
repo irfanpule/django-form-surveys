@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import View
 from django.http import JsonResponse
+from django.contrib import messages
 
 from surveys.models import Survey, Question
 from surveys.mixin import ContextTitleMixin
@@ -26,6 +27,7 @@ class AdminCrateSurveyView(ContextTitleMixin, CreateView):
         if form.is_valid():
             survey = form.save()
             self.success_url = reverse("surveys:admin_forms_survey", args=[survey.id])
+            messages.success(self.request, f'Successfully {self.title_page}')
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
@@ -85,6 +87,7 @@ class AdminCreateQuestionView(ContextTitleMixin, CreateView):
             question = form.save(commit=False)
             question.survey = self.survey
             question.save()
+            messages.success(self.request, f'Successfully {self.title_page}')
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
@@ -131,7 +134,6 @@ class AdminDeleteQuestionView(DetailView):
 class AdminChangeOrderQuestionView(View):
     def post(self, request, *args, **kwargs):
         ordering = request.POST['order_question'].split(",")
-        print(ordering)
         for index, question_id in enumerate(ordering):
             if question_id:
                 question = Question.objects.get(id=question_id)

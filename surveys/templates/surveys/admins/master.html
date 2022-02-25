@@ -9,10 +9,21 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
+    {% if messages %}
+        {% for message in messages %}
+            {% include 'surveys/components/alert.html' %}
+        {% endfor %}
+    {% endif %}
     {% include 'surveys/components/header_nav.html' %}
     <div class="container mx-auto">
         {% block content %} {% endblock %}
     </div>
+    <script>
+        document.querySelector(".close-alert").addEventListener("click", () => {
+            let alertMessage = document.getElementById("alert-message");
+            alertMessage.style.display = "none";
+        })
+    </script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

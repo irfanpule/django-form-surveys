@@ -1,0 +1,40 @@
+<div class="flex py-1 fixed top-10 right-10" id="alert-message">
+    <div class="flex p-4 text-white
+        {% if message.tags == 'success' %}
+            bg-green-600
+        {% elif message.tags == 'warning' %}
+            bg-amber-600
+        {% elif message.tags == 'info' %}
+            bg-sky-600
+        {% elif message.tags == 'error' %}
+            bg-red-600
+        {% else %}
+            bg-gray-600
+        {% endif %}
+            rounded" role="alert">
+        <button class="absolute opacity-90 top-4 right-4 close-alert" type="button">
+            <span class="sr-only"> Close </span>
+
+            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clip-rule="evenodd"></path>
+            </svg>
+        </button>
+        <svg class="flex-shrink-0 w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+             stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+
+        <div class="ml-3 -mt-0.25">
+            <h3 class="text-sm font-medium">
+                {{ message.tags }}
+            </h3>
+
+            <p class="mt-1 text-xs opacity-90">
+                {{ message }}
+            </p>
+        </div>
+    </div>
+</div>

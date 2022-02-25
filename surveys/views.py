@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.shortcuts import redirect
 from django.core.paginator import Paginator
+from django.contrib import messages
 
 from surveys.models import Survey, UserAnswer
 from surveys.forms import CreateSurveyForm, EditSurveyForm
@@ -28,8 +29,10 @@ class SurveyFormView(FormMixin, DetailView):
         form = self.get_form()
         if form.is_valid():
             form.save()
+            messages.success(self.request, f'Successfully {self.title_page}')
             return self.form_valid(form)
         else:
+            messages.error(self.request, 'Something wrong')
             return self.form_invalid(form)
 
 
@@ -105,6 +108,7 @@ class DeleteSurveyAnswerView(DetailView):
     def get(self, request, *args, **kwargs):
         user_answer = self.get_object()
         user_answer.delete()
+        messages.success(self.request, 'Successfully deleted one survey')
         return redirect("surveys:detail", pk=user_answer.survey.id)
 
 
