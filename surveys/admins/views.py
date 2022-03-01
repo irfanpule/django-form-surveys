@@ -59,13 +59,13 @@ class AdminSurveyFormView(ContextTitleMixin, FormMixin, DetailView):
     def get_form(self, form_class=None):
         if form_class is None:
             form_class = self.get_form_class()
-        return form_class(survey=self.get_object(), user=self.request.user, **self.get_form_kwargs())
+        return form_class(survey=self.object, user=self.request.user, **self.get_form_kwargs())
 
     def get_title_page(self):
-        return self.get_object().name
+        return self.object.name
 
     def get_sub_title_page(self):
-        return self.get_object().description
+        return self.object.description
 
 
 @method_decorator(staff_member_required, name='dispatch')
@@ -93,7 +93,7 @@ class AdminCreateQuestionView(ContextTitleMixin, CreateView):
             return self.form_invalid(form)
 
     def get_success_url(self):
-        return reverse("surveys:admin_forms_survey", args=[self.survey.pk])
+        return reverse("surveys:admin_forms_survey", args=[self.survey.slug])
 
 
 @method_decorator(staff_member_required, name='dispatch')
@@ -111,7 +111,7 @@ class AdminUpdateQuestionView(ContextTitleMixin, UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse("surveys:admin_forms_survey", args=[self.survey.pk])
+        return reverse("surveys:admin_forms_survey", args=[self.survey.slug])
 
 
 @method_decorator(staff_member_required, name='dispatch')

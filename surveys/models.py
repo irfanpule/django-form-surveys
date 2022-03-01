@@ -98,8 +98,3 @@ class Answer(BaseModel):
 
     def __str__(self):
         return f'{self.question}: {self.value}'
-
-    @classmethod
-    def get_answer(cls, survey, user=None):
-        question_ids = Question.objects.filter(survey=survey).values_list('id', flat=True)
-        return cls.objects.filter(user=user, question_id__in=question_ids)

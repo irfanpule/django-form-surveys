@@ -48,7 +48,8 @@ class CreateSurveyFormView(ContextTitleMixin, SurveyFormView):
         survey = self.get_object()
         if not app_settings.SURVEY_DUPLICATE_ENTRY and \
                 UserAnswer.objects.filter(survey=survey, user=request.user).exists():
-            return redirect("surveys:detail", pk=survey.id)
+            messages.error(request, 'You have added a survey')
+            return redirect("surveys:detail", slug=survey.slug)
         return super().dispatch(request, *args, **kwargs)
 
     def get_form(self, form_class=None):
@@ -119,7 +120,8 @@ class DetailSurveyView(ContextTitleMixin, DetailView):
     paginate_by = 6
 
     def get_context_data(self, **kwargs):
-        user_answers = UserAnswer.objects.filter(survey=self.get_object())
+        user_answers = UserAnswer.objects.filter(survey=self.get_object()) \
+            .select_related('user').prefetch_related('answer_set__question')
         paginator = Paginator(user_answers, self.paginate_by)
         page_number = self.request.GET.get('page')
         page_obj = paginator.get_page(page_number)
