@@ -22,7 +22,12 @@ class AdminUserAnswer(admin.ModelAdmin):
     list_display = ('survey', 'user', 'created_at', 'updated_at')
 
 
-admin.site.register(Survey)
+class AdminSurvey(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+    exclude = ['slug']
+
+
+admin.site.register(Survey, AdminSurvey)
 admin.site.register(Question, AdminQuestion)
 admin.site.register(Answer, AdminAnswer)
 admin.site.register(UserAnswer, AdminUserAnswer)

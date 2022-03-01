@@ -19,14 +19,14 @@ from surveys.forms import BaseSurveyForm
 class AdminCrateSurveyView(ContextTitleMixin, CreateView):
     model = Survey
     template_name = 'surveys/admins/form.html'
-    fields = '__all__'
+    fields = ['name', 'description']
     title_page = "Add New Survey"
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
             survey = form.save()
-            self.success_url = reverse("surveys:admin_forms_survey", args=[survey.id])
+            self.success_url = reverse("surveys:admin_forms_survey", args=[survey.slug])
             messages.success(self.request, f'Successfully {self.title_page}')
             return self.form_valid(form)
         else:
@@ -37,12 +37,12 @@ class AdminCrateSurveyView(ContextTitleMixin, CreateView):
 class AdminEditSurveyView(ContextTitleMixin, UpdateView):
     model = Survey
     template_name = 'surveys/admins/form.html'
-    fields = '__all__'
+    fields = ['name', 'description']
     title_page = "Edit Survey"
 
     def get_success_url(self):
         survey = self.get_object()
-        return reverse("surveys:admin_forms_survey", args=[survey.id])
+        return reverse("surveys:admin_forms_survey", args=[survey.slug])
 
 
 @method_decorator(staff_member_required, name='dispatch')

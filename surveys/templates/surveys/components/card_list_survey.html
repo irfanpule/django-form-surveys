@@ -1,7 +1,7 @@
 <div>
     {% if user.is_superuser %}
         <div class="flex -space-x-4 hover:space-x-1 float-right">
-            <a href="{% url 'surveys:admin_forms_survey' survey.id %}" class="z-20 block p-4 text-blue-700 transition-all bg-blue-100 border-2 border-white rounded-full active:bg-blue-50 hover:scale-110 focus:outline-none focus:ring"
+            <a href="{% url 'surveys:admin_forms_survey' survey.slug %}" class="z-20 block p-4 text-blue-700 transition-all bg-blue-100 border-2 border-white rounded-full active:bg-blue-50 hover:scale-110 focus:outline-none focus:ring"
                     type="button">
                 <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                      stroke="currentColor">
@@ -21,7 +21,7 @@
         </div>
     {% endif %}
 
-    <a class="relative block p-8 overflow-hidden border border-gray-100 rounded-lg bg-white" href="{% url 'surveys:detail' survey.id %}">
+    <a class="relative block p-8 overflow-hidden border border-gray-100 rounded-lg bg-white" href="{% url 'surveys:detail' survey.slug %}">
         <span class="absolute inset-x-0 bottom-0 h-2  bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
         <div class="justify-between sm:flex">
             <div>

@@ -1,14 +1,34 @@
-import uuid
+import random, string
 from collections import namedtuple
 
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.text import slugify
+
 from surveys import app_settings
 
 
 TYPE_FIELD = namedtuple(
     'TYPE_FIELD', 'text number radio select multi_select text_area'
 )._make(range(6))
+
+
+def generate_unique_slug(klass, field, id):
+    """
+    generate unique slug.
+    """
+    origin_slug = slugify(field)
+    unique_slug = origin_slug
+    numb = 1
+    obj = klass.objects.filter(slug=unique_slug).first()
+    while obj:
+        if obj.id == id:
+            break
+        rnd_string = random.choices(string.ascii_lowercase, k=(len(unique_slug)))
+        unique_slug = '%s-%s-%d' % (origin_slug, ''.join(rnd_string[:10]), numb)
+        numb += 1
+        obj = klass.objects.filter(slug=unique_slug).first()
+    return unique_slug
 
 
 class BaseModel(models.Model):
@@ -22,9 +42,17 @@ class BaseModel(models.Model):
 class Survey(BaseModel):
     name = models.CharField(max_length=200)
     description = models.TextField(default='')
+    slug = models.SlugField(max_length=225, default='')
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if self.slug:
+            self.slug = generate_unique_slug(Survey, self.slug, self.id)
+        else:
+            self.slug = generate_unique_slug(Survey, self.name, self.id)
+        super().save(*args, **kwargs)
 
 
 class Question(BaseModel):
