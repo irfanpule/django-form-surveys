@@ -9,8 +9,8 @@ from surveys import app_settings
 
 
 TYPE_FIELD = namedtuple(
-    'TYPE_FIELD', 'text number radio select multi_select text_area url'
-)._make(range(7))
+    'TYPE_FIELD', 'text number radio select multi_select text_area url email'
+)._make(range(8))
 
 
 def generate_unique_slug(klass, field, id):
@@ -63,7 +63,8 @@ class Question(BaseModel):
         (TYPE_FIELD.select, "Select"),
         (TYPE_FIELD.multi_select, "Multi Select"),
         (TYPE_FIELD.text_area, "Text Area"),
-        (TYPE_FIELD.url, "URL")
+        (TYPE_FIELD.url, "URL"),
+        (TYPE_FIELD.email, "Email")
     ]
 
     survey = models.ForeignKey(Survey, related_name='questions', on_delete=models.CASCADE)

@@ -37,6 +37,8 @@ class BaseSurveyForm(forms.Form):
                 self.fields[field_name] = forms.IntegerField(label=question.label)
             elif question.type_field == TYPE_FIELD.url:
                 self.fields[field_name] = forms.URLField(label=question.label)
+            elif question.type_field == TYPE_FIELD.email:
+                self.fields[field_name] = forms.EmailField(label=question.label)
             elif question.type_field == TYPE_FIELD.text_area:
                 self.fields[field_name] = forms.CharField(
                     label=question.label, widget=forms.Textarea
@@ -118,8 +120,11 @@ class EditSurveyForm(BaseSurveyForm):
             else:
                 value = cleaned_data[field_name]
 
-            answer = Answer.objects.get(question=question, user_answer=self.user_answer)
+            answer, created = Answer.objects.get_or_create(
+                question=question, user_answer=self.user_answer,
+                defaults={'question_id': question.id, 'user_answer_id': self.user_answer.id}
+            )
 
-            if answer:
+            if not created and answer:
                 answer.value = value
                 answer.save()
