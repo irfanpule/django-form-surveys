@@ -14,7 +14,7 @@
         <form method="post">
             {% csrf_token %}
             {% for field in form %}
-                <div class="mb-5">
+                <div class="mb-5" id="section_field_{{ field.auto_id }}">
                     <label for="email" class="text-base font-medium">{{ field.label }}</label>
                     <div class="mt-1">
                         {% if field.field.widget.input_type == 'radio' or field.field.widget.input_type == 'checkbox'%}

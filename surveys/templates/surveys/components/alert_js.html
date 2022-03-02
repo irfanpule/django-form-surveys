@@ -1,0 +1,10 @@
+<script>
+    var elCloseAlert = document.querySelector(".close-alert");
+
+    if (elCloseAlert) {
+        document.querySelector(".close-alert").addEventListener("click", () => {
+            let alertMessage = document.getElementById("alert-message");
+            alertMessage.style.display = "none";
+        })
+    }
+</script>

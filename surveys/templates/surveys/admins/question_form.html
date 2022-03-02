@@ -1,0 +1,23 @@
+{% extends 'surveys/admins/form.html' %}
+
+{% block extra_js %}
+    <script>
+        var choicesVal = document.getElementById('id_type_field').value;
+        var elChoice = document.querySelector("#section_field_id_choices");
+
+        toggleChoices(choicesVal);
+
+        document.getElementById('id_type_field').addEventListener('change', function() {
+          console.log('You selected: ', this.value);
+          toggleChoices(this.value);
+        });
+
+        function toggleChoices(value) {
+            if (value == 2 || value == 3 || value == 4) {
+              elChoice.hidden = false;
+          } else {
+              elChoice.hidden = true;
+          }
+        }
+    </script>
+{% endblock %}

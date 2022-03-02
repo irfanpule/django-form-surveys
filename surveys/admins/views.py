@@ -71,7 +71,7 @@ class AdminSurveyFormView(ContextTitleMixin, FormMixin, DetailView):
 @method_decorator(staff_member_required, name='dispatch')
 class AdminCreateQuestionView(ContextTitleMixin, CreateView):
     model = Question
-    template_name = 'surveys/admins/form.html'
+    template_name = 'surveys/admins/question_form.html'
     success_url = "/"
     fields = ['label', 'type_field', 'choices', 'help_text', 'required']
     title_page = 'Add Question'
@@ -99,7 +99,7 @@ class AdminCreateQuestionView(ContextTitleMixin, CreateView):
 @method_decorator(staff_member_required, name='dispatch')
 class AdminUpdateQuestionView(ContextTitleMixin, UpdateView):
     model = Question
-    template_name = 'surveys/admins/form.html'
+    template_name = 'surveys/admins/question_form.html'
     success_url = "/"
     fields = ['label', 'type_field', 'choices', 'help_text', 'required']
     title_page = 'Add Question'
