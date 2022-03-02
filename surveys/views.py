@@ -27,6 +27,7 @@ class SurveyFormView(FormMixin, DetailView):
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
+        self.object = self.get_object()
         if form.is_valid():
             form.save()
             messages.success(self.request, f'Successfully {self.title_page}')
@@ -80,7 +81,7 @@ class EditSurveyFormView(ContextTitleMixin, SurveyFormView):
         user_answer = self.get_object()
         if user_answer.user != request.user:
             return redirect("surveys:detail", pk=user_answer.survey.id)
-        return super(EditSurveyFormView, self).dispatch(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
     def get_form(self, form_class=None):
         if form_class is None:

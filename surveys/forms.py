@@ -35,6 +35,8 @@ class BaseSurveyForm(forms.Form):
                 )
             elif question.type_field == TYPE_FIELD.number:
                 self.fields[field_name] = forms.IntegerField(label=question.label)
+            elif question.type_field == TYPE_FIELD.url:
+                self.fields[field_name] = forms.URLField(label=question.label)
             elif question.type_field == TYPE_FIELD.text_area:
                 self.fields[field_name] = forms.CharField(
                     label=question.label, widget=forms.Textarea
@@ -50,7 +52,12 @@ class BaseSurveyForm(forms.Form):
         cleaned_data = super().clean()
 
         for field_name in self.field_names:
-            if self.fields[field_name].required and not cleaned_data[field_name]:
+            try:
+                field = cleaned_data[field_name]
+            except KeyError:
+                raise forms.ValidationError("You must enter valid data")
+
+            if self.fields[field_name].required and not field:
                 self.add_error(field_name, 'This field is required')
 
         return cleaned_data
