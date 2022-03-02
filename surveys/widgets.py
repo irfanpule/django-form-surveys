@@ -7,3 +7,8 @@ class CheckboxSelectMultipleSurvey(forms.CheckboxSelectMultiple):
 
 class RadioSelectSurvey(forms.RadioSelect):
     option_template_name = 'surveys/widgets/radio_option.html'
+
+
+class DateSurvey(forms.DateTimeInput):
+    template_name = 'surveys/widgets/datepicker.html'
+

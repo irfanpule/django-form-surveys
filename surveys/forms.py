@@ -3,7 +3,7 @@ from django.db import transaction
 
 from surveys.models import Answer, TYPE_FIELD, UserAnswer
 from surveys.utils import make_choices
-from surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey
+from surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey, DateSurvey
 
 
 class BaseSurveyForm(forms.Form):
@@ -39,6 +39,10 @@ class BaseSurveyForm(forms.Form):
                 self.fields[field_name] = forms.URLField(label=question.label)
             elif question.type_field == TYPE_FIELD.email:
                 self.fields[field_name] = forms.EmailField(label=question.label)
+            elif question.type_field == TYPE_FIELD.date:
+                self.fields[field_name] = forms.DateField(
+                    label=question.label, widget=DateSurvey()
+                )
             elif question.type_field == TYPE_FIELD.text_area:
                 self.fields[field_name] = forms.CharField(
                     label=question.label, widget=forms.Textarea
