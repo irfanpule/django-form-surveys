@@ -33,4 +33,10 @@
         {% endif %}
     </div>
 
+    {% include 'surveys/components/modal_delete.html' %}
+
+{% endblock %}
+
+{% block extra_js %}
+    {% include 'surveys/components/modal_delete_js.html' %}
 {% endblock %}
