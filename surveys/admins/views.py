@@ -75,6 +75,7 @@ class AdminDeleteSurveyView(DetailView):
     def get(self, request, *args, **kwargs):
         survey = self.get_object()
         survey.delete()
+        messages.success(request, f'Successfully delete {survey.name}')
         return redirect("surveys:admin_survey")
 
 
@@ -137,7 +138,8 @@ class AdminDeleteQuestionView(DetailView):
     def get(self, request, *args, **kwargs):
         question = self.get_object()
         question.delete()
-        return redirect("surveys:admin_forms_survey", pk=self.survey.id)
+        messages.success(request, f'Successfully delete {question.label}')
+        return redirect("surveys:admin_forms_survey", slug=self.survey.slug)
 
 
 @method_decorator(staff_member_required, name='dispatch')

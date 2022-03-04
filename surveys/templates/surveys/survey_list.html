@@ -22,22 +22,5 @@
 {% endblock %}
 
 {% block extra_js %}
-<script type="text/javascript">
-    const buttonModals = document.getElementsByClassName('button-delete');
-    const exampleModal = document.getElementById('modalDelete');
-
-    for (var i = 0; i < buttonModals.length; i++) {
-        buttonModals[i].addEventListener("click", (e) => {
-           const button = e.currentTarget;
-           const objectName = button.getAttribute('data-mdb-object_name');
-           const objectDeleteUrl = button.getAttribute('data-mdb-object_delete_url');
-
-            const modalTitle = exampleModal.querySelector('#object_name');
-            const buttonDelete = exampleModal.querySelector('#confirmDeleteButton');
-            buttonDelete.href = objectDeleteUrl;
-            modalTitle.textContent = `Are you sure to delete ${objectName}?`;
-        });
-    }
-
-</script>
+    {% include 'surveys/components/modal_delete_js.html' %}
 {% endblock %}
