@@ -11,8 +11,11 @@
                     </svg>
                 </a>
 
-                <a href="{% url 'surveys:delete' object.id %}" class="z-30 block p-4 text-red-700 transition-all bg-red-100 border-2 border-white rounded-full hover:scale-110 focus:outline-none focus:ring active:bg-red-50"
-                        type="button">
+                <a class="button-delete z-30 block p-4 text-red-700 transition-all bg-red-100 border-2 border-white rounded-full hover:scale-110 focus:outline-none focus:ring active:bg-red-50"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalDelete"
+                    data-mdb-object_name="your answer"
+                    data-mdb-object_delete_url="{% url 'surveys:delete' object.id %}">
                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

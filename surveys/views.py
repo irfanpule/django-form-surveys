@@ -111,7 +111,7 @@ class DeleteSurveyAnswerView(DetailView):
         user_answer = self.get_object()
         user_answer.delete()
         messages.success(self.request, 'Successfully deleted one survey')
-        return redirect("surveys:detail", pk=user_answer.survey.id)
+        return redirect("surveys:detail", slug=user_answer.survey.slug)
 
 
 class DetailSurveyView(ContextTitleMixin, DetailView):
