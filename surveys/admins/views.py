@@ -69,6 +69,16 @@ class AdminSurveyFormView(ContextTitleMixin, FormMixin, DetailView):
 
 
 @method_decorator(staff_member_required, name='dispatch')
+class AdminDeleteSurveyView(DetailView):
+    model = Survey
+
+    def get(self, request, *args, **kwargs):
+        survey = self.get_object()
+        survey.delete()
+        return redirect("surveys:admin_survey")
+
+
+@method_decorator(staff_member_required, name='dispatch')
 class AdminCreateQuestionView(ContextTitleMixin, CreateView):
     model = Question
     template_name = 'surveys/admins/question_form.html'

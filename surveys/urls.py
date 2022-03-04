@@ -15,6 +15,7 @@ urlpatterns += [
     path('dashboard/', admin_views.AdminSurveyListView.as_view(), name='admin_survey'),
     path('dashboard/create/survey/', admin_views.AdminCrateSurveyView.as_view(), name='admin_create_survey'),
     path('dashboard/edit/survey/<str:slug>', admin_views.AdminEditSurveyView.as_view(), name='admin_edit_survey'),
+    path('dashboard/delete/survey/<str:slug>', admin_views.AdminDeleteSurveyView.as_view(), name='admin_delete_survey'),
     path('dashboard/forms/<str:slug>/', admin_views.AdminSurveyFormView.as_view(), name='admin_forms_survey'),
     path('dashboard/question/add/<int:pk>',
          admin_views.AdminCreateQuestionView.as_view(), name='admin_create_question'),

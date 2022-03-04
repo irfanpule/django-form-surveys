@@ -4,7 +4,7 @@
         {% include 'surveys/components/section_welcome.html' %}
 
         {% if object_list %}
-            <div class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
                 {% for survey in page_obj %}
                     {% include 'surveys/components/card_list_survey.html' %}
                 {% endfor %}
@@ -17,4 +17,27 @@
         {% endif %}
     </div>
 
+    {% include 'surveys/components/modal_delete.html' %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+    const buttonModals = document.getElementsByClassName('button-delete');
+    const exampleModal = document.getElementById('modalDelete');
+
+    for (var i = 0; i < buttonModals.length; i++) {
+        buttonModals[i].addEventListener("click", (e) => {
+           const button = e.currentTarget;
+           const objectName = button.getAttribute('data-mdb-object_name');
+           const objectDeleteUrl = button.getAttribute('data-mdb-object_delete_url');
+
+            const modalTitle = exampleModal.querySelector('#object_name');
+            const buttonDelete = exampleModal.querySelector('#confirmDeleteButton');
+            buttonDelete.href = objectDeleteUrl;
+            modalTitle.textContent = `Are you sure to delete ${objectName}?`;
+        });
+    }
+
+</script>
 {% endblock %}
