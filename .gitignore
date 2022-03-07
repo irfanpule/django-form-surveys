@@ -9,12 +9,12 @@ __pycache__/
 build/
 develop-eggs/
 dist/
-eggs/
 sdist/
 tmp/
 *.egg-info/
 .installed.cfg
 *.egg
+*.dist-info
 
 # Installer logs
 pip-log.txt
