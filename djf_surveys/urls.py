@@ -1,8 +1,8 @@
 from django.urls import path
-from surveys import views
-from surveys.admins import views as admin_views
+from djf_surveys import views
+from djf_surveys.admins import views as admin_views
 
-app_name = 'surveys'
+app_name = 'djf_surveys'
 urlpatterns = [
     path('', views.SurveyListView.as_view(), name='index'),
     path('detail/<str:slug>', views.DetailSurveyView.as_view(), name='detail'),

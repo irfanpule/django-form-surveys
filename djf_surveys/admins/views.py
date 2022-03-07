@@ -9,16 +9,16 @@ from django.views.generic import View
 from django.http import JsonResponse
 from django.contrib import messages
 
-from surveys.models import Survey, Question
-from surveys.mixin import ContextTitleMixin
-from surveys.views import SurveyListView
-from surveys.forms import BaseSurveyForm
+from djf_surveys.models import Survey, Question
+from djf_surveys.mixin import ContextTitleMixin
+from djf_surveys.views import SurveyListView
+from djf_surveys.forms import BaseSurveyForm
 
 
 @method_decorator(staff_member_required, name='dispatch')
 class AdminCrateSurveyView(ContextTitleMixin, CreateView):
     model = Survey
-    template_name = 'surveys/admins/form.html'
+    template_name = 'djf_surveys/admins/form.html'
     fields = ['name', 'description']
     title_page = "Add New Survey"
 
@@ -26,7 +26,7 @@ class AdminCrateSurveyView(ContextTitleMixin, CreateView):
         form = self.get_form()
         if form.is_valid():
             survey = form.save()
-            self.success_url = reverse("surveys:admin_forms_survey", args=[survey.slug])
+            self.success_url = reverse("djf_surveys:admin_forms_survey", args=[survey.slug])
             messages.success(self.request, f'Successfully {self.title_page}')
             return self.form_valid(form)
         else:
@@ -36,24 +36,24 @@ class AdminCrateSurveyView(ContextTitleMixin, CreateView):
 @method_decorator(staff_member_required, name='dispatch')
 class AdminEditSurveyView(ContextTitleMixin, UpdateView):
     model = Survey
-    template_name = 'surveys/admins/form.html'
+    template_name = 'djf_surveys/admins/form.html'
     fields = ['name', 'description']
     title_page = "Edit Survey"
 
     def get_success_url(self):
         survey = self.get_object()
-        return reverse("surveys:admin_forms_survey", args=[survey.slug])
+        return reverse("djf_surveys:admin_forms_survey", args=[survey.slug])
 
 
 @method_decorator(staff_member_required, name='dispatch')
 class AdminSurveyListView(SurveyListView):
-    template_name = 'surveys/admins/survey_list.html'
+    template_name = 'djf_surveys/admins/survey_list.html'
 
 
 @method_decorator(staff_member_required, name='dispatch')
 class AdminSurveyFormView(ContextTitleMixin, FormMixin, DetailView):
     model = Survey
-    template_name = 'surveys/admins/form_preview.html'
+    template_name = 'djf_surveys/admins/form_preview.html'
     form_class = BaseSurveyForm
 
     def get_form(self, form_class=None):
@@ -76,13 +76,13 @@ class AdminDeleteSurveyView(DetailView):
         survey = self.get_object()
         survey.delete()
         messages.success(request, f'Successfully delete {survey.name}')
-        return redirect("surveys:admin_survey")
+        return redirect("djf_surveys:admin_survey")
 
 
 @method_decorator(staff_member_required, name='dispatch')
 class AdminCreateQuestionView(ContextTitleMixin, CreateView):
     model = Question
-    template_name = 'surveys/admins/question_form.html'
+    template_name = 'djf_surveys/admins/question_form.html'
     success_url = "/"
     fields = ['label', 'type_field', 'choices', 'help_text', 'required']
     title_page = 'Add Question'
@@ -104,13 +104,13 @@ class AdminCreateQuestionView(ContextTitleMixin, CreateView):
             return self.form_invalid(form)
 
     def get_success_url(self):
-        return reverse("surveys:admin_forms_survey", args=[self.survey.slug])
+        return reverse("djf_surveys:admin_forms_survey", args=[self.survey.slug])
 
 
 @method_decorator(staff_member_required, name='dispatch')
 class AdminUpdateQuestionView(ContextTitleMixin, UpdateView):
     model = Question
-    template_name = 'surveys/admins/question_form.html'
+    template_name = 'djf_surveys/admins/question_form.html'
     success_url = "/"
     fields = ['label', 'type_field', 'choices', 'help_text', 'required']
     title_page = 'Add Question'
@@ -122,7 +122,7 @@ class AdminUpdateQuestionView(ContextTitleMixin, UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse("surveys:admin_forms_survey", args=[self.survey.slug])
+        return reverse("djf_surveys:admin_forms_survey", args=[self.survey.slug])
 
 
 @method_decorator(staff_member_required, name='dispatch')
@@ -139,7 +139,7 @@ class AdminDeleteQuestionView(DetailView):
         question = self.get_object()
         question.delete()
         messages.success(request, f'Successfully delete {question.label}')
-        return redirect("surveys:admin_forms_survey", slug=self.survey.slug)
+        return redirect("djf_surveys:admin_forms_survey", slug=self.survey.slug)
 
 
 @method_decorator(staff_member_required, name='dispatch')

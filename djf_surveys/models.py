@@ -5,7 +5,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
 
-from surveys import app_settings
+from djf_surveys import app_settings
 
 
 TYPE_FIELD = namedtuple(

@@ -1,9 +1,9 @@
 from django import forms
 from django.db import transaction
 
-from surveys.models import Answer, TYPE_FIELD, UserAnswer
-from surveys.utils import make_choices
-from surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey, DateSurvey
+from djf_surveys.models import Answer, TYPE_FIELD, UserAnswer
+from djf_surveys.utils import make_choices
+from djf_surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey, DateSurvey
 
 
 class BaseSurveyForm(forms.Form):

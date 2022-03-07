@@ -1,4 +1,4 @@
-from surveys import app_settings
+from djf_surveys import app_settings
 
 
 def surveys_context(request):

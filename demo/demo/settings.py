@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'surveys'
+    'djf_surveys'
 ]
 
 MIDDLEWARE = [
@@ -64,7 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'surveys.context_processors.surveys_context'
+                'djf_surveys.context_processors.surveys_context'
             ],
         },
     },

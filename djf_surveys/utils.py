@@ -1,6 +1,6 @@
 from typing import List, Tuple
 
-from surveys.models import Question
+from djf_surveys.models import Question
 
 
 def make_choices(question: Question) -> List[Tuple[str, str]]:

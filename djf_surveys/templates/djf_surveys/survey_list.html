@@ -1,26 +1,26 @@
 {% extends get_master_template %}
 {% block content %}
     <div class="container px-5 py-5">
-        {% include 'surveys/components/section_welcome.html' %}
+        {% include 'djf_surveys/components/section_welcome.html' %}
 
         {% if object_list %}
             <div class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
                 {% for survey in page_obj %}
-                    {% include 'surveys/components/card_list_survey.html' %}
+                    {% include 'djf_surveys/components/card_list_survey.html' %}
                 {% endfor %}
             </div>
             <div class="py-10">
-                {% include 'surveys/components/pagination.html' %}
+                {% include 'djf_surveys/components/pagination.html' %}
             </div>
         {% else %}
-            {% include 'surveys/components/empty_state.html' %}
+            {% include 'djf_surveys/components/empty_state.html' %}
         {% endif %}
     </div>
 
-    {% include 'surveys/components/modal_delete.html' %}
+    {% include 'djf_surveys/components/modal_delete.html' %}
 
 {% endblock %}
 
 {% block extra_js %}
-    {% include 'surveys/components/modal_delete_js.html' %}
+    {% include 'djf_surveys/components/modal_delete_js.html' %}
 {% endblock %}

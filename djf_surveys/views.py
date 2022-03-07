@@ -7,10 +7,10 @@ from django.shortcuts import redirect
 from django.core.paginator import Paginator
 from django.contrib import messages
 
-from surveys.models import Survey, UserAnswer
-from surveys.forms import CreateSurveyForm, EditSurveyForm
-from surveys import app_settings
-from surveys.mixin import ContextTitleMixin
+from djf_surveys.models import Survey, UserAnswer
+from djf_surveys.forms import CreateSurveyForm, EditSurveyForm
+from djf_surveys import app_settings
+from djf_surveys.mixin import ContextTitleMixin
 
 
 @method_decorator(login_required, name='dispatch')
@@ -22,7 +22,7 @@ class SurveyListView(ContextTitleMixin, ListView):
 
 @method_decorator(login_required, name='dispatch')
 class SurveyFormView(FormMixin, DetailView):
-    template_name = 'surveys/form.html'
+    template_name = 'djf_surveys/form.html'
     success_url = "/"
 
     def post(self, request, *args, **kwargs):
@@ -50,7 +50,7 @@ class CreateSurveyFormView(ContextTitleMixin, SurveyFormView):
         if not app_settings.SURVEY_DUPLICATE_ENTRY and \
                 UserAnswer.objects.filter(survey=survey, user=request.user).exists():
             messages.error(request, 'You have added a survey')
-            return redirect("surveys:detail", slug=survey.slug)
+            return redirect("djf_surveys:detail", slug=survey.slug)
         return super().dispatch(request, *args, **kwargs)
 
     def get_form(self, form_class=None):
@@ -80,7 +80,7 @@ class EditSurveyFormView(ContextTitleMixin, SurveyFormView):
         # handle if user not same
         user_answer = self.get_object()
         if user_answer.user != request.user:
-            return redirect("surveys:detail", pk=user_answer.survey.id)
+            return redirect("djf_surveys:detail", pk=user_answer.survey.id)
         return super().dispatch(request, *args, **kwargs)
 
     def get_form(self, form_class=None):
@@ -104,19 +104,19 @@ class DeleteSurveyAnswerView(DetailView):
         # handle if user not same
         user_answer = self.get_object()
         if user_answer.user != request.user:
-            return redirect("surveys:detail", pk=user_answer.survey.id)
+            return redirect("djf_surveys:detail", pk=user_answer.survey.id)
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         user_answer = self.get_object()
         user_answer.delete()
         messages.success(self.request, 'Successfully deleted one survey')
-        return redirect("surveys:detail", slug=user_answer.survey.slug)
+        return redirect("djf_surveys:detail", slug=user_answer.survey.slug)
 
 
 class DetailSurveyView(ContextTitleMixin, DetailView):
     model = Survey
-    template_name = "surveys/answer_list.html"
+    template_name = "djf_surveys/answer_list.html"
     title_page = "Result Survey"
     paginate_by = 6
 

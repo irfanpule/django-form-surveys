@@ -7,31 +7,31 @@ Django form survey is an application Django to easier create form survey and eas
 Quick start
 -----------
 
-1. Add "surveys" to your INSTALLED_APPS setting like this::
+1. Add "djf_surveys" to your INSTALLED_APPS setting like this::
 
     INSTALLED_APPS = [
         ...
-        'surveys',
+        'djf_surveys',
     ]
 
-2. Add context processor `'surveys.context_processors.surveys_context'`::
+2. Add context processor `'djf_surveys.context_processors.surveys_context'`::
 
     'context_processors': [
         ....
-        'surveys.context_processors.surveys_context'
+        'djf_surveys.context_processors.surveys_context'
     ],
-3. Run `python manage.py migrate` to create the surveys models.
-4. Include url `surveys` in your root url::
+3. Run `python manage.py migrate` to create the djf_surveys models.
+4. Include url `djf_surveys` in your root url::
 
     ....
 
     urlpatterns = [
         path('admin/', admin.site.urls),
         .....
-        path('surveys', include('surveys.urls'))
+        path('djf_surveys', include('djf_surveys.urls'))
     ]
 
 5. Start the development server and visit `http://127.0.0.1:8000/admin/`
    to create a survey.
-6. Access `http://127.0.0.1:8000/surveys/` get list of survey
-7. Access `http://127.0.0.1:8000/surveys/{id}` get form of survey
+6. Access `http://127.0.0.1:8000/djf_surveys/` get list of survey
+7. Access `http://127.0.0.1:8000/djf_surveys/{id}` get form of survey

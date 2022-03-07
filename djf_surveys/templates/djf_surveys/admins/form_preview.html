@@ -1,9 +1,9 @@
-{% extends 'surveys/admins/master.html' %}
+{% extends 'djf_surveys/admins/master.html' %}
 {% load survey_tags %}
 
 {% block content %}
 <div class="flex py-1 fixed bottom-10 right-10">
-    <a href="{% url 'surveys:admin_create_question' object.id %}"
+    <a href="{% url 'djf_surveys:admin_create_question' object.id %}"
        class="z-20 block p-4 text-blue-100 transition-all bg-blue-700 border-2 border-white rounded-full active:bg-purple-50 hover:scale-110 focus:outline-none focus:ring"
        type="button">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 float-left" fill="none" viewBox="0 0 24 24"
@@ -18,7 +18,7 @@
 <div class="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
   <div class="max-w-lg mx-auto">
         <div class="flex -space-x-4 hover:space-x-1 py-1 float-right">
-            <a href="{% url 'surveys:admin_edit_survey' object.slug %}"
+            <a href="{% url 'djf_surveys:admin_edit_survey' object.slug %}"
                class="z-20 block p-4 text-blue-700 transition-all bg-blue-100 border-2 border-white rounded-full active:bg-blue-50 hover:scale-110 focus:outline-none focus:ring"
                type="button">
                 <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -48,7 +48,7 @@
         {% for field in form %}
             <div class="ui-state-default" id="{{ field|get_id_field }}">
                 <div class="flex -space-x-4 hover:space-x-1 py-1">
-                    <a href="{% url 'surveys:admin_edit_question' field|get_id_field %}" class="z-20 block p-4 text-blue-700 transition-all bg-blue-100 border-2 border-white rounded-full active:bg-blue-50 hover:scale-110 focus:outline-none focus:ring"
+                    <a href="{% url 'djf_surveys:admin_edit_question' field|get_id_field %}" class="z-20 block p-4 text-blue-700 transition-all bg-blue-100 border-2 border-white rounded-full active:bg-blue-50 hover:scale-110 focus:outline-none focus:ring"
                        type="button">
                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                              stroke="currentColor">
@@ -61,7 +61,7 @@
                        data-bs-toggle="modal"
                        data-bs-target="#modalDelete"
                        data-mdb-object_name="{{ field.label }}"
-                       data-mdb-object_delete_url="{% url 'surveys:admin_delete_question' field|get_id_field %}">
+                       data-mdb-object_delete_url="{% url 'djf_surveys:admin_delete_question' field|get_id_field %}">
                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                              stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -94,7 +94,7 @@
     </form>
   </div>
 
-    {% include 'surveys/components/modal_delete.html' %}
+    {% include 'djf_surveys/components/modal_delete.html' %}
 </div>
 
 {% endblock %}
@@ -110,7 +110,7 @@
                 var order = $(this).sortable('toArray');
                 console.log(order);
                 $.ajax({
-                    url: "{% url 'surveys:admin_change_order_question' %}",
+                    url: "{% url 'djf_surveys:admin_change_order_question' %}",
                     type: 'POST',
                     headers: { "X-CSRFToken": '{{csrf_token}}'},
                     data: {
@@ -130,5 +130,5 @@
     });
     </script>
 
-    {% include 'surveys/components/modal_delete_js.html' %}
+    {% include 'djf_surveys/components/modal_delete_js.html' %}
 {% endblock %}
