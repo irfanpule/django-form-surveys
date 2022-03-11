@@ -1,5 +1,9 @@
 {% extends get_master_template %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+{% endblock %}
+
 {% block content %}
     <div class="container px-5 py-5">
         <section>
@@ -33,5 +37,6 @@
 {% endblock %}
 
 {% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
     {% include 'djf_surveys/components/modal_delete_js.html' %}
 {% endblock %}
