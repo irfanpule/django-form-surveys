@@ -41,3 +41,4 @@ Django form survey is an application Django to easier create form survey and eas
    to create a survey.
 - Access `http://127.0.0.1:8000/surveys/` get list of survey 
 - Access `http://127.0.0.1:8000/surveys/{id}` get form of survey
+- Access `http://127.0.0.1:8000/surveys/dashboard/` to enter admin page
