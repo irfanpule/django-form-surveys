@@ -7,7 +7,7 @@ Django form survey is an application Django to easier create form survey and eas
 ### Installation
 - Install django-form-surveys using:
     ```
-    pip install djf_surveys
+    pip install django-form-surveys
     ```
 
 - Add `djf_surveys` to your `INSTALLED_APPS` setting like this
