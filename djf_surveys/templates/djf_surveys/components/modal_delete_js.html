@@ -5,6 +5,7 @@
     for (var i = 0; i < buttonModals.length; i++) {
         buttonModals[i].addEventListener("click", (e) => {
            const button = e.currentTarget;
+           console.log("pencet");
            const objectName = button.getAttribute('data-mdb-object_name');
            const objectDeleteUrl = button.getAttribute('data-mdb-object_delete_url');
 
