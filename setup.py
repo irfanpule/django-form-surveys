@@ -1,6 +1,5 @@
 import os
 import re
-import shutil
 import sys
 from io import open
 
@@ -43,9 +42,6 @@ if sys.argv[-1] == 'publish':
     print("You probably want to also tag the version now:")
     print("  git tag -a %s -m 'version %s'" % (version, version))
     print("  git push --tags")
-    shutil.rmtree('dist')
-    shutil.rmtree('build')
-    shutil.rmtree('django-form-surveys.egg-info')
     sys.exit()
 
 
