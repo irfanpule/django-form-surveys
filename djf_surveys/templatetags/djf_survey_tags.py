@@ -1,6 +1,5 @@
 from django.template import Library
-from django.utils.html import format_html
-from django.utils.safestring import mark_safe
+from djf_surveys.utils import create_star as utils_create_star
 register = Library()
 
 
@@ -17,12 +16,4 @@ def get_id_field(field):
 
 @register.filter(name='create_star')
 def create_star(number):
-    active = int(number)
-    inactive = 5 - active
-    elements = []
-    for _ in range(int(number)):
-        elements.append('<i class ="rating__star rating_active"> </i>')
-    for _ in range(inactive):
-        elements.append('<i class ="rating__star rating_inactive"> </i>')
-
-    return mark_safe(''.join(elements))
+    return utils_create_star(active_star=int(number))

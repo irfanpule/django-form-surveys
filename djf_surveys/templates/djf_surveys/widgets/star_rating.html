@@ -3,11 +3,9 @@
 <input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
 <div class="flex content-center">
     {% if widget.value != None %}
-        {{ widget.value|create_star|safe }}
+        {{ widget.value|create_star }}
     {% else %}
-        {% for i in "12345" %}
-            <i class="rating__star rating_inactive"></i>
-        {% endfor %}
+        {{ "0"|create_star }}
     {% endif %}
 </div>
 
