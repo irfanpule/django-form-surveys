@@ -9,8 +9,8 @@ from djf_surveys import app_settings
 
 
 TYPE_FIELD = namedtuple(
-    'TYPE_FIELD', 'text number radio select multi_select text_area url email date'
-)._make(range(9))
+    'TYPE_FIELD', 'text number radio select multi_select text_area url email date rating'
+)._make(range(10))
 
 
 def generate_unique_slug(klass, field, id):
@@ -65,7 +65,8 @@ class Question(BaseModel):
         (TYPE_FIELD.text_area, "Text Area"),
         (TYPE_FIELD.url, "URL"),
         (TYPE_FIELD.email, "Email"),
-        (TYPE_FIELD.date, "Date")
+        (TYPE_FIELD.date, "Date"),
+        (TYPE_FIELD.rating, "Rating")
     ]
 
     survey = models.ForeignKey(Survey, related_name='questions', on_delete=models.CASCADE)

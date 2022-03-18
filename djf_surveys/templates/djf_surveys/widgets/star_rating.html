@@ -1,0 +1,35 @@
+{% load static %}
+<input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
+<div class="flex content-center">
+    {% for i in "12345" %}
+        <i class="rating__star rating_inactive"></i>
+    {% endfor %}
+</div>
+
+<script>
+    const ratingStars = [...document.getElementsByClassName("rating__star")];
+
+    function executeRating(stars) {
+        const starClassActive = "rating__star rating_active";
+        const starClassUnactive = "rating__star rating_inactive";
+        const starsLength = stars.length;
+        let i;
+
+        stars.map((star) => {
+            star.onclick = () => {
+                i = stars.indexOf(star);
+                if (star.className.indexOf(starClassUnactive) !== -1) {
+                    for (i; i >= 0; --i) stars[i].className = starClassActive;
+                } else {
+                    for (i; i < starsLength; ++i) stars[i].className = starClassUnactive;
+                }
+                const ratingStarsActive = [...document.getElementsByClassName("rating_active")];
+                const hiddenInput = document.getElementById("{{ widget.attrs.id }}");
+                hiddenInput.value = ratingStarsActive.length;
+            };
+        });
+
+    }
+
+    executeRating(ratingStars);
+</script>

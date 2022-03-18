@@ -3,7 +3,7 @@ from django.db import transaction
 
 from djf_surveys.models import Answer, TYPE_FIELD, UserAnswer
 from djf_surveys.utils import make_choices
-from djf_surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey, DateSurvey
+from djf_surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey, DateSurvey, RatingSurvey
 
 
 class BaseSurveyForm(forms.Form):
@@ -46,6 +46,10 @@ class BaseSurveyForm(forms.Form):
             elif question.type_field == TYPE_FIELD.text_area:
                 self.fields[field_name] = forms.CharField(
                     label=question.label, widget=forms.Textarea
+                )
+            elif question.type_field == TYPE_FIELD.rating:
+                self.fields[field_name] = forms.CharField(
+                    label=question.label, widget=RatingSurvey
                 )
             else:
                 self.fields[field_name] = forms.CharField(label=question.label)
