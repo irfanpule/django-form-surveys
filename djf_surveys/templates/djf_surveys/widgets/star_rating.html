@@ -1,13 +1,11 @@
 {% load static djf_survey_tags %}
 
 <input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
-<div class="flex content-center">
-    {% if widget.value != None %}
-        {{ widget.value|create_star }}
-    {% else %}
-        {{ "0"|create_star }}
-    {% endif %}
-</div>
+{% if widget.value != None %}
+    {{ widget.value|create_star }}
+{% else %}
+    {{ "0"|create_star }}
+{% endif %}
 
 <script>
     const ratingStars = [...document.getElementsByClassName("rating__star")];

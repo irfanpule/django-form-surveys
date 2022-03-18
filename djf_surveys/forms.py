@@ -1,9 +1,18 @@
+from typing import List, Tuple
+
 from django import forms
 from django.db import transaction
 
-from djf_surveys.models import Answer, TYPE_FIELD, UserAnswer
-from djf_surveys.utils import make_choices
+from djf_surveys.models import Answer, TYPE_FIELD, UserAnswer, Question
 from djf_surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey, DateSurvey, RatingSurvey
+
+
+def make_choices(question: Question) -> List[Tuple[str, str]]:
+    choices = []
+    for choice in question.choices.split(','):
+        choice = choice.strip()
+        choices.append((choice.replace(' ', '_').lower(), choice))
+    return choices
 
 
 class BaseSurveyForm(forms.Form):
