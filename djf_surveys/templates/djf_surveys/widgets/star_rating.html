@@ -1,9 +1,14 @@
-{% load static %}
+{% load static djf_survey_tags %}
+
 <input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
 <div class="flex content-center">
-    {% for i in "12345" %}
-        <i class="rating__star rating_inactive"></i>
-    {% endfor %}
+    {% if widget.value != None %}
+        {{ widget.value|create_star|safe }}
+    {% else %}
+        {% for i in "12345" %}
+            <i class="rating__star rating_inactive"></i>
+        {% endfor %}
+    {% endif %}
 </div>
 
 <script>
