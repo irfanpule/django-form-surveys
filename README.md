@@ -26,6 +26,7 @@ Django form survey is an application Django to easier create form survey and eas
     ],
     ```
 - Run `python manage.py migrate` to create the djf_surveys models.
+- Run `python manage.py collectstatic` to collect file static djf_surveys into project.
 - Include url `djf_surveys` in your root url
     ```
     ....
