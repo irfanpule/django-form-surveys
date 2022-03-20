@@ -112,7 +112,6 @@ class Answer(BaseModel):
 
     @property
     def get_value(self):
-        print(self.value)
         if self.question.type_field == TYPE_FIELD.rating:
             return create_star(active_star=int(self.value))
         elif self.question.type_field == TYPE_FIELD.url:

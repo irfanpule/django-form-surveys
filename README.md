@@ -7,7 +7,6 @@ Django form survey is an application Django to easier create form survey and eas
 - Installation
 - Configuration
 - Features
-- Override Class
  
 ## Installation
 - Install django-form-surveys using:
@@ -56,9 +55,9 @@ There are several configurations that you can write on `settings.py`
 - `SURVEY_USER_PHOTO_PROFILE`, `default=''`, -> `str`: This configuration is used to add a profile photo object that is related to the User model. Example: `SURVEY_USER_PHOTO_PROFILE = 'self.user.profile.photo.url'`
 
 ## Features
-- Manage a survey: You must as superuser to get manage survey
+- Manage a survey: You must as superuser to manage survey
     - You can `create, edit, delete` a survey and `show all available survey`.
-    - To manage survey you can access `http:localhost:8000/surveys/dashboard/`.
+    - To manage survey you can access `http://localhost:8000/surveys/dashboard/`.
 - Support many question type (type field): Available field types include:
     - Text 
     - Number
