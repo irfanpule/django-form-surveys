@@ -40,3 +40,7 @@ ghostdriver.log
 ## sqlite
 *.sqlite3
 .idea/
+
+## envirotment
+env/
+venv/

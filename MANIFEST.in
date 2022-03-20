@@ -1,4 +1,4 @@
 include LICENSE
 include README.md
 recursive-include djf_surveys/templates *
-recursive-include docs *
+recursive-include djf_surveys/static *

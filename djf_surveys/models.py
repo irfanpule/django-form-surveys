@@ -4,13 +4,15 @@ from collections import namedtuple
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
+from django.utils.safestring import mark_safe
 
 from djf_surveys import app_settings
+from djf_surveys.utils import create_star
 
 
 TYPE_FIELD = namedtuple(
-    'TYPE_FIELD', 'text number radio select multi_select text_area url email date'
-)._make(range(9))
+    'TYPE_FIELD', 'text number radio select multi_select text_area url email date rating'
+)._make(range(10))
 
 
 def generate_unique_slug(klass, field, id):
@@ -65,7 +67,8 @@ class Question(BaseModel):
         (TYPE_FIELD.text_area, "Text Area"),
         (TYPE_FIELD.url, "URL"),
         (TYPE_FIELD.email, "Email"),
-        (TYPE_FIELD.date, "Date")
+        (TYPE_FIELD.date, "Date"),
+        (TYPE_FIELD.rating, "Rating")
     ]
 
     survey = models.ForeignKey(Survey, related_name='questions', on_delete=models.CASCADE)
@@ -106,3 +109,12 @@ class Answer(BaseModel):
 
     def __str__(self):
         return f'{self.question}: {self.value}'
+
+    @property
+    def get_value(self):
+        if self.question.type_field == TYPE_FIELD.rating:
+            return create_star(active_star=int(self.value))
+        elif self.question.type_field == TYPE_FIELD.url:
+            return mark_safe(f'<a href="{self.value}" target="_blank">{self.value}</a>')
+        else:
+            return self.value

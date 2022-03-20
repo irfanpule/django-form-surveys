@@ -12,4 +12,6 @@ Django form survey is an application Django to easier create form survey and eas
     - View
     - Template
 - Tutorial
+    - Create a Survey
+    - 
 

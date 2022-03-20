@@ -1,0 +1,36 @@
+{% load static djf_survey_tags %}
+
+<input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
+{% if widget.value != None %}
+    {{ widget.value|create_star }}
+{% else %}
+    {{ "0"|create_star }}
+{% endif %}
+
+<script>
+    const ratingStars = [...document.getElementsByClassName("rating__star")];
+
+    function executeRating(stars) {
+        const starClassActive = "rating__star rating_active";
+        const starClassUnactive = "rating__star rating_inactive";
+        const starsLength = stars.length;
+        let i;
+
+        stars.map((star) => {
+            star.onclick = () => {
+                i = stars.indexOf(star);
+                if (star.className.indexOf(starClassUnactive) !== -1) {
+                    for (i; i >= 0; --i) stars[i].className = starClassActive;
+                } else {
+                    for (i; i < starsLength; ++i) stars[i].className = starClassUnactive;
+                }
+                const ratingStarsActive = [...document.getElementsByClassName("rating_active")];
+                const hiddenInput = document.getElementById("{{ widget.attrs.id }}");
+                hiddenInput.value = ratingStarsActive.length;
+            };
+        });
+
+    }
+
+    executeRating(ratingStars);
+</script>

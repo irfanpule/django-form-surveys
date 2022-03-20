@@ -36,7 +36,7 @@
 
         {% for answer in object.answer_set.all %}
             <p class="text-lg text-neutral-900">{{ answer.question.label }}</p>
-            <p class="text-slate-400">{{ answer.value }}</p>
+            <p class="text-slate-400">{{ answer.get_value }}</p>
             <hr class="mt-3 mb-3">
         {% endfor %}
 
