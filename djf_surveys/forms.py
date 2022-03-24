@@ -5,6 +5,7 @@ from django.db import transaction
 
 from djf_surveys.models import Answer, TYPE_FIELD, UserAnswer, Question
 from djf_surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey, DateSurvey, RatingSurvey
+from djf_surveys.app_settings import DATE_INPUT_FORMAT
 
 
 def make_choices(question: Question) -> List[Tuple[str, str]]:
@@ -50,7 +51,8 @@ class BaseSurveyForm(forms.Form):
                 self.fields[field_name] = forms.EmailField(label=question.label)
             elif question.type_field == TYPE_FIELD.date:
                 self.fields[field_name] = forms.DateField(
-                    label=question.label, widget=DateSurvey()
+                    label=question.label, widget=DateSurvey(),
+                    input_formats=DATE_INPUT_FORMAT
                 )
             elif question.type_field == TYPE_FIELD.text_area:
                 self.fields[field_name] = forms.CharField(
