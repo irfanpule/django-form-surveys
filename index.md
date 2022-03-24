@@ -58,7 +58,7 @@ There are several configurations that you can write on `settings.py`
 - Manage a survey: You must as superuser to manage survey
     - You can `create, edit, delete` a survey and `show all available survey`.
     - To manage survey you can access `http://localhost:8000/surveys/dashboard/`.
-    - ![image](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/gif/djf_create_survey_edit.gif)
+    ![image](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/gif/djf_create_survey_edit.gif)
 - Support many question type (type field): Available field types include:
     - Text 
     - Number
@@ -70,9 +70,9 @@ There are several configurations that you can write on `settings.py`
     - Email 
     - Date 
     - Rating
-    - ![image](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/gif/djf_type_field_edit.gif)
+    ![image](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/gif/djf_type_field_edit.gif)
 - Easy sorting question: You can drag and drop to sort question
-  - ![image](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/gif/djf_drag_n_drop_edit.gif)
+  ![image](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/gif/djf_drag_n_drop_edit.gif)
 - Change master template: look section `Configuration`
 - Duplicate entry: look section `Configuration`
 
