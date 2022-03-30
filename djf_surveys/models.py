@@ -45,6 +45,9 @@ class Survey(BaseModel):
     name = models.CharField(max_length=200)
     description = models.TextField(default='')
     slug = models.SlugField(max_length=225, default='')
+    editable = models.BooleanField(default=True, help_text="if False, user can't edit record")
+    deletable = models.BooleanField(default=True, help_text="if False, user can't delete record")
+    duplicate_entry = models.BooleanField(default=False, help_text="if True, user can resubmit")
 
     def __str__(self):
         return self.name
