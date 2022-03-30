@@ -79,8 +79,9 @@ class EditSurveyFormView(ContextTitleMixin, SurveyFormView):
     def dispatch(self, request, *args, **kwargs):
         # handle if user not same
         user_answer = self.get_object()
-        if user_answer.user != request.user:
-            return redirect("djf_surveys:detail", pk=user_answer.survey.id)
+        if user_answer.user != request.user or not user_answer.survey.editable:
+            messages.warning(request, "You can't edit this survey. You don't have permission")
+            return redirect("/")
         return super().dispatch(request, *args, **kwargs)
 
     def get_form(self, form_class=None):
@@ -103,8 +104,9 @@ class DeleteSurveyAnswerView(DetailView):
     def dispatch(self, request, *args, **kwargs):
         # handle if user not same
         user_answer = self.get_object()
-        if user_answer.user != request.user:
-            return redirect("djf_surveys:detail", pk=user_answer.survey.id)
+        if user_answer.user != request.user or not user_answer.survey.deletable:
+            messages.warning(request, "You can't delete this survey. You don't have permission")
+            return redirect("/")
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):

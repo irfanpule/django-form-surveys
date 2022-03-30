@@ -45,6 +45,8 @@ class Survey(BaseModel):
     name = models.CharField(max_length=200)
     description = models.TextField(default='')
     slug = models.SlugField(max_length=225, default='')
+    editable = models.BooleanField(default=True)
+    deletable = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
