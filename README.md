@@ -48,7 +48,6 @@ Django form survey is an application Django to easier create form survey and eas
 
 ## Configuration
 There are several configurations that you can write on `settings.py`
-- `SURVEY_DUPLICATE_ENTRY`, `default=False` -> `bool`: This configuration can you set `True` to allowed user re-entry on the same survey. Example `SURVEY_DUPLICATE_ENTRY = True`
 - `SURVEY_MASTER_TEMPLATE`, `default='surveys/master.html'`, -> `str`: This configuration to change master template using your template. You can set with your template path. Example `SURVEY_MASTER_TEMPLATE = 'mywebsite/master.html'`
     > NB: This config will be work if on your template use block content `{% block content %}` to include or render content of context from view 
   > and your master template must be including or using [Tailwind CSS](https://tailwindcss.com/).
@@ -59,6 +58,7 @@ There are several configurations that you can write on `settings.py`
     - You can `create, edit, delete` a survey and `show all available survey`.
     - To manage survey you can access `http://localhost:8000/surveys/dashboard/`.
     - ![image](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/gif/djf_create_survey_edit.gif)
+- Option config survey: You can set a survey editable, deletable or duplicate entry
 - Support many question type (type field): Available field types include:
     - Text 
     - Number
