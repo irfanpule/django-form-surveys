@@ -9,7 +9,6 @@ from django.contrib import messages
 
 from djf_surveys.models import Survey, UserAnswer
 from djf_surveys.forms import CreateSurveyForm, EditSurveyForm
-from djf_surveys import app_settings
 from djf_surveys.mixin import ContextTitleMixin
 
 
@@ -47,9 +46,9 @@ class CreateSurveyFormView(ContextTitleMixin, SurveyFormView):
     def dispatch(self, request, *args, **kwargs):
         # handle if user have answer survey
         survey = self.get_object()
-        if not app_settings.SURVEY_DUPLICATE_ENTRY and \
+        if not survey.duplicate_entry and \
                 UserAnswer.objects.filter(survey=survey, user=request.user).exists():
-            messages.error(request, 'You have added a survey')
+            messages.warning(request, 'You have submitted out this survey')
             return redirect("djf_surveys:detail", slug=survey.slug)
         return super().dispatch(request, *args, **kwargs)
 
