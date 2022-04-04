@@ -2,10 +2,11 @@ from typing import List, Tuple
 
 from django import forms
 from django.db import transaction
+from django.core.validators import MaxLengthValidator
 
 from djf_surveys.models import Answer, TYPE_FIELD, UserAnswer, Question
 from djf_surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey, DateSurvey, RatingSurvey
-from djf_surveys.app_settings import DATE_INPUT_FORMAT
+from djf_surveys.app_settings import DATE_INPUT_FORMAT, SURVEY_FIELD_VALIDATORS
 
 
 def make_choices(question: Question) -> List[Tuple[str, str]]:
@@ -46,9 +47,15 @@ class BaseSurveyForm(forms.Form):
             elif question.type_field == TYPE_FIELD.number:
                 self.fields[field_name] = forms.IntegerField(label=question.label)
             elif question.type_field == TYPE_FIELD.url:
-                self.fields[field_name] = forms.URLField(label=question.label)
+                self.fields[field_name] = forms.URLField(
+                    label=question.label,
+                    validators=[MaxLengthValidator(SURVEY_FIELD_VALIDATORS['max_length']['url'])]
+                )
             elif question.type_field == TYPE_FIELD.email:
-                self.fields[field_name] = forms.EmailField(label=question.label)
+                self.fields[field_name] = forms.EmailField(
+                    label=question.label,
+                    validators=[MaxLengthValidator(SURVEY_FIELD_VALIDATORS['max_length']['email'])]
+                )
             elif question.type_field == TYPE_FIELD.date:
                 self.fields[field_name] = forms.DateField(
                     label=question.label, widget=DateSurvey(),
@@ -63,7 +70,10 @@ class BaseSurveyForm(forms.Form):
                     label=question.label, widget=RatingSurvey
                 )
             else:
-                self.fields[field_name] = forms.CharField(label=question.label)
+                self.fields[field_name] = forms.CharField(
+                    label=question.label,
+                    validators=[MaxLengthValidator(SURVEY_FIELD_VALIDATORS['max_length']['text'])]
+                )
 
             self.fields[field_name].required = question.required
             self.fields[field_name].help_text = question.help_text

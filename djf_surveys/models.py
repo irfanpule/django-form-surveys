@@ -107,7 +107,7 @@ class UserAnswer(BaseModel):
 
 class Answer(BaseModel):
     question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
-    value = models.CharField(max_length=200)
+    value = models.TextField()
     user_answer = models.ForeignKey(UserAnswer, on_delete=models.CASCADE)
 
     def __str__(self):

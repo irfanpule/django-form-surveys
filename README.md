@@ -52,6 +52,25 @@ There are several configurations that you can write on `settings.py`
     > NB: This config will be work if on your template use block content `{% block content %}` to include or render content of context from view 
   > and your master template must be including or using [Tailwind CSS](https://tailwindcss.com/).
 - `SURVEY_USER_PHOTO_PROFILE`, `default=''`, -> `str`: This configuration is used to add a profile photo object that is related to the User model. Example: `SURVEY_USER_PHOTO_PROFILE = 'self.user.profile.photo.url'`
+- `SURVEY_FIELD_VALIDATORS`, -> `dict`: This configuration to override max_length of type filed `email, url, text`
+  ```python
+  # default value of SURVEY_FIELD_VALIDATORS
+  SURVEY_FIELD_VALIDATORS = {
+      'max_length': {
+          'email': 150,
+          'text': 250,
+          'url': 250
+      }
+  }
+  ```
+  ```python
+  # example declare in settings.py
+  SURVEY_FIELD_VALIDATORS = {
+      'max_length': {
+          'email': 110,
+      }
+  }
+  ```
 
 ## Features
 - Manage a survey: You must as superuser to manage survey
