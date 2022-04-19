@@ -8,6 +8,7 @@
     <div class="container px-5 py-5">
         {% include 'djf_surveys/components/section_welcome.html' %}
 
+        {% include 'djf_surveys/components/search_form.html' %}
         {% if object_list %}
             <div class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
                 {% for survey in page_obj %}
