@@ -5,7 +5,7 @@
         {% include 'djf_surveys/components/section_welcome.html' %}
 
         <section>
-            <div class="py-6 lg:items-end justify-between flex sm:px-6 lg:px-8">
+            <div class="py-6 lg:items-end justify-between flex">
                 <h2 class="max-w-xl text-2xl font-bold sm:text-3xl">
                     Create a survey
                 </h2>
@@ -20,6 +20,7 @@
             </div>
         </section>
 
+        {% include 'djf_surveys/components/search_form.html' %}
         {% if object_list %}
             <div class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
                 {% for survey in page_obj %}
