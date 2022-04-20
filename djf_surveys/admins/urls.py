@@ -12,4 +12,5 @@ urlpatterns = [
     path('question/edit/<int:pk>', admin_views.AdminUpdateQuestionView.as_view(), name='admin_edit_question'),
     path('question/delete/<int:pk>', admin_views.AdminDeleteQuestionView.as_view(), name='admin_delete_question'),
     path('question/ordering/', admin_views.AdminChangeOrderQuestionView.as_view(), name='admin_change_order_question'),
+    path('download/survey/<str:slug>', admin_views.DownloadResponseSurveyView.as_view(), name='admin_download_survey'),
 ]
