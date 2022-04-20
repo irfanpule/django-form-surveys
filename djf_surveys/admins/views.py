@@ -1,3 +1,5 @@
+import csv
+from io import StringIO
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
@@ -6,10 +8,10 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import View
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
 
-from djf_surveys.models import Survey, Question
+from djf_surveys.models import Survey, Question, UserAnswer
 from djf_surveys.mixin import ContextTitleMixin
 from djf_surveys.views import SurveyListView
 from djf_surveys.forms import BaseSurveyForm
@@ -156,3 +158,37 @@ class AdminChangeOrderQuestionView(View):
             'message': 'Success update ordering question'
         }
         return JsonResponse(data, status=200)
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class DownloadResponseSurveyView(DetailView):
+    model = Survey
+
+    def get(self, request, *args, **kwargs):
+        survey = self.get_object()
+        user_answers = UserAnswer.objects.filter(survey=survey)
+        csv_buffer = StringIO()
+        writer = csv.writer(csv_buffer)
+
+        rows = []
+        header = []
+        for index, user_answer in enumerate(user_answers):
+            if index == 0:
+                header.append('user')
+                header.append('update_at')
+
+            rows.append(user_answer.user.username)
+            rows.append(user_answer.updated_at.strftime("%Y-%m-%d %H:%M:%S"))
+            for answer in user_answer.answer_set.all():
+                if index == 0:
+                    header.append(answer.question.label)
+                rows.append(answer.value)
+
+            if index == 0:
+                writer.writerow(header)
+            writer.writerow(rows)
+            rows = []
+
+        response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
+        response['Content-Disposition'] = f'attachment; filename={survey.slug}.csv'
+        return response
