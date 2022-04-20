@@ -74,7 +74,7 @@ There are several configurations that you can write on `settings.py`
 
 ## Features
 - Manage a survey: You must as superuser to manage survey
-    - You can `create, edit, delete` a survey and `show all available survey`.
+    - You can `create, edit, delete, search and show all available survey`.
     - To manage survey you can access `http://localhost:8000/surveys/dashboard/`.
     - ![image](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/gif/djf_create_survey_edit.gif)
 - Option config survey: You can set a survey editable, deletable or duplicate entry
@@ -94,6 +94,7 @@ There are several configurations that you can write on `settings.py`
   - ![image](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/gif/djf_drag_n_drop_edit.gif)
 - Change master template: look section `Configuration`
 - Duplicate entry: look section `Configuration`
+- Download respondent report
 
 
 ### Thanks!
