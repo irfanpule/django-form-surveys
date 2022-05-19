@@ -138,3 +138,30 @@ class DetailSurveyView(ContextTitleMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['page_obj'] = page_obj
         return context
+
+
+@method_decorator(login_required, name='dispatch')
+class DetailResultSurveyView(ContextTitleMixin, DetailView):
+    title_page = "Detail Result"
+    template_name = "djf_surveys/detail_result.html"
+    model = UserAnswer
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object'] = self.get_object()
+        context['on_detail'] = True
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        # handle if user not same
+        user_answer = self.get_object()
+        if user_answer.user != request.user:
+            messages.warning(request, "You can't this. You don't have permission")
+            return redirect("/")
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_title_page(self):
+        return self.get_object().survey.name
+
+    def get_sub_title_page(self):
+        return self.get_object().survey.description
