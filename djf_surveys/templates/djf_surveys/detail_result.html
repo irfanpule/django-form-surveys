@@ -1,0 +1,44 @@
+{% extends get_master_template %}
+{% load djf_survey_tags static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+    <style>
+        .rating__star {
+            cursor: pointer;
+        }
+
+        .rating_active {
+            width: 50px;
+            height: 50px;
+            background-size: contain;
+            background-image: url("{% static 'djf_surveys/images/star-fill.png' %}");
+        }
+
+        .rating_inactive {
+            width: 50px;
+            height: 50px;
+            background-size: contain;
+            background-image: url("{% static 'djf_surveys/images/star-border.png' %}");
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
+  <div class="max-w-lg mx-auto">
+    <h1 class="text-2xl font-bold text-center text-blue-500 sm:text-3xl">{{ title_page  }}</h1>
+
+    <p class="max-w-md mx-auto mt-4 mb-4 text-center text-gray-500">
+      {{ sub_title_page }}
+    </p>
+
+    {% include 'djf_surveys/components/card_list_answer.html' %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
+{% endblock %}
