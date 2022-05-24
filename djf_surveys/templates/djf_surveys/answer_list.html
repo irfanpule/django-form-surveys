@@ -34,7 +34,7 @@
 
                 <div class="btn-group">
                     {% if user.is_superuser %}
-                    <a href="{% url 'djf_surveys:create' survey.slug %}" class="inline-block px-5 py-3 mt-4 font-medium text-white bg-blue-500 rounded-lg sm:m-0">
+                    <a href="{% url 'djf_surveys:admin_download_survey' survey.slug %}" class="inline-block px-5 py-3 mt-4 font-medium text-white bg-blue-500 rounded-lg sm:m-0">
                         Download Result
                     </a>
                     {% endif %}
