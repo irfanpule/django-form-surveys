@@ -129,6 +129,13 @@ class DetailSurveyView(ContextTitleMixin, DetailView):
     title_page = "Result Survey"
     paginate_by = 6
 
+    def dispatch(self, request, *args, **kwargs):
+        survey = self.get_object()
+        if not self.request.user.is_superuser and survey.private_response:
+            messages.warning(request, "You can't access this page")
+            return redirect("/")
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         user_answers = UserAnswer.objects.filter(survey=self.get_object()) \
             .select_related('user').prefetch_related('answer_set__question')

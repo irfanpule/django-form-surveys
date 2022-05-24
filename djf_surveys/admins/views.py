@@ -21,7 +21,7 @@ from djf_surveys.forms import BaseSurveyForm
 class AdminCrateSurveyView(ContextTitleMixin, CreateView):
     model = Survey
     template_name = 'djf_surveys/admins/form.html'
-    fields = ['name', 'description', 'editable', 'deletable', 'duplicate_entry']
+    fields = ['name', 'description', 'editable', 'deletable', 'duplicate_entry', 'private_response']
     title_page = "Add New Survey"
 
     def post(self, request, *args, **kwargs):
@@ -39,7 +39,7 @@ class AdminCrateSurveyView(ContextTitleMixin, CreateView):
 class AdminEditSurveyView(ContextTitleMixin, UpdateView):
     model = Survey
     template_name = 'djf_surveys/admins/form.html'
-    fields = ['name', 'description', 'editable', 'deletable', 'duplicate_entry']
+    fields = ['name', 'description', 'editable', 'deletable', 'duplicate_entry', 'private_response']
     title_page = "Edit Survey"
 
     def get_success_url(self):
