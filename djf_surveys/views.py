@@ -57,7 +57,7 @@ class CreateSurveyFormView(ContextTitleMixin, SurveyFormView):
         if not survey.duplicate_entry and \
                 UserAnswer.objects.filter(survey=survey, user=request.user).exists():
             messages.warning(request, 'You have submitted out this survey')
-            return redirect("djf_surveys:detail", slug=survey.slug)
+            return redirect("/")
         return super().dispatch(request, *args, **kwargs)
 
     def get_form(self, form_class=None):
