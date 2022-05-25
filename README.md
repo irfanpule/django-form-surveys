@@ -77,7 +77,12 @@ There are several configurations that you can write on `settings.py`
     - You can `create, edit, delete, search and show all available survey`.
     - To manage survey you can access `http://localhost:8000/surveys/dashboard/`.
       ![image](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/gif/djf_create_survey_edit.gif)
-- Option config survey: You can set a survey editable, deletable or duplicate entry
+- Option config survey:
+    - `editable`: this option allows the user to edit the answer
+    - `deletable`: this option allows the user to delete the answer
+    - `duplicate entry`: this option allows users to submit more than once
+    - `private reponse`: this option makes the answer list only visible to admin
+    - `can anonymous user`: This option allows users without authentication to submit
 - Support many question type (type field): Available field types include:
     - Text 
     - Number

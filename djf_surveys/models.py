@@ -49,6 +49,7 @@ class Survey(BaseModel):
     deletable = models.BooleanField(default=True, help_text="if False, user can't delete record")
     duplicate_entry = models.BooleanField(default=False, help_text="if True, user can resubmit")
     private_response = models.BooleanField(default=False, help_text="if True, admin and owner can access")
+    can_anonymous_user = models.BooleanField(default=False, help_text="if True, user without auth can submit")
 
     def __str__(self):
         return self.name
@@ -95,7 +96,7 @@ class Question(BaseModel):
 
 class UserAnswer(BaseModel):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), blank=True, null=True, on_delete=models.CASCADE)
     
     class Meta:
         ordering = ['-updated_at']
