@@ -27,7 +27,6 @@ class SurveyListView(ContextTitleMixin, ListView):
         return object_list
 
 
-@method_decorator(login_required, name='dispatch')
 class SurveyFormView(FormMixin, DetailView):
     template_name = 'djf_surveys/form.html'
     success_url = "/"
@@ -44,7 +43,6 @@ class SurveyFormView(FormMixin, DetailView):
             return self.form_invalid(form)
 
 
-@method_decorator(login_required, name='dispatch')
 class CreateSurveyFormView(ContextTitleMixin, SurveyFormView):
     model = Survey
     form_class = CreateSurveyForm
@@ -52,9 +50,14 @@ class CreateSurveyFormView(ContextTitleMixin, SurveyFormView):
     title_page = "Add Survey"
 
     def dispatch(self, request, *args, **kwargs):
-        # handle if user have answer survey
         survey = self.get_object()
-        if not survey.duplicate_entry and \
+        # handle if survey can_anonymous_user
+        if not request.user.is_authenticated and not survey.can_anonymous_user:
+            messages.warning(request, 'Sorry, you must be logged in to fill out the survey')
+            return redirect("/")
+
+        # handle if user have answer survey
+        if request.user.is_authenticated and not survey.duplicate_entry and \
                 UserAnswer.objects.filter(survey=survey, user=request.user).exists():
             messages.warning(request, 'You have submitted out this survey')
             return redirect("/")
