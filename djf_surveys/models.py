@@ -52,7 +52,7 @@ class Survey(BaseModel):
     can_anonymous_user = models.BooleanField(default=False, help_text="if True, user without auth can submit")
 
     def __str__(self):
-        return self.nameque 
+        return self.name
 
     def save(self, *args, **kwargs):
         if self.slug:
@@ -124,5 +124,7 @@ class Answer(BaseModel):
             return create_star(active_star=int(self.value))
         elif self.question.type_field == TYPE_FIELD.url:
             return mark_safe(f'<a href="{self.value}" target="_blank">{self.value}</a>')
+        elif self.question.type_field == TYPE_FIELD.radio or self.question.type_field == TYPE_FIELD.select:
+            return self.value.strip().replace('_', ' ').capitalize()
         else:
             return self.value

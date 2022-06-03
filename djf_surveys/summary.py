@@ -2,6 +2,9 @@ from djf_surveys.models import TYPE_FIELD, Survey, Question, Answer
 
 
 class ChartJS:
+    """
+    this class to generate chart https://www.chartjs.org
+    """
     chart_id = ""
     chart_name = ""
     element_html = ""
@@ -14,7 +17,13 @@ class ChartJS:
     def __init__(self, chart_id: str, chart_name: str, *args, **kwargs):
         self.chart_id = f"djfChart{chart_id}"
         self.chart_name = chart_name
-        self.element_html = f'<canvas id="{self.chart_id}" width="{self.width}" height="{self.height}"></canvas>'
+        self.element_html = f"""
+<div class="swiper-slide">
+    <blockquote class="p-6 border border-gray-100 rounded-lg shadow-lg bg-white">
+      <canvas id="{self.chart_id}" width="{self.width}" height="{self.height}"></canvas>
+    </blocquote>
+</div>
+"""
 
     def _config(self):
         pass
@@ -38,6 +47,7 @@ class ChartJS:
 
 
 class ChartPie(ChartJS):
+    """ this class to generate pie chart"""
     colors = [
       '#4dc9f6',
       '#f67019',
@@ -93,8 +103,8 @@ class SummaryResponse:
         labels = question.choices.split(",")
         data = []
         for label in labels:
-            print(label.strip().lower())
-            count = Answer.objects.filter(question=question, value=label.strip().lower()).count()
+            clean_label = label.strip().replace(' ', '_').lower()
+            count = Answer.objects.filter(question=question, value=clean_label).count()
             data.append(count)
 
         chart_pie.labels = labels
