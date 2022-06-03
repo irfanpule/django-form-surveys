@@ -21,3 +21,4 @@ if hasattr(settings, 'SURVEY_FIELD_VALIDATORS'):
         field_validators['max_length'].update(max_length)
 SURVEY_FIELD_VALIDATORS = field_validators
 
+CHART_JS_SRC = settings.CHART_JS_SRC if hasattr(settings, 'CHART_JS_SRC') else '<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>'

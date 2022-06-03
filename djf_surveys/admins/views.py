@@ -15,6 +15,7 @@ from djf_surveys.models import Survey, Question, UserAnswer
 from djf_surveys.mixin import ContextTitleMixin
 from djf_surveys.views import SurveyListView
 from djf_surveys.forms import BaseSurveyForm
+from djf_surveys.summary import ChartPie, SummaryResponse
 
 
 @method_decorator(staff_member_required, name='dispatch')
@@ -198,3 +199,20 @@ class DownloadResponseSurveyView(DetailView):
         response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
         response['Content-Disposition'] = f'attachment; filename={survey.slug}.csv'
         return response
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class SummaryResponseSurveyView(ContextTitleMixin, DetailView):
+    model = Survey
+    template_name = "djf_surveys/admins/summary.html"
+    title_page = 'Summary'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # chartjs = ChartPie(chart_id="radio_1", chart_name="coba")
+        # chartjs.labels = ["Red", "Green", "Blue", "Yellow", "Black"]
+        # chartjs.data = [22, 36, 60, 10, 78]
+        # context['chartjs'] = chartjs
+        summary = SummaryResponse(survey=self.get_object())
+        context['summary'] = summary
+        return context

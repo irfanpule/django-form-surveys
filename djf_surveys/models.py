@@ -52,7 +52,7 @@ class Survey(BaseModel):
     can_anonymous_user = models.BooleanField(default=False, help_text="if True, user without auth can submit")
 
     def __str__(self):
-        return self.name
+        return self.nameque 
 
     def save(self, *args, **kwargs):
         if self.slug:

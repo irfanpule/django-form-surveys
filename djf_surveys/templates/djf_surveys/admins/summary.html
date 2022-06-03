@@ -1,0 +1,22 @@
+{% extends 'djf_surveys/admins/master.html' %}
+
+{% block extra_css %}
+    {{ chart_js_src|safe }}
+{% endblock %}
+
+{% block content %}
+    <div class="container px-5 py-5 ">
+
+        <section>
+            <div class="py-6 lg:items-end justify-between flex">
+                <h2 class="max-w-xl text-2xl font-bold sm:text-3xl">
+                    Summary {{ object.name }}
+                </h2>
+            </div>
+        </section>
+
+        {{ summary.generate|safe }}
+
+    </div>
+
+{% endblock %}
