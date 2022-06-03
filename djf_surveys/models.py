@@ -91,7 +91,7 @@ class Question(BaseModel):
     ordering = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return self.survey.name
+        return f"{self.label}-survey-{self.survey.id}"
 
 
 class UserAnswer(BaseModel):

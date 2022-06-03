@@ -1,5 +1,6 @@
 import random
 from djf_surveys.models import TYPE_FIELD, Survey, Question, Answer
+from djf_surveys.utils import create_star
 
 
 COLORS = [
@@ -27,6 +28,8 @@ class ChartJS:
     def __init__(self, chart_id: str, chart_name: str, *args, **kwargs):
         self.chart_id = f"djfChart{chart_id}"
         self.chart_name = chart_name
+
+    def _base_element_html(self):
         self.element_html = f"""
 <div class="swiper-slide">
     <blockquote class="p-6 border border-gray-100 rounded-lg shadow-lg bg-white">
@@ -34,7 +37,7 @@ class ChartJS:
     </blocquote>
 </div>
 """
-    
+
     def _shake_colors(self):
         self.colors = random.choices(COLORS, k=len(self.labels))
 
@@ -45,6 +48,7 @@ class ChartJS:
         pass
 
     def render(self):
+        self._base_element_html()
         self._shake_colors()
         script = f"""
 {self.element_html}
@@ -121,9 +125,8 @@ const config%s = {
 
     def _setup(self):
         script = """
-const labels = %s;
 const data%s = {
-  labels: labels,
+  labels: %s,
   datasets: [{
     label: '%s',
     data: %s,
@@ -132,7 +135,30 @@ const data%s = {
   }]
 };
 """
-        return script % (self.labels, self.chart_id, self.chart_name, self.data, self.colors)
+        return script % (self.chart_id, self.labels, self.chart_name, self.data, self.colors)
+
+
+class ChartBarRating(ChartBar):
+    height = 200
+    rate_avg = 0
+
+    def _base_element_html(self):
+        stars = create_star(active_star=int(self.rate_avg))
+        self.element_html = f"""
+<div class="swiper-slide">
+    <blockquote class="p-6 border border-gray-100 rounded-lg shadow-lg bg-white">
+      <div class="bg-yellow-100 space-y-1 py-5 rounded-md border border-yellow-200 text-center shadow-xs mb-2">
+          <h1 class="text-5xl font-semibold"> {self.rate_avg}</h1>
+          <div class="flex justify-center">
+              {stars}
+          </div>
+          <h5 class="mb-0 mt-1 text-sm"> Rate Average</h5>
+      </div>
+      <canvas id="{self.chart_id}" width="{self.width}" height="{self.height}"></canvas>
+    </blocquote>
+</div>
+"""
+
 
 class SummaryResponse:
 
@@ -142,6 +168,7 @@ class SummaryResponse:
     def _process_radio_type(self, question: Question) -> str:
         pie_chart = ChartPie(chart_id=f"chartpie_{question.id}", chart_name=question.label)
         labels = question.choices.split(",")
+        
         data = []
         for label in labels:
             clean_label = label.strip().replace(' ', '_').lower()
@@ -152,17 +179,38 @@ class SummaryResponse:
         pie_chart.data = data
         return pie_chart.render()
     
-    def _process_select_type(self):
-        pass
+    def _process_rating_type(self, question: Question):
+        bar_chart = ChartBarRating(chart_id=f"chartbar_{question.id}", chart_name=question.label)
+        labels = ['1', '2', '3', '4', '5']
+        
+        data = []
+        for label in labels:
+            count = Answer.objects.filter(question=question, value=label).count()
+            data.append(count)
+
+        values_rating = Answer.objects.filter(question=question).values_list('value', flat=True)
+        values_convert = [int(v) for v in values_rating]
+        rating_avg = round(sum(values_convert) / len(values_convert), 1)
+        
+        bar_chart.labels = labels
+        bar_chart.data = data
+        bar_chart.rate_avg = rating_avg
+        return bar_chart.render()
 
     def _process_multiselect_type(self, question: Question) -> str:
         bar_chart = ChartBar(chart_id=f"barchart_{question.id}", chart_name=question.label)
         labels = question.choices.split(",")
+
+        str_value = []
+        for answer in Answer.objects.filter(question=question):
+            str_value.append(answer.value)
+        all_value = ",".join(str_value)
+        data_value = all_value.split(",")
+
         data = []
         for label in labels:
             clean_label = label.strip().replace(' ', '_').lower()
-            count = Answer.objects.filter(question=question, value__contains=clean_label).count()
-            data.append(count)
+            data.append(data_value.count(clean_label))
 
         bar_chart.labels = labels
         bar_chart.data = data
@@ -175,5 +223,7 @@ class SummaryResponse:
                 html_str.append(self._process_radio_type(question))
             elif question.type_field == TYPE_FIELD.multi_select:
                 html_str.append(self._process_multiselect_type(question))
+            elif question.type_field == TYPE_FIELD.rating:
+                html_str.append(self._process_rating_type(question))
 
         return " ".join(html_str)
