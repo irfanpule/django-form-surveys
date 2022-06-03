@@ -1,0 +1,56 @@
+{% extends 'djf_surveys/admins/master.html' %}
+{% load static %}
+
+{% block extra_css %}
+    {{ chart_js_src|safe }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+    <style>
+        .rating__star {
+            cursor: pointer;
+        }
+
+        .rating_active {
+            width: 50px;
+            height: 50px;
+            background-size: contain;
+            background-image: url("{% static 'djf_surveys/images/star-fill.png' %}");
+        }
+
+        .rating_inactive {
+            width: 50px;
+            height: 50px;
+            background-size: contain;
+            background-image: url("{% static 'djf_surveys/images/star-border.png' %}");
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container px-5 py-5 ">
+
+        <section>
+            <div class="py-6 lg:items-end justify-between flex">
+                <h2 class="max-w-xl text-2xl font-bold sm:text-3xl">
+                    Summary {{ object.name }}
+                </h2>
+
+                <div class="flex -space-x-4 hover:space-x-1 float-right">
+                    <a href="{% url 'djf_surveys:detail' object.slug %}" class="z-20 block p-4 text-green-700 transition-all bg-green-100 border-2 border-white rounded-full active:bg-green-50 hover:scale-110 focus:outline-none focus:ring"
+                            type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {{ summary.generate|safe }}
+        </div>
+        
+
+    </div>
+
+{% endblock %}

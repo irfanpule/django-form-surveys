@@ -33,14 +33,30 @@
                 </h2>
 
                 <div class="btn-group">
-                    {% if user.is_superuser %}
-                    <a href="{% url 'djf_surveys:admin_download_survey' survey.slug %}" class="inline-block px-5 py-3 mt-4 font-medium text-white bg-blue-500 rounded-lg sm:m-0">
-                        Download Result
-                    </a>
-                    {% endif %}
-                    <a href="{% url 'djf_surveys:create' survey.slug %}" class="inline-block px-5 py-3 mt-4 font-medium text-white bg-blue-500 rounded-lg sm:m-0">
-                        Add Survey
-                    </a>
+                    <div class="flex -space-x-4 hover:space-x-1 float-right">
+                        {% if user.is_superuser %}
+                            <a href="{% url 'djf_surveys:admin_download_survey' survey.slug %}" class="z-20 block p-4 text-purple-700 transition-all bg-purple-100 border-2 border-white rounded-full active:bg-purple-50 hover:scale-110 focus:outline-none focus:ring"
+                                    type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                      </svg>
+                            </a>
+
+                            <a href="{% url 'djf_surveys:admin_summary_survey' survey.slug %}" class="z-20 block p-4 text-blue-700 transition-all bg-blue-100 border-2 border-white rounded-full active:bg-blue-50 hover:scale-110 focus:outline-none focus:ring"
+                                    type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                                    </svg>
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'djf_surveys:create' survey.slug %}" class="z-20 block p-4 text-green-700 transition-all bg-green-100 border-2 border-white rounded-full active:bg-green-50 hover:scale-110 focus:outline-none focus:ring"
+                                type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                    </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
