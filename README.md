@@ -3,6 +3,7 @@
 Django form survey is an application Django to easier create form survey and easy integrated for your project.
 
 ![image](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/dashboard-index.png)
+![summary](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/chart_summary.png)
 ## Table of content
 - Installation
 - Configuration
@@ -101,6 +102,8 @@ There are several configurations that you can write on `settings.py`
 - Duplicate entry: look section `Configuration`
 - Download respondent report
   ![download_report](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/download_report_respondent_button.png)
+- Summary: You can see the survey summary in a charts. Summary just calculate type field "radio, select, multi_select, rating"
+  ![summary](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/chart_summary.png)
 
 
 ### Thanks!
