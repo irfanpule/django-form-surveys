@@ -225,5 +225,12 @@ class SummaryResponse:
                 html_str.append(self._process_multiselect_type(question))
             elif question.type_field == TYPE_FIELD.rating:
                 html_str.append(self._process_rating_type(question))
+        if not html_str:
+            return """
+<div class="bg-yellow-100 space-y-1 py-5 rounded-md border border-yellow-200 text-center shadow-xs mb-2">
+    <h1 class="text-2xl font-semibold">Have't summary</h1>
+    <h5 class="mb-0 mt-1 text-sm p-2">Summary just calculate type field "radio, select, multi_select, rating"</h5>
+</div>
+"""        
 
         return " ".join(html_str)
