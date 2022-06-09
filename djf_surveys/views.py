@@ -11,6 +11,7 @@ from djf_surveys.models import Survey, UserAnswer
 from djf_surveys.forms import CreateSurveyForm, EditSurveyForm
 from djf_surveys.mixin import ContextTitleMixin
 from djf_surveys import app_settings
+from djf_surveys.utils import NewPaginator
 
 
 @method_decorator(login_required, name='dispatch')
@@ -18,6 +19,7 @@ class SurveyListView(ContextTitleMixin, ListView):
     model = Survey
     title_page = 'Survey List'
     paginate_by = app_settings.SURVEY_PAGINATION_NUMBER['survey_list']
+    paginator_class = NewPaginator
 
     def get_queryset(self):
         query = self.request.GET.get('q')
@@ -26,6 +28,13 @@ class SurveyListView(ContextTitleMixin, ListView):
         else:
             object_list = self.model.objects.all()
         return object_list
+
+    def get_context_data(self, **kwargs):
+        page_number = self.request.GET.get('page', 1)
+        context = super().get_context_data(**kwargs)
+        page_range = context['page_obj'].paginator.get_elided_page_range(number=page_number)
+        context['page_range'] = page_range
+        return context
 
 
 class SurveyFormView(FormMixin, DetailView):
@@ -143,11 +152,13 @@ class DetailSurveyView(ContextTitleMixin, DetailView):
     def get_context_data(self, **kwargs):
         user_answers = UserAnswer.objects.filter(survey=self.get_object()) \
             .select_related('user').prefetch_related('answer_set__question')
-        paginator = Paginator(user_answers, self.paginate_by)
-        page_number = self.request.GET.get('page')
+        paginator = NewPaginator(user_answers, self.paginate_by)
+        page_number = self.request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
+        page_range = paginator.get_elided_page_range(number=page_number)
         context = super().get_context_data(**kwargs)
         context['page_obj'] = page_obj
+        context['page_range'] = page_range
         return context
 
 
