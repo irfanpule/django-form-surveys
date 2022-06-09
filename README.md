@@ -6,8 +6,8 @@ Django form survey is an application Django to easier create form survey and eas
 ![summary](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/chart_summary.png)
 ## Table of content
 - Installation
-- Configuration
 - Features
+- Configuration
  
 ## Installation
 - Install django-form-surveys using:
@@ -47,31 +47,6 @@ Django form survey is an application Django to easier create form survey and eas
 - Access `http://127.0.0.1:8000/surveys/` get list of survey 
 - Access `http://127.0.0.1:8000/surveys/{id}` get form of survey
 
-## Configuration
-There are several configurations that you can write on `settings.py`
-- `SURVEY_MASTER_TEMPLATE`, `default='surveys/master.html'`, -> `str`: This configuration to change master template using your template. You can set with your template path. Example `SURVEY_MASTER_TEMPLATE = 'mywebsite/master.html'`
-    > NB: This config will be work if on your template use block content `{% block content %}` to include or render content of context from view 
-  > and your master template must be including or using [Tailwind CSS](https://tailwindcss.com/).
-- `SURVEY_USER_PHOTO_PROFILE`, `default=''`, -> `str`: This configuration is used to add a profile photo object that is related to the User model. Example: `SURVEY_USER_PHOTO_PROFILE = 'self.user.profile.photo.url'`
-- `SURVEY_FIELD_VALIDATORS`, -> `dict`: This configuration to override max_length of type filed `email, url, text`
-  ```python
-  # default value of SURVEY_FIELD_VALIDATORS
-  SURVEY_FIELD_VALIDATORS = {
-      'max_length': {
-          'email': 150,
-          'text': 250,
-          'url': 250
-      }
-  }
-  ```
-  ```python
-  # example declare in settings.py
-  SURVEY_FIELD_VALIDATORS = {
-      'max_length': {
-          'email': 110,
-      }
-  }
-  ```
 
 ## Features
 - Manage a survey: You must as superuser to manage survey
@@ -104,6 +79,42 @@ There are several configurations that you can write on `settings.py`
   ![download_report](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/download_report_respondent_button.png)
 - Summary: You can see the survey summary in a charts. Summary just calculate type field "radio, select, multi_select, rating"
   ![summary](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/chart_summary.png)
+
+
+## Configuration
+There are several configurations that you can write on `settings.py`
+- `SURVEY_MASTER_TEMPLATE`, `default='surveys/master.html'`, -> `str`: This configuration to change master template using your template. You can set with your template path. Example `SURVEY_MASTER_TEMPLATE = 'mywebsite/master.html'`
+    > NB: This config will be work if on your template use block content `{% block content %}` to include or render content of context from view 
+  > and your master template must be including or using [Tailwind CSS](https://tailwindcss.com/).
+- `SURVEY_USER_PHOTO_PROFILE`, `default=''`, -> `str`: This configuration is used to add a profile photo object that is related to the User model. Example: `SURVEY_USER_PHOTO_PROFILE = 'self.user.profile.photo.url'`
+- `SURVEY_FIELD_VALIDATORS`, -> `dict`: This configuration to override max_length of type filed `email, url, text`
+  ```python
+  # default value of SURVEY_FIELD_VALIDATORS
+  SURVEY_FIELD_VALIDATORS = {
+      'max_length': {
+          'email': 150,
+          'text': 250,
+          'url': 250
+      }
+  }
+  ```
+  ```python
+  # example declare in settings.py
+  SURVEY_FIELD_VALIDATORS = {
+      'max_length': {
+          'email': 110,
+      }
+  }
+  ```
+- `SURVEY_PAGINATION_NUMBER`, -> `dict`: This configuration to override number of pagination `survey_list` and `answer_list`
+  ```python
+  # example override in settings.py
+  # default value 12
+  SURVEY_PAGINATION_NUMBER = {
+      'answer_list': 3,
+      'survey_list': 2
+  }
+  ```
 
 
 ### Thanks!

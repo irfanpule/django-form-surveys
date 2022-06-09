@@ -10,13 +10,14 @@ from django.contrib import messages
 from djf_surveys.models import Survey, UserAnswer
 from djf_surveys.forms import CreateSurveyForm, EditSurveyForm
 from djf_surveys.mixin import ContextTitleMixin
+from djf_surveys import app_settings
 
 
 @method_decorator(login_required, name='dispatch')
 class SurveyListView(ContextTitleMixin, ListView):
     model = Survey
     title_page = 'Survey List'
-    paginate_by = 12
+    paginate_by = app_settings.SURVEY_PAGINATION_NUMBER['survey_list']
 
     def get_queryset(self):
         query = self.request.GET.get('q')
@@ -130,7 +131,7 @@ class DetailSurveyView(ContextTitleMixin, DetailView):
     model = Survey
     template_name = "djf_surveys/answer_list.html"
     title_page = "Result Survey"
-    paginate_by = 6
+    paginate_by = app_settings.SURVEY_PAGINATION_NUMBER['answer_list']
 
     def dispatch(self, request, *args, **kwargs):
         survey = self.get_object()
