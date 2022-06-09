@@ -190,7 +190,10 @@ class SummaryResponse:
 
         values_rating = Answer.objects.filter(question=question).values_list('value', flat=True)
         values_convert = [int(v) for v in values_rating]
-        rating_avg = round(sum(values_convert) / len(values_convert), 1)
+        try:
+          rating_avg = round(sum(values_convert) / len(values_convert), 1)
+        except ZeroDevisionError:
+          rating_avg = 0
         
         bar_chart.labels = labels
         bar_chart.data = data
