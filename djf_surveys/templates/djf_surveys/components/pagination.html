@@ -23,13 +23,20 @@
                 </button>
             </li>
         {% endif %}
-        {% for i in page_obj.paginator.page_range %}
+
+        {% for i in page_range|default_if_none:page_obj.paginator.get_elided_page_range %}
             {% if page_obj.number == i %}
                 <li class="block w-8 h-8 leading-8 text-center text-white bg-blue-600 border-blue-600 rounded-full">{{ i }}</li>
             {% else %}
-                <li>
-                    <a href="?page={{ i }}" class="block w-8 h-8 leading-8 text-center border border-gray-100 rounded-full">{{ i }}</a>
-                </li>
+                {% if i == page_obj.paginator.ELLIPSIS %}
+                    <li>
+                        <span class="block w-8 h-8 leading-8 text-center border border-gray-100 rounded-full">{{ page_obj.paginator.ELLIPSIS }}</span>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="?page={{ i }}" class="block w-8 h-8 leading-8 text-center border border-gray-100 rounded-full">{{ i }}</a>
+                    </li>
+                {% endif %}
             {% endif %}
         {% endfor %}
         {% if page_obj.has_next %}
