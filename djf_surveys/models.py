@@ -79,8 +79,8 @@ class Question(BaseModel):
     survey = models.ForeignKey(Survey, related_name='questions', on_delete=models.CASCADE)
     label = models.CharField(max_length=200, help_text='Enter your question in here')
     type_field = models.PositiveSmallIntegerField(choices=TYPE_FIELD)
-    choices = models.CharField(
-        max_length=200, blank=True, null=True,
+    choices = models.TextField(
+        blank=True, null=True,
         help_text='if Type Field is (radio, select, multi select), fill in the option separated by commas. ex: Male, Female'
     )
     help_text = models.CharField(
@@ -124,7 +124,8 @@ class Answer(BaseModel):
             return create_star(active_star=int(self.value))
         elif self.question.type_field == TYPE_FIELD.url:
             return mark_safe(f'<a href="{self.value}" target="_blank">{self.value}</a>')
-        elif self.question.type_field == TYPE_FIELD.radio or self.question.type_field == TYPE_FIELD.select:
+        elif self.question.type_field == TYPE_FIELD.radio or self.question.type_field == TYPE_FIELD.select or\
+                self.question.type_field == TYPE_FIELD.multi_select:
             return self.value.strip().replace('_', ' ').capitalize()
         else:
             return self.value
