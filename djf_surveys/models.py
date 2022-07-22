@@ -129,3 +129,11 @@ class Answer(BaseModel):
             return self.value.strip().replace('_', ' ').capitalize()
         else:
             return self.value
+
+    @property
+    def get_value_for_csv(self):
+        if self.question.type_field == TYPE_FIELD.radio or self.question.type_field == TYPE_FIELD.select or\
+                self.question.type_field == TYPE_FIELD.multi_select:
+            return self.value.strip().replace('_', ' ').capitalize()
+        else:
+            return self.value.strip()
