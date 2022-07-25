@@ -90,6 +90,9 @@ class Question(BaseModel):
     required = models.BooleanField(default=True)
     ordering = models.PositiveIntegerField(default=0)
 
+    class Meta:
+        ordering = ['ordering']
+
     def __str__(self):
         return f"{self.label}-survey-{self.survey.id}"
 
@@ -118,6 +121,9 @@ class Answer(BaseModel):
     def __str__(self):
         return f'{self.question}: {self.value}'
 
+    class Meta:
+        ordering = ['question__ordering']
+
     @property
     def get_value(self):
         if self.question.type_field == TYPE_FIELD.rating:
@@ -129,7 +135,7 @@ class Answer(BaseModel):
             return self.value.strip().replace('_', ' ').capitalize()
         else:
             return self.value
-
+    
     @property
     def get_value_for_csv(self):
         if self.question.type_field == TYPE_FIELD.radio or self.question.type_field == TYPE_FIELD.select or\
