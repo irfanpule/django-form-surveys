@@ -90,6 +90,9 @@ class Question(BaseModel):
     required = models.BooleanField(default=True)
     ordering = models.PositiveIntegerField(default=0)
 
+    class Meta:
+        ordering = ['ordering']
+
     def __str__(self):
         return f"{self.label}-survey-{self.survey.id}"
 
@@ -129,3 +132,7 @@ class Answer(BaseModel):
             return self.value.strip().replace('_', ' ').capitalize()
         else:
             return self.value
+
+    
+    class Meta:
+        ordering = ['question__ordering']
