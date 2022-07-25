@@ -189,7 +189,7 @@ class DownloadResponseSurveyView(DetailView):
             for answer in user_answer.answer_set.all():
                 if index == 0:
                     header.append(answer.question.label)
-                rows.append(answer.value)
+                rows.append(answer.get_value_for_csv)
 
             if index == 0:
                 writer.writerow(header)
