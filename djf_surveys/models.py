@@ -15,23 +15,26 @@ TYPE_FIELD = namedtuple(
 )._make(range(10))
 
 
-def generate_unique_slug(klass, field, id):
+def generate_unique_slug(klass, field, id, identifier='slug'):
     """
     generate unique slug.
     """
     origin_slug = slugify(field)
     unique_slug = origin_slug
     numb = 1
-    obj = klass.objects.filter(slug=unique_slug).first()
+    mapping = {
+        identifier: unique_slug,
+    }
+    obj = klass.objects.filter(**mapping).first()
     while obj:
         if obj.id == id:
             break
         rnd_string = random.choices(string.ascii_lowercase, k=(len(unique_slug)))
         unique_slug = '%s-%s-%d' % (origin_slug, ''.join(rnd_string[:10]), numb)
+        mapping[identifier] = unique_slug
         numb += 1
-        obj = klass.objects.filter(slug=unique_slug).first()
+        obj = klass.objects.filter(**mapping).first()
     return unique_slug
-
 
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -76,7 +79,9 @@ class Question(BaseModel):
         (TYPE_FIELD.rating, "Rating")
     ]
 
-    key = models.CharField(max_length=225, unique=True, default='', null=True, blank=True)
+    key = models.CharField(max_length=225, unique=True, default='', null=True, blank=True,
+                           help_text="unique key for this question, fill in the blank if you want to generate "
+                                     "automatically")
     survey = models.ForeignKey(Survey, related_name='questions', on_delete=models.CASCADE)
     label = models.CharField(max_length=200, help_text='Enter your question in here')
     type_field = models.PositiveSmallIntegerField(choices=TYPE_FIELD)
@@ -99,9 +104,9 @@ class Question(BaseModel):
 
     def save(self, *args, **kwargs):
         if self.key:
-            self.key = generate_unique_slug(Question, self.key, self.id)
+            self.key = generate_unique_slug(Question, self.key, self.id, 'key')
         else:
-            self.key = generate_unique_slug(Question, self.label, self.id)
+            self.key = generate_unique_slug(Question, self.label, self.id, 'key')
             
         super(Question, self).save(*args, **kwargs)
 

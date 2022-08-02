@@ -15,23 +15,6 @@ def create_star(active_star: int) -> str:
     return mark_safe(''.join(elements))
 
 
-def generate_unique_slug(klass, field, id):
-    """
-    generate unique slug.
-    """
-    origin_slug = slugify(field)
-    unique_slug = origin_slug
-    numb = 1
-    obj = klass.objects.filter(slug=unique_slug).first()
-    while obj:
-        if obj.id == id:
-            break
-        unique_slug = '%s-%d' % (origin_slug, numb)
-        numb += 1
-        obj = klass.objects.filter(slug=unique_slug).first()
-    return unique_slug
-
-
 class NewPaginator(Paginator):
     # adaptation from new Paginator django >= 3.2 
     # https://docs.djangoproject.com/en/4.0/_modules/django/core/paginator/#Paginator.get_elided_page_range
