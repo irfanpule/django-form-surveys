@@ -76,6 +76,7 @@ class Question(BaseModel):
         (TYPE_FIELD.rating, "Rating")
     ]
 
+    key = models.CharField(max_length=225, unique=True, default='', null=True, blank=True)
     survey = models.ForeignKey(Survey, related_name='questions', on_delete=models.CASCADE)
     label = models.CharField(max_length=200, help_text='Enter your question in here')
     type_field = models.PositiveSmallIntegerField(choices=TYPE_FIELD)
@@ -95,6 +96,14 @@ class Question(BaseModel):
 
     def __str__(self):
         return f"{self.label}-survey-{self.survey.id}"
+
+    def save(self, *args, **kwargs):
+        if self.key:
+            self.key = generate_unique_slug(Question, self.key, self.id)
+        else:
+            self.key = generate_unique_slug(Question, self.label, self.id)
+            
+        super(Question, self).save(*args, **kwargs)
 
 
 class UserAnswer(BaseModel):

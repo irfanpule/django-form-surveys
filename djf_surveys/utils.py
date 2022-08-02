@@ -1,5 +1,6 @@
 from django.utils.safestring import mark_safe
 from django.core.paginator import Paginator
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 
@@ -12,6 +13,23 @@ def create_star(active_star: int) -> str:
         elements.append('<i class ="rating__star rating_inactive"> </i>')
     elements.append('</div>')
     return mark_safe(''.join(elements))
+
+
+def generate_unique_slug(klass, field, id):
+    """
+    generate unique slug.
+    """
+    origin_slug = slugify(field)
+    unique_slug = origin_slug
+    numb = 1
+    obj = klass.objects.filter(slug=unique_slug).first()
+    while obj:
+        if obj.id == id:
+            break
+        unique_slug = '%s-%d' % (origin_slug, numb)
+        numb += 1
+        obj = klass.objects.filter(slug=unique_slug).first()
+    return unique_slug
 
 
 class NewPaginator(Paginator):
