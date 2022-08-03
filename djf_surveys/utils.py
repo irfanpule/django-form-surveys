@@ -1,5 +1,6 @@
 from django.utils.safestring import mark_safe
 from django.core.paginator import Paginator
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 
