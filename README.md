@@ -119,3 +119,15 @@ There are several configurations that you can write on `settings.py`
 
 ### Thanks!
 ![image](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/gif/djf_submit_survey_edit.gif)
+
+
+### For Contributor
+- clone project
+- symlink app to `demo`
+  ```bash
+  ln -s [path_project_djf_survey] [path_demo_djf_survey]
+  ```
+- create `env` development
+- active `env`
+- enter directory `demo`
+- now, you can access all command `manage.py`
