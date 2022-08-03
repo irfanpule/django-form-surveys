@@ -79,7 +79,7 @@ class Question(BaseModel):
         (TYPE_FIELD.rating, "Rating")
     ]
 
-    key = models.CharField(max_length=225, unique=True, default='', null=True, blank=True,
+    key = models.CharField(max_length=225, unique=True, null=True, blank=True,
                            help_text="unique key for this question, fill in the blank if you want to generate "
                                      "automatically")
     survey = models.ForeignKey(Survey, related_name='questions', on_delete=models.CASCADE)

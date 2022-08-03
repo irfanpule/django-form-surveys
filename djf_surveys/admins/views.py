@@ -121,7 +121,7 @@ class AdminUpdateQuestionView(ContextTitleMixin, UpdateView):
     model = Question
     template_name = 'djf_surveys/admins/question_form.html'
     success_url = "/"
-    fields = ['label', 'type_field', 'choices', 'help_text', 'required']
+    fields = ['label', 'key', 'type_field', 'choices', 'help_text', 'required']
     title_page = 'Add Question'
     survey = None
 
