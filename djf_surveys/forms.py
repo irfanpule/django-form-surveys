@@ -7,6 +7,7 @@ from django.core.validators import MaxLengthValidator
 from djf_surveys.models import Answer, TYPE_FIELD, UserAnswer, Question
 from djf_surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey, DateSurvey, RatingSurvey
 from djf_surveys.app_settings import DATE_INPUT_FORMAT, SURVEY_FIELD_VALIDATORS
+from djf_surveys.validators import validate_rating
 
 
 def make_choices(question: Question) -> List[Tuple[str, str]]:
@@ -31,18 +32,21 @@ class BaseSurveyForm(forms.Form):
             field_name = f'field_survey_{question.id}'
 
             if question.type_field == TYPE_FIELD.multi_select:
+                choices = make_choices(question)
                 self.fields[field_name] = forms.MultipleChoiceField(
-                    choices=make_choices(question), label=question.label,
+                    choices=choices, label=question.label,
                     widget=CheckboxSelectMultipleSurvey,
                 )
             elif question.type_field == TYPE_FIELD.radio:
+                choices = make_choices(question)
                 self.fields[field_name] = forms.ChoiceField(
-                    choices=make_choices(question), label=question.label,
+                    choices=choices, label=question.label,
                     widget=RadioSelectSurvey
                 )
             elif question.type_field == TYPE_FIELD.select:
+                choices = make_choices(question)
                 self.fields[field_name] = forms.ChoiceField(
-                    choices=make_choices(question), label=question.label
+                    choices=choices, label=question.label
                 )
             elif question.type_field == TYPE_FIELD.number:
                 self.fields[field_name] = forms.IntegerField(label=question.label)
@@ -67,7 +71,8 @@ class BaseSurveyForm(forms.Form):
                 )
             elif question.type_field == TYPE_FIELD.rating:
                 self.fields[field_name] = forms.CharField(
-                    label=question.label, widget=RatingSurvey
+                    label=question.label, widget=RatingSurvey,
+                    validators=[MaxLengthValidator(1), validate_rating]
                 )
             else:
                 self.fields[field_name] = forms.CharField(
