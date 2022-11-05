@@ -1,5 +1,8 @@
 import csv
 from io import StringIO
+
+from django.utils.text import capfirst
+from django.utils.translation import gettext, gettext_lazy as _
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
@@ -26,14 +29,14 @@ class AdminCrateSurveyView(ContextTitleMixin, CreateView):
         'name', 'description', 'editable', 'deletable', 
         'duplicate_entry', 'private_response', 'can_anonymous_user'
     ]
-    title_page = "Add New Survey"
+    title_page = _("Add New Survey")
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
             survey = form.save()
             self.success_url = reverse("djf_surveys:admin_forms_survey", args=[survey.slug])
-            messages.success(self.request, f'Successfully {self.title_page}')
+            messages.success(self.request, gettext("%(page_action_name)s succeeded.") % dict(page_action_name=capfirst(self.title_page.lower())))
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
@@ -47,7 +50,7 @@ class AdminEditSurveyView(ContextTitleMixin, UpdateView):
         'name', 'description', 'editable', 'deletable', 
         'duplicate_entry', 'private_response', 'can_anonymous_user'
     ]
-    title_page = "Edit Survey"
+    title_page = _("Edit Survey")
 
     def get_success_url(self):
         survey = self.get_object()
@@ -84,7 +87,7 @@ class AdminDeleteSurveyView(DetailView):
     def get(self, request, *args, **kwargs):
         survey = self.get_object()
         survey.delete()
-        messages.success(request, f'Successfully delete {survey.name}')
+        messages.success(request, gettext("Survey %(name)s succesfully deleted.") % dict(name=survey.name))
         return redirect("djf_surveys:admin_survey")
 
 
@@ -94,7 +97,7 @@ class AdminCreateQuestionView(ContextTitleMixin, CreateView):
     template_name = 'djf_surveys/admins/question_form.html'
     success_url = "/"
     fields = ['label', 'key', 'type_field', 'choices', 'help_text', 'required']
-    title_page = 'Add Question'
+    title_page = _("Add Question")
     survey = None
 
     def dispatch(self, request, *args, **kwargs):
@@ -107,7 +110,7 @@ class AdminCreateQuestionView(ContextTitleMixin, CreateView):
             question = form.save(commit=False)
             question.survey = self.survey
             question.save()
-            messages.success(self.request, f'Successfully {self.title_page}')
+            messages.success(self.request, gettext("%(page_action_name)s succeeded.") % dict(page_action_name=capfirst(self.title_page.lower())))
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
@@ -122,7 +125,7 @@ class AdminUpdateQuestionView(ContextTitleMixin, UpdateView):
     template_name = 'djf_surveys/admins/question_form.html'
     success_url = "/"
     fields = ['label', 'key', 'type_field', 'choices', 'help_text', 'required']
-    title_page = 'Add Question'
+    title_page = _("Add Question")
     survey = None
 
     def dispatch(self, request, *args, **kwargs):
@@ -147,7 +150,7 @@ class AdminDeleteQuestionView(DetailView):
     def get(self, request, *args, **kwargs):
         question = self.get_object()
         question.delete()
-        messages.success(request, f'Successfully delete {question.label}')
+        messages.success(request, gettext("Question %(name)s succesfully deleted.") % dict(name=question.label))
         return redirect("djf_surveys:admin_forms_survey", slug=self.survey.slug)
 
 
@@ -162,7 +165,7 @@ class AdminChangeOrderQuestionView(View):
                 question.save()
 
         data = {
-            'message': 'Success update ordering question'
+            'message': gettext("Update ordering of questions succeeded.")
         }
         return JsonResponse(data, status=200)
 
@@ -205,7 +208,7 @@ class DownloadResponseSurveyView(DetailView):
 class SummaryResponseSurveyView(ContextTitleMixin, DetailView):
     model = Survey
     template_name = "djf_surveys/admins/summary.html"
-    title_page = 'Summary'
+    title_page = _("Summary")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

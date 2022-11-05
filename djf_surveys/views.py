@@ -1,10 +1,11 @@
+from django.utils.text import capfirst
+from django.utils.translation import gettext, gettext_lazy as _
 from django.views.generic.list import ListView
 from django.views.generic.edit import FormMixin
 from django.views.generic.detail import DetailView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.shortcuts import redirect
-from django.core.paginator import Paginator
 from django.contrib import messages
 
 from djf_surveys.models import Survey, UserAnswer
@@ -46,10 +47,10 @@ class SurveyFormView(FormMixin, DetailView):
         self.object = self.get_object()
         if form.is_valid():
             form.save()
-            messages.success(self.request, f'Successfully {self.title_page}')
+            messages.success(self.request, gettext("%(page_action_name)s succeeded.") % dict(page_action_name=capfirst(self.title_page.lower())))
             return self.form_valid(form)
         else:
-            messages.error(self.request, 'Something wrong')
+            messages.error(self.request, gettext("Something went wrong."))
             return self.form_invalid(form)
 
 
@@ -57,19 +58,19 @@ class CreateSurveyFormView(ContextTitleMixin, SurveyFormView):
     model = Survey
     form_class = CreateSurveyForm
     success_url = "/"
-    title_page = "Add Survey"
+    title_page = _("Add Survey")
 
     def dispatch(self, request, *args, **kwargs):
         survey = self.get_object()
         # handle if survey can_anonymous_user
         if not request.user.is_authenticated and not survey.can_anonymous_user:
-            messages.warning(request, 'Sorry, you must be logged in to fill out the survey')
+            messages.warning(request, gettext("Sorry, you must be logged in to fill out the survey."))
             return redirect("/")
 
         # handle if user have answer survey
         if request.user.is_authenticated and not survey.duplicate_entry and \
                 UserAnswer.objects.filter(survey=survey, user=request.user).exists():
-            messages.warning(request, 'You have submitted out this survey')
+            messages.warning(request, gettext("You have submitted out this survey."))
             return redirect("/")
         return super().dispatch(request, *args, **kwargs)
 
@@ -100,7 +101,7 @@ class EditSurveyFormView(ContextTitleMixin, SurveyFormView):
         # handle if user not same
         user_answer = self.get_object()
         if user_answer.user != request.user or not user_answer.survey.editable:
-            messages.warning(request, "You can't edit this survey. You don't have permission")
+            messages.warning(request, gettext("You can't edit this survey. You don't have permission."))
             return redirect("/")
         return super().dispatch(request, *args, **kwargs)
 
@@ -125,27 +126,27 @@ class DeleteSurveyAnswerView(DetailView):
         # handle if user not same
         user_answer = self.get_object()
         if user_answer.user != request.user or not user_answer.survey.deletable:
-            messages.warning(request, "You can't delete this survey. You don't have permission")
+            messages.warning(request, gettext("You can't delete this survey. You don't have permission."))
             return redirect("/")
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         user_answer = self.get_object()
         user_answer.delete()
-        messages.success(self.request, 'Successfully deleted one survey')
+        messages.success(self.request, gettext("Answer succesfully deleted."))
         return redirect("djf_surveys:detail", slug=user_answer.survey.slug)
 
 
 class DetailSurveyView(ContextTitleMixin, DetailView):
     model = Survey
     template_name = "djf_surveys/answer_list.html"
-    title_page = "Result Survey"
+    title_page = "Survey Detail"
     paginate_by = app_settings.SURVEY_PAGINATION_NUMBER['answer_list']
 
     def dispatch(self, request, *args, **kwargs):
         survey = self.get_object()
         if not self.request.user.is_superuser and survey.private_response:
-            messages.warning(request, "You can't access this page")
+            messages.warning(request, gettext("You can't access this page. You don't have permission."))
             return redirect("/")
         return super().dispatch(request, *args, **kwargs)
 
@@ -164,7 +165,7 @@ class DetailSurveyView(ContextTitleMixin, DetailView):
 
 @method_decorator(login_required, name='dispatch')
 class DetailResultSurveyView(ContextTitleMixin, DetailView):
-    title_page = "Detail Result"
+    title_page = _("Survey Result")
     template_name = "djf_surveys/detail_result.html"
     model = UserAnswer
 
@@ -178,7 +179,7 @@ class DetailResultSurveyView(ContextTitleMixin, DetailView):
         # handle if user not same
         user_answer = self.get_object()
         if user_answer.user != request.user:
-            messages.warning(request, "You can't this. You don't have permission")
+            messages.warning(request, gettext("You can't access this page. You don't have permission."))
             return redirect("/")
         return super().dispatch(request, *args, **kwargs)
 

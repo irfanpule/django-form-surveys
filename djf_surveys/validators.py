@@ -5,19 +5,19 @@ from django.utils.translation import gettext_lazy as _
 def validate_rating(value):
     try:
         rating = int(value)
-    except:
+    except (TypeError, ValueError):
         raise ValidationError(
-            _('%(value)s is not a number'),
+            _('%(value)s is not a number.'),
             params={'value': value},
         )
 
     if rating > 5:
         raise ValidationError(
-            _('Value cannot be greater than 5')
+            _('Value cannot be greater than 5.')
         )
 
     if rating < 1:
         raise ValidationError(
-            _('value cannot be less than 1')
+            _('Value cannot be less than 1.')
         )
 

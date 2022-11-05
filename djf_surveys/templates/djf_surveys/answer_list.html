@@ -1,5 +1,5 @@
 {% extends get_master_template %}
-{% load static %}
+{% load i18n static %}
 
 {% block extra_css %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
@@ -29,7 +29,7 @@
         <section>
             <div class="py-16 lg:items-end lg:justify-between lg:flex sm:px-6 lg:px-8">
                 <h2 class="max-w-xl text-2xl font-bold sm:text-3xl">
-                    Result - {{ object.name }}
+                    {% trans "Result" %} - {{ object.name }}
                 </h2>
 
                 <div class="btn-group">

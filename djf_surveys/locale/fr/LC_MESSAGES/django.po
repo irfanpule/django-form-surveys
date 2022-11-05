@@ -1,0 +1,372 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-07 01:06+0700\n"
+"PO-Revision-Date: 2022-11-06 19:06+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#: admins/views.py:32
+msgid "Add New Survey"
+msgstr "Ajouter un nouveau sondage"
+
+#: admins/views.py:39 admins/views.py:113 views.py:50
+#, python-format
+msgid "%(page_action_name)s succeeded."
+msgstr "%(page_action_name)s réussi."
+
+#: admins/views.py:53
+msgid "Edit Survey"
+msgstr "Modifier sondage"
+
+#: admins/views.py:90
+#, python-format
+msgid "Survey %(name)s succesfully deleted."
+msgstr "Sondage %(name)s supprimé avec succès."
+
+#: admins/views.py:100 admins/views.py:128
+msgid "Add Question"
+msgstr "Ajouter question"
+
+#: admins/views.py:153
+#, python-format
+msgid "Question %(name)s succesfully deleted."
+msgstr "Question %(name)s supprimée avec succès."
+
+#: admins/views.py:168
+msgid "Update ordering of questions succeeded."
+msgstr "Mise à jour de l'ordre des questions réussie."
+
+#: admins/views.py:211 templates/djf_surveys/admins/summary.html:34
+msgid "Summary"
+msgstr "Résumé"
+
+#: models.py:49
+msgid "name"
+msgstr "nom"
+
+#: models.py:50
+msgid "description"
+msgstr "description"
+
+#: models.py:51
+msgid "slug"
+msgstr "étiquette"
+
+#: models.py:52
+msgid "editable"
+msgstr "éditable"
+
+#: models.py:52
+msgid "If False, user can't edit record."
+msgstr "Si Faux, l'utilisateur ne peut pas modifier l'enregistrement."
+
+#: models.py:53
+msgid "deletable"
+msgstr "supprimable"
+
+#: models.py:53
+msgid "If False, user can't delete record."
+msgstr "Si Faux, l'utilisateur ne peut pas supprimer l'enregistrement."
+
+#: models.py:54
+msgid "mutiple submissions"
+msgstr "soumissions multiples"
+
+#: models.py:54
+msgid "If True, user can resubmit."
+msgstr "Si Vrai, l'utilisateur peut soumettre à nouveau."
+
+#: models.py:55
+msgid "private response"
+msgstr "réponse privée"
+
+#: models.py:55
+msgid "If True, only admin and owner can access."
+msgstr "Si Vrai, seuls l'admin et le propriétaire peuvent y accéder."
+
+#: models.py:56
+msgid "anonymous submission"
+msgstr "soumission anonyme"
+
+#: models.py:56
+msgid "If True, user without authentatication can submit."
+msgstr "Si Vrai, l'utilisateur non authentifié peut soumettre."
+
+#: models.py:59 models.py:73 models.py:93 models.py:127
+msgid "survey"
+msgstr "sondage"
+
+#: models.py:60 models.py:74
+msgid "surveys"
+msgstr "sondages"
+
+#: models.py:79
+msgid "Text"
+msgstr "Texte"
+
+#: models.py:80
+msgid "Number"
+msgstr "Nombre"
+
+#: models.py:81
+msgid "Radio"
+msgstr "Radio"
+
+#: models.py:82
+msgid "Select"
+msgstr "Sélection"
+
+#: models.py:83
+msgid "Multi Select"
+msgstr "Multi-sélection"
+
+#: models.py:84
+msgid "Text Area"
+msgstr "Zone de texte"
+
+#: models.py:85
+msgid "URL"
+msgstr "URL"
+
+#: models.py:86
+msgid "Email"
+msgstr "Adresse électronique"
+
+#: models.py:87
+msgid "Date"
+msgstr "Date"
+
+#: models.py:88
+msgid "Rating"
+msgstr "Notation"
+
+#: models.py:91
+msgid "key"
+msgstr "clé"
+
+#: models.py:92
+msgid ""
+"Unique key for this question, fill in the blank if you want to use for "
+"automatic generation."
+msgstr ""
+"Clé unique pour cette question. Remplissez le blanc si vous voulez "
+"l'utiliser pour la génération automatique."
+
+#: models.py:94
+msgid "label"
+msgstr "libellé"
+
+#: models.py:94
+msgid "Enter your question in here."
+msgstr "Entrez votre question ici."
+
+#: models.py:95
+msgid "type of input field"
+msgstr "type de champ de saisie"
+
+#: models.py:97 models.py:107
+msgid "choices"
+msgstr "choix"
+
+#: models.py:99
+msgid ""
+"If type of field is radio, select, or multi select, fill in the options "
+"separated by commas. Ex: Male, Female."
+msgstr ""
+"Si le type de champ est radio, sélection, ou multi-sélection, remplissez les "
+"options séparées par des virgules. Par ex: Homme, Femme."
+
+#: models.py:102
+msgid "help text"
+msgstr "texte d'aide"
+
+#: models.py:104
+msgid "You can add a help text in here."
+msgstr "Voucx pouvez ajouter un texte d'aide ici."
+
+#: models.py:106
+msgid "required"
+msgstr "obligatoire"
+
+#: models.py:106
+msgid "If True, the user must provide an answer to this question."
+msgstr "Si Vrai, l'utilisateur doit fournir une réponse à cette question."
+
+#: models.py:107
+msgid "Defines the question order within the surveys."
+msgstr "Défini l'ordre de la question dans les sondages."
+
+#: models.py:110 models.py:145
+msgid "question"
+msgstr "question"
+
+#: models.py:111
+msgid "questions"
+msgstr "questions"
+
+#: models.py:128
+msgid "user"
+msgstr "utilisateur"
+
+#: models.py:131 models.py:147
+msgid "user answer"
+msgstr "réponse de l'utilisateur"
+
+#: models.py:132
+msgid "user answers"
+msgstr "réponses des utilisateurs"
+
+#: models.py:146
+msgid "value"
+msgstr "valeur"
+
+#: models.py:146
+msgid "The value of the answer given by the user."
+msgstr "La valeur de la réponse donnée par l'utilisateur."
+
+#: models.py:150
+msgid "answer"
+msgstr "réponse"
+
+#: models.py:151
+msgid "answers"
+msgstr "réponses"
+
+#: summary.py:243
+msgid "No summary"
+msgstr "Aucun résumé"
+
+#: summary.py:243
+#, python-format
+msgid "Summary is available only for input type: %(input_types)s"
+msgstr ""
+"Le résumé n'est disponible que pour les types de saisie : %(input_types)s"
+
+#: templates/djf_surveys/admins/form.html:31 templates/djf_surveys/form.html:56
+msgid "Submit"
+msgstr "Soumettre"
+
+#: templates/djf_surveys/admins/survey_list.html:10
+msgid "Create a survey"
+msgstr "Créer un sondage"
+
+#: templates/djf_surveys/answer_list.html:32
+msgid "Result"
+msgstr "Résultat"
+
+#: templates/djf_surveys/components/empty_state.html:4
+msgid "There's nothing here..."
+msgstr "Il n'y a rien ici..."
+
+#: templates/djf_surveys/components/empty_state.html:8
+msgid "Created survey will appear here, try creating one!"
+msgstr "Les sondages créés vont apparaître ici, essayez d'en créer un!"
+
+#: templates/djf_surveys/components/header_nav.html:10
+msgid "Home"
+msgstr "Accueil"
+
+#: templates/djf_surveys/components/header_nav.html:15
+#: templates/djf_surveys/components/header_nav.html:50
+msgid "Surveys"
+msgstr "Sondages"
+
+#: templates/djf_surveys/components/header_nav.html:16
+#: templates/djf_surveys/components/header_nav.html:53
+msgid "About"
+msgstr "À propos"
+
+#: templates/djf_surveys/components/modal_delete.html:8
+msgid "Confirmation"
+msgstr "Confimation"
+
+#: templates/djf_surveys/components/modal_delete.html:12
+msgid "Close"
+msgstr "Fermer"
+
+#: templates/djf_surveys/components/modal_delete.html:15
+#, python-format
+msgid "Are you sure to delete %(html)s?"
+msgstr "Êtes-vous sûr de vouloir supprimer %(html)s?"
+
+#: templates/djf_surveys/components/modal_delete.html:22
+msgid "Cancel"
+msgstr "Annuler"
+
+#: templates/djf_surveys/components/modal_delete.html:26
+msgid "Yes"
+msgstr "Oui"
+
+#: templates/djf_surveys/master.html:7
+msgid "Survey"
+msgstr "Sondage"
+
+#. Translators: String used to replace omitted page numbers in elided page
+#. range generated by paginators, e.g. [1, 2, '…', 5, 6, 7, '…', 9, 10].
+#: utils.py:23
+msgid "…"
+msgstr "…"
+
+#: validators.py:10
+#, python-format
+msgid "%(value)s is not a number."
+msgstr "%(value)s n'est pas un nombre."
+
+#: validators.py:16
+msgid "Value cannot be greater than 5."
+msgstr "La valeur ne peut pas être plus grande que 5."
+
+#: validators.py:21
+msgid "Value cannot be less than 1."
+msgstr "La valeur ne peut pas être inférieure à 1."
+
+#: views.py:53
+msgid "Something went wrong."
+msgstr "Quelque chose n'a pas fonctionné."
+
+#: views.py:61
+msgid "Add Survey"
+msgstr "Ajouter un sondage"
+
+#: views.py:67
+msgid "Sorry, you must be logged in to fill out the survey."
+msgstr "Désolé, vous devez être connecté pour remplir le sondage."
+
+#: views.py:73
+msgid "You have submitted out this survey."
+msgstr "Vous avez soumis le sondage."
+
+#: views.py:104
+msgid "You can't edit this survey. You don't have permission."
+msgstr "Vous ne pouvez pas modifier ce sondage. Vous n'avez pas la permission."
+
+#: views.py:129
+msgid "You can't delete this survey. You don't have permission."
+msgstr ""
+"Vous ne pouvez pas supprimer ce sondage. Vous n'avez pas la permission."
+
+#: views.py:136
+msgid "Answer succesfully deleted."
+msgstr "Réponse supprimée avec succès."
+
+#: views.py:149 views.py:182
+msgid "You can't access this page. You don't have permission."
+msgstr ""
+"Vous ne pouvez pas accéder à cette page. Vous n'avez pas la permission."
+
+#: views.py:168
+msgid "Survey Result"
+msgstr "Résultat du sondage"
