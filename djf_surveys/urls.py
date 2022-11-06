@@ -1,6 +1,6 @@
 from django.urls import path, include
 from djf_surveys import views
-
+from djf_surveys.app_settings import SURVEYS_ADMIN_BASE_PATH
 
 app_name = 'djf_surveys'
 urlpatterns = [
@@ -10,5 +10,5 @@ urlpatterns = [
     path('detail/result/<int:pk>/', views.DetailResultSurveyView.as_view(), name='detail_result'),
     path('create/<str:slug>/', views.CreateSurveyFormView.as_view(), name='create'),
     path('delete/<int:pk>/', views.DeleteSurveyAnswerView.as_view(), name='delete'),
-    path('dashboard/', include('djf_surveys.admins.urls')),
+    path(SURVEYS_ADMIN_BASE_PATH, include('djf_surveys.admins.urls')),
 ]

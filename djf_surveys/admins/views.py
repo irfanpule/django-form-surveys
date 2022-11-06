@@ -8,12 +8,13 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
 from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import View
 from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
 
+from djf_surveys.app_settings import SURVEYS_ADMIN_BASE_PATH
 from djf_surveys.models import Survey, Question, UserAnswer
 from djf_surveys.mixin import ContextTitleMixin
 from djf_surveys.views import SurveyListView
@@ -95,7 +96,7 @@ class AdminDeleteSurveyView(DetailView):
 class AdminCreateQuestionView(ContextTitleMixin, CreateView):
     model = Question
     template_name = 'djf_surveys/admins/question_form.html'
-    success_url = "/"
+    success_url = reverse_lazy("djf_surveys:")
     fields = ['label', 'key', 'type_field', 'choices', 'help_text', 'required']
     title_page = _("Add Question")
     survey = None
@@ -123,7 +124,7 @@ class AdminCreateQuestionView(ContextTitleMixin, CreateView):
 class AdminUpdateQuestionView(ContextTitleMixin, UpdateView):
     model = Question
     template_name = 'djf_surveys/admins/question_form.html'
-    success_url = "/"
+    success_url = SURVEYS_ADMIN_BASE_PATH
     fields = ['label', 'key', 'type_field', 'choices', 'help_text', 'required']
     title_page = _("Add Question")
     survey = None

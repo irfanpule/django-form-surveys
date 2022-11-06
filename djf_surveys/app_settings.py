@@ -1,5 +1,4 @@
 from django.conf import settings
-
 # replace master template
 SURVEY_MASTER_TEMPLATE = settings.SURVEY_MASTER_TEMPLATE if hasattr(settings,
                                                                     'SURVEY_MASTER_TEMPLATE') else 'djf_surveys/master.html'
@@ -42,3 +41,5 @@ if hasattr(settings, 'SURVEY_PAGINATION_NUMBER'):
     if answer_list:
         number_of_pagination['answer_list'] = answer_list
 SURVEY_PAGINATION_NUMBER = number_of_pagination
+
+SURVEYS_ADMIN_BASE_PATH = "dashboard/"
