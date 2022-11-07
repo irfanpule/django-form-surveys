@@ -1,4 +1,8 @@
 import random
+
+from django.utils.translation import gettext
+
+from djf_surveys import models
 from djf_surveys.models import TYPE_FIELD, Survey, Question, Answer
 from djf_surveys.utils import create_star
 
@@ -229,11 +233,13 @@ class SummaryResponse:
             elif question.type_field == TYPE_FIELD.rating:
                 html_str.append(self._process_rating_type(question))
         if not html_str:
+            input_types = ', '.join(str(x[1]) for x in models.Question.TYPE_FIELD if
+                      x[0] in (models.TYPE_FIELD.radio, models.TYPE_FIELD.select, models.TYPE_FIELD.multi_select, models.TYPE_FIELD.rating))
             return """
 <div class="bg-yellow-100 space-y-1 py-5 rounded-md border border-yellow-200 text-center shadow-xs mb-2">
-    <h1 class="text-2xl font-semibold">Have't summary</h1>
-    <h5 class="mb-0 mt-1 text-sm p-2">Summary just calculate type field "radio, select, multi_select, rating"</h5>
+    <h1 class="text-2xl font-semibold">{}</h1>
+    <h5 class="mb-0 mt-1 text-sm p-2">{}</h5>
 </div>
-"""        
+""".format(gettext("No summary"), gettext("Summary is available only for input type: %(input_types)s") % dict(input_types=input_types))
 
         return " ".join(html_str)

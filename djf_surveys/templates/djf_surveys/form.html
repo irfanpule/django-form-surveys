@@ -1,8 +1,8 @@
 {% extends get_master_template %}
-{% load djf_survey_tags static %}
+{% load djf_survey_tags i18n static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css"/>
     <style>
         .rating__star {
             cursor: pointer;
@@ -25,39 +25,39 @@
 {% endblock %}
 
 {% block content %}
-<div class="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
-  <div class="max-w-lg mx-auto">
-    <h1 class="text-2xl font-bold text-center text-blue-500 sm:text-3xl">{{ title_page  }}</h1>
+    <div class="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-lg mx-auto">
+            <h1 class="text-2xl font-bold text-center text-blue-500 sm:text-3xl">{{ title_page }}</h1>
 
-    <p class="max-w-md mx-auto mt-4 text-center text-gray-500">
-      {{ sub_title_page }}
-    </p>
+            <p class="max-w-md mx-auto mt-4 text-center text-gray-500">
+                {{ sub_title_page }}
+            </p>
 
-    <form method="post">
-        {% csrf_token %}
-        {% for field in form %}
-            <div class="p-8 mt-6 mb-0 space-y-4 rounded-lg shadow-md border border-gray-200 bg-white">
-                <label for="email" class="text-base font-medium">{{ field.label }}</label>
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="p-8 mt-6 mb-0 space-y-4 rounded-lg shadow-md border border-gray-200 bg-white">
+                        <label for="email" class="text-base font-medium">{{ field.label }}</label>
 
-                <div class="mt-1">
-                    {% if field.field.widget.input_type == 'radio' or field.field.widget.input_type == 'checkbox'%}
-                        {{ field }}
-                    {% else %}
-                        {{ field|addclass:'w-full p-4 pr-12 text-sm border-gray-500 rounded-lg shadow-sm' }}
-                    {% endif %}
-                </div>
-                <p class="text-xs text-gray-400">{{ field.help_text }}</p>
-                <span class="text-xs text-red-400">{{ field.errors }}</span>
-            </div>
+                        <div class="mt-1">
+                            {% if field.field.widget.input_type == 'radio' or field.field.widget.input_type == 'checkbox' %}
+                                {{ field }}
+                            {% else %}
+                                {{ field|addclass:'w-full p-4 pr-12 text-sm border-gray-500 rounded-lg shadow-sm' }}
+                            {% endif %}
+                        </div>
+                        <p class="text-xs text-gray-400">{{ field.help_text }}</p>
+                        <span class="text-xs text-red-400">{{ field.errors }}</span>
+                    </div>
 
-         {% endfor %}
+                {% endfor %}
 
-      <button type="submit" class="block w-full mt-5 px-5 py-3 text-sm font-medium text-white bg-blue-500 rounded-lg">
-        Submit
-      </button>
-    </form>
-  </div>
-</div>
+                <button type="submit" class="block w-full mt-5 px-5 py-3 text-sm font-medium text-white bg-blue-500 rounded-lg">
+                    {% trans "Submit" %}
+                </button>
+            </form>
+        </div>
+    </div>
 
 {% endblock %}
 
