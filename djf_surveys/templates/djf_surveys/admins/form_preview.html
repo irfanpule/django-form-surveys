@@ -2,124 +2,109 @@
 {% load djf_survey_tags static %}
 
 {% block extra_css %}
-    <style>
-        .rating__star {
-            cursor: pointer;
-        }
-
-        .rating_active {
-            width: 50px;
-            height: 50px;
-            background-size: contain;
-            background-image: url("{% static 'djf_surveys/images/star-fill.png' %}");
-        }
-
-        .rating_inactive {
-            width: 50px;
-            height: 50px;
-            background-size: contain;
-            background-image: url("{% static 'djf_surveys/images/star-border.png' %}");
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'djf_surveys/css/rating.css' %}"/>
 {% endblock %}
 
 {% block content %}
-<div class="flex py-1 fixed bottom-10 right-10">
-    <a href="{% url 'djf_surveys:admin_create_question' object.id %}"
-       class="z-20 block p-4 text-blue-100 transition-all bg-blue-700 border-2 border-white rounded-full active:bg-purple-50 hover:scale-110 focus:outline-none focus:ring"
-       type="button">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 float-left" fill="none" viewBox="0 0 24 24"
-             stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-        </svg>
-        <span class="items-center float-right"> Question </span>
-    </a>
-</div>
+    <div class="flex py-1 fixed bottom-10 right-10">
+        <a href="{% url 'djf_surveys:admin_create_question' object.id %}"
+           class="z-20 block p-4 text-blue-100 transition-all bg-blue-700 border-2 border-white rounded-full active:bg-purple-50 hover:scale-110 focus:outline-none focus:ring"
+           type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 float-left" fill="none" viewBox="0 0 24 24"
+                 stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+            </svg>
+            <span class="items-center float-right"> Question </span>
+        </a>
+    </div>
 
-<div class="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
-  <div class="max-w-lg mx-auto">
-        <div class="flex -space-x-4 hover:space-x-1 py-1 float-right">
-            <a href="{% url 'djf_surveys:admin_edit_survey' object.slug %}"
-               class="z-20 block p-4 text-blue-700 transition-all bg-blue-100 border-2 border-white rounded-full active:bg-blue-50 hover:scale-110 focus:outline-none focus:ring"
-               type="button">
-                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                     stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-                </svg>
-            </a>
-            <a class="button-delete z-30 block p-4 text-red-700 transition-all bg-red-100 border-2 border-white rounded-full hover:scale-110 focus:outline-none focus:ring active:bg-red-50"
-                data-bs-toggle="modal"
-                data-bs-target="#modalDelete"
-                data-mdb-object_name="{{ object.name }}"
-                data-mdb-object_delete_url="{% url 'djf_surveys:admin_delete_survey' object.slug%}">
-                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                     stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                </svg>
-            </a>
-        </div>
-    <h1 class="text-2xl font-bold text-center text-blue-500 sm:text-3xl">{{ title_page }}</h1>
-
-    <p class="max-w-md mx-auto mt-4 text-center text-gray-500">
-      {{ sub_title_page }}
-    </p>
-
-    <form method="post" class="mx-auto mt-12" id="sortable">
-        {% csrf_token %}
-        {% for field in form %}
-            <div class="ui-state-default" id="{{ field|get_id_field }}">
-                <div class="flex -space-x-4 hover:space-x-1 py-1">
-                    <a href="{% url 'djf_surveys:admin_edit_question' field|get_id_field %}" class="z-20 block p-4 text-blue-700 transition-all bg-blue-100 border-2 border-white rounded-full active:bg-blue-50 hover:scale-110 focus:outline-none focus:ring"
-                       type="button">
-                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-                        </svg>
-                    </a>
-
-                    <a class="button-delete z-30 block p-4 text-red-700 transition-all bg-red-100 border-2 border-white rounded-full hover:scale-110 focus:outline-none focus:ring active:bg-red-50"
-                       data-bs-toggle="modal"
-                       data-bs-target="#modalDelete"
-                       data-mdb-object_name="{{ field.label }}"
-                       data-mdb-object_delete_url="{% url 'djf_surveys:admin_delete_question' field|get_id_field %}">
-                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                        </svg>
-                    </a>
-
-                </div>
-
-                <a href="#" class="float-right z-30 block p-2 m-2 text-gray-500 transition-all bg-gray-100 border-2 border-white rounded-full hover:scale-110 focus:outline-none focus:ring active:bg-red-50">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
+    <div class="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-lg mx-auto">
+            <div class="flex -space-x-4 hover:space-x-1 py-1 float-right">
+                <a href="{% url 'djf_surveys:admin_edit_survey' object.slug %}"
+                   class="z-20 block p-4 text-blue-700 transition-all bg-blue-100 border-2 border-white rounded-full active:bg-blue-50 hover:scale-110 focus:outline-none focus:ring"
+                   type="button">
+                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
                     </svg>
                 </a>
-                <div class="p-8 mb-6 rounded-lg shadow-md border border-gray-200 bg-white">
-                    <label for="email" class="text-base font-medium">{{ field.label }}</label>
-
-                    <div class="mt-1">
-                        {% if field.field.widget.input_type == 'radio' or field.field.widget.input_type == 'checkbox'%}
-                            {{ field }}
-                        {% else %}
-                            {{ field|addclass:'w-full p-4 pr-12 text-sm border-gray-500 rounded-lg shadow-sm' }}
-                        {% endif %}
-                    </div>
-                    <p class="text-xs text-gray-400 mt-2">{{ field.help_text }}</p>
-                </div>
+                <a class="button-delete z-30 block p-4 text-red-700 transition-all bg-red-100 border-2 border-white rounded-full hover:scale-110 focus:outline-none focus:ring active:bg-red-50"
+                   data-bs-toggle="modal"
+                   data-bs-target="#modalDelete"
+                   data-mdb-object_name="{{ object.name }}"
+                   data-mdb-object_delete_url="{% url 'djf_surveys:admin_delete_survey' object.slug %}">
+                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                </a>
             </div>
+            <h1 class="text-2xl font-bold text-center text-blue-500 sm:text-3xl">{{ title_page }}</h1>
 
-         {% endfor %}
-    </form>
-  </div>
+            <p class="max-w-md mx-auto mt-4 text-center text-gray-500">
+                {{ sub_title_page }}
+            </p>
 
-    {% include 'djf_surveys/components/modal_delete.html' %}
-</div>
+            <form method="post" class="mx-auto mt-12" id="sortable">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="ui-state-default" id="{{ field|get_id_field }}">
+                        <div class="flex -space-x-4 hover:space-x-1 py-1">
+                            <a href="{% url 'djf_surveys:admin_edit_question' field|get_id_field %}"
+                               class="z-20 block p-4 text-blue-700 transition-all bg-blue-100 border-2 border-white rounded-full active:bg-blue-50 hover:scale-110 focus:outline-none focus:ring"
+                               type="button">
+                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                </svg>
+                            </a>
+
+                            <a class="button-delete z-30 block p-4 text-red-700 transition-all bg-red-100 border-2 border-white rounded-full hover:scale-110 focus:outline-none focus:ring active:bg-red-50"
+                               data-bs-toggle="modal"
+                               data-bs-target="#modalDelete"
+                               data-mdb-object_name="{{ field.label }}"
+                               data-mdb-object_delete_url="{% url 'djf_surveys:admin_delete_question' field|get_id_field %}">
+                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                </svg>
+                            </a>
+
+                        </div>
+
+                        <a href="#"
+                           class="float-right z-30 block p-2 m-2 text-gray-500 transition-all bg-gray-100 border-2 border-white rounded-full hover:scale-110 focus:outline-none focus:ring active:bg-red-50">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"/>
+                            </svg>
+                        </a>
+                        <div class="p-8 mb-6 rounded-lg shadow-md border border-gray-200 bg-white">
+                            <label for="email" class="text-base font-medium">{{ field.label }}</label>
+
+                            <div class="mt-1">
+                                {% if field.field.widget.input_type == 'radio' or field.field.widget.input_type == 'checkbox' %}
+                                    {{ field }}
+                                {% else %}
+                                    {{ field|addclass:'w-full p-4 pr-12 text-sm border-gray-500 rounded-lg shadow-sm' }}
+                                {% endif %}
+                            </div>
+                            <p class="text-xs text-gray-400 mt-2">{{ field.help_text }}</p>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </form>
+        </div>
+
+        {% include 'djf_surveys/components/modal_delete.html' %}
+    </div>
 
 {% endblock %}
 
@@ -127,30 +112,30 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script>
-    $(function () {
-        $("#sortable").sortable({
-            opacity: 0.7,
-            update: function (event, ui) {
-                var order = $(this).sortable('toArray');
-                console.log(order);
-                $.ajax({
-                    url: "{% url 'djf_surveys:admin_change_order_question' %}",
-                    type: 'POST',
-                    headers: { "X-CSRFToken": '{{csrf_token}}'},
-                    data: {
-                        'order_question': order.toString(),
-                    },
-                    dataType: 'json',
-                    success: function (data) {
-                        console.log(data.message);
-                    },
-                    error: function (data) {
-                        alert("An error occured!");
-                    }
-                });
-            }
+        $(function () {
+            $("#sortable").sortable({
+                opacity: 0.7,
+                update: function (event, ui) {
+                    var order = $(this).sortable('toArray');
+                    console.log(order);
+                    $.ajax({
+                        url: "{% url 'djf_surveys:admin_change_order_question' %}",
+                        type: 'POST',
+                        headers: {"X-CSRFToken": '{{csrf_token}}'},
+                        data: {
+                            'order_question': order.toString(),
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            console.log(data.message);
+                        },
+                        error: function (data) {
+                            alert("An error occured!");
+                        }
+                    });
+                }
+            });
         });
-    });
     </script>
 
     {% include 'djf_surveys/components/modal_delete_js.html' %}
