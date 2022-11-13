@@ -109,14 +109,14 @@
 {% endblock %}
 
 {% block extra_js %}
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script>
         $(function () {
             $("#sortable").sortable({
                 opacity: 0.7,
                 update: function (event, ui) {
-                    var order = $(this).sortable('toArray');
+                    const order = $(this).sortable('toArray');
                     console.log(order);
                     $.ajax({
                         url: "{% url 'djf_surveys:admin_change_order_question' %}",
