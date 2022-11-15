@@ -11,11 +11,7 @@
                 </h2>
 
                 <a href="{% url 'djf_surveys:admin_create_survey' %}" class="inline-block px-5 py-3 mt-4 font-medium text-white bg-blue-500 rounded-lg sm:m-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                    </svg>
+                    {% include "djf_surveys/buttons/add_button.html" %}
                 </a>
             </div>
         </section>
