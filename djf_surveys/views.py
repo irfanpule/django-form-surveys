@@ -66,13 +66,13 @@ class CreateSurveyFormView(ContextTitleMixin, SurveyFormView):
         # handle if survey can_anonymous_user
         if not request.user.is_authenticated and not survey.can_anonymous_user:
             messages.warning(request, gettext("Sorry, you must be logged in to fill out the survey."))
-            return reverse("djf_surveys:index")
+            return redirect("djf_surveys:index")
 
         # handle if user have answer survey
         if request.user.is_authenticated and not survey.duplicate_entry and \
                 UserAnswer.objects.filter(survey=survey, user=request.user).exists():
             messages.warning(request, gettext("You have submitted out this survey."))
-            return reverse("djf_surveys:index")
+            return redirect("djf_surveys:index")
         return super().dispatch(request, *args, **kwargs)
 
     def get_form(self, form_class=None):
@@ -103,7 +103,7 @@ class EditSurveyFormView(ContextTitleMixin, SurveyFormView):
         user_answer = self.get_object()
         if user_answer.user != request.user or not user_answer.survey.editable:
             messages.warning(request, gettext("You can't edit this survey. You don't have permission."))
-            return reverse("djf_surveys:index")
+            return redirect("djf_surveys:index")
         return super().dispatch(request, *args, **kwargs)
 
     def get_form(self, form_class=None):
@@ -128,7 +128,7 @@ class DeleteSurveyAnswerView(DetailView):
         user_answer = self.get_object()
         if user_answer.user != request.user or not user_answer.survey.deletable:
             messages.warning(request, gettext("You can't delete this survey. You don't have permission."))
-            return reverse("djf_surveys:index")
+            return redirect("djf_surveys:index")
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
@@ -148,7 +148,7 @@ class DetailSurveyView(ContextTitleMixin, DetailView):
         survey = self.get_object()
         if not self.request.user.is_superuser and survey.private_response:
             messages.warning(request, gettext("You can't access this page. You don't have permission."))
-            return reverse("djf_surveys:index")
+            return redirect("djf_surveys:index")
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -181,7 +181,7 @@ class DetailResultSurveyView(ContextTitleMixin, DetailView):
         user_answer = self.get_object()
         if user_answer.user != request.user:
             messages.warning(request, gettext("You can't access this page. You don't have permission."))
-            return reverse("djf_surveys:index")
+            return redirect("djf_surveys:index")
         return super().dispatch(request, *args, **kwargs)
 
     def get_title_page(self):
