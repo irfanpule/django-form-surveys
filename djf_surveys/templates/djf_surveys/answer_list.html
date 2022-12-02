@@ -39,6 +39,11 @@
                            type="button">
                             {% include "djf_surveys/buttons/add_button.html" %}
                         </a>
+                        <a href="#"
+                           class="button-share z-20 block p-4 text-amber-700 transition-all bg-amber-100 border-2 border-white rounded-full active:bg-amber-50 hover:scale-110 focus:outline-none focus:ring"
+                           type="button" data-share-link="{% url 'djf_surveys:share_link' survey.slug %}">
+                            {% include "djf_surveys/buttons/share_button.html" %}
+                        </a>
                     </div>
                 </div>
             </div>
@@ -65,4 +70,5 @@
 {% block extra_js %}
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
     {% include 'djf_surveys/components/modal_delete_js.html' %}
+    {% include 'djf_surveys/components/share_link_button_js.html' %}
 {% endblock %}

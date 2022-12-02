@@ -6,7 +6,7 @@ from django.views.generic.edit import FormMixin
 from django.views.generic.detail import DetailView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 
 from djf_surveys.models import Survey, UserAnswer
@@ -189,3 +189,13 @@ class DetailResultSurveyView(ContextTitleMixin, DetailView):
 
     def get_sub_title_page(self):
         return self.get_object().survey.description
+
+
+def share_link(request, slug):
+    # this func to handle link redirect to create form or edit form
+    survey = get_object_or_404(Survey, slug=slug)
+    user_answer = UserAnswer.objects.filter(survey=survey, user=request.user).last()
+    if user_answer:
+        return redirect(reverse_lazy("djf_surveys:edit", kwargs={'pk': user_answer.id}))
+    else:
+        return redirect(reverse_lazy("djf_surveys:create", kwargs={'slug': survey.slug}))

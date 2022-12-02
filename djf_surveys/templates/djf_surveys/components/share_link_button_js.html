@@ -1,0 +1,13 @@
+<script type="text/javascript">
+    const shareButtons = document.getElementsByClassName('button-share');
+
+    for (var i = 0; i < shareButtons.length; i++) {
+        shareButtons[i].addEventListener("click", (e) => {
+            const button = e.currentTarget;
+            const link = button.getAttribute('data-share-link');
+            const fullLink = location.origin + link;
+            navigator.clipboard.writeText(fullLink);
+            alert(`Successfully copied the link  ${fullLink}. You can paste to share anywhare`);
+        });
+    }
+</script>
