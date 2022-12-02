@@ -194,8 +194,9 @@ class DetailResultSurveyView(ContextTitleMixin, DetailView):
 def share_link(request, slug):
     # this func to handle link redirect to create form or edit form
     survey = get_object_or_404(Survey, slug=slug)
-    user_answer = UserAnswer.objects.filter(survey=survey, user=request.user).last()
-    if user_answer:
-        return redirect(reverse_lazy("djf_surveys:edit", kwargs={'pk': user_answer.id}))
+    if request.user.is_authenticated:
+        user_answer = UserAnswer.objects.filter(survey=survey, user=request.user).last()
+        if user_answer:
+            return redirect(reverse_lazy("djf_surveys:edit", kwargs={'pk': user_answer.id}))
     else:
         return redirect(reverse_lazy("djf_surveys:create", kwargs={'slug': survey.slug}))
