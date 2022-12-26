@@ -88,7 +88,7 @@ class Question(BaseModel):
         (TYPE_FIELD.rating, _("Rating"))
     ]
 
-    key = models.CharField(_("key"), max_length=225, unique=True, default="", blank=True,
+    key = models.CharField(_("key"), max_length=225, unique=True, null=True, blank=True,
                            help_text=_("Unique key for this question, fill in the blank if you want to use for automatic generation."))
     survey = models.ForeignKey(Survey, related_name='questions', on_delete=models.CASCADE, verbose_name=_("survey"))
     label = models.CharField(_("label"), max_length=500, help_text=_("Enter your question in here."))
