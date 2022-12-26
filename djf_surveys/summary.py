@@ -196,7 +196,7 @@ class SummaryResponse:
         values_convert = [int(v) for v in values_rating]
         try:
           rating_avg = round(sum(values_convert) / len(values_convert), 1)
-        except ZeroDevisionError:
+        except ZeroDivisionError:
           rating_avg = 0
         
         bar_chart.labels = labels
