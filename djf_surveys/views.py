@@ -198,5 +198,4 @@ def share_link(request, slug):
         user_answer = UserAnswer.objects.filter(survey=survey, user=request.user).last()
         if user_answer:
             return redirect(reverse_lazy("djf_surveys:edit", kwargs={'pk': user_answer.id}))
-    else:
-        return redirect(reverse_lazy("djf_surveys:create", kwargs={'slug': survey.slug}))
+    return redirect(reverse_lazy("djf_surveys:create", kwargs={'slug': survey.slug}))
