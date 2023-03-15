@@ -2,35 +2,35 @@
 
 <input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
 {% if widget.value != None %}
-    {{ widget.value|create_star }}
+    {{ widget.value|create_star:widget.attrs.id }}
 {% else %}
-    {{ "0"|create_star }}
+    {{ "0"|create_star:widget.attrs.id }}
 {% endif %}
 
 <script>
-    const ratingStars = [...document.getElementsByClassName("rating__star")];
+    const ratingStars_{{ widget.attrs.id }} = [...document.getElementById("parent_start_{{ widget.attrs.id }}").getElementsByClassName("rating__star")];
 
     function executeRating(stars) {
-        const starClassActive = "rating__star rating_active";
-        const starClassUnactive = "rating__star rating_inactive";
-        const starsLength = stars.length;
+        const starClassActive_{{ widget.attrs.id }} = "rating__star rating_active";
+        const starClassUnactive_{{ widget.attrs.id }} = "rating__star rating_inactive";
+        const starsLength_{{ widget.attrs.id }} = stars.length;
         let i;
 
         stars.map((star) => {
             star.onclick = () => {
                 i = stars.indexOf(star);
-                if (star.className.indexOf(starClassUnactive) !== -1) {
-                    for (i; i >= 0; --i) stars[i].className = starClassActive;
+                if (star.className.indexOf(starClassUnactive_{{ widget.attrs.id }}) !== -1) {
+                    for (i; i >= 0; --i) stars[i].className = starClassActive_{{ widget.attrs.id }};
                 } else {
-                    for (i; i < starsLength; ++i) stars[i].className = starClassUnactive;
+                    for (i; i < starsLength_{{ widget.attrs.id }}; ++i) stars[i].className = starClassUnactive_{{ widget.attrs.id }};
                 }
-                const ratingStarsActive = [...document.getElementsByClassName("rating_active")];
-                const hiddenInput = document.getElementById("{{ widget.attrs.id }}");
-                hiddenInput.value = ratingStarsActive.length;
+                const ratingStarsActive_{{ widget.attrs.id }} = [...document.getElementById("parent_start_{{ widget.attrs.id }}").getElementsByClassName("rating_active")];
+                const hiddenInput_{{ widget.attrs.id }} = document.getElementById("{{ widget.attrs.id }}");
+                hiddenInput_{{ widget.attrs.id }}.value = ratingStarsActive_{{ widget.attrs.id }}.length;
             };
         });
 
     }
 
-    executeRating(ratingStars);
+    executeRating(ratingStars_{{ widget.attrs.id }});
 </script>

@@ -15,5 +15,5 @@ def get_id_field(field):
 
 
 @register.filter(name='create_star')
-def create_star(number):
-    return utils_create_star(active_star=int(number))
+def create_star(number, args):
+    return utils_create_star(active_star=int(number), id_element=args)
