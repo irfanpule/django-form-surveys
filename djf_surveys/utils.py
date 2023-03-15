@@ -4,9 +4,9 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 
-def create_star(active_star: int) -> str:
+def create_star(active_star: int, id_element: str = '') -> str:
     inactive_star = 5 - active_star
-    elements = ['<div class="flex content-center">']
+    elements = [f'<div class="flex content-center" id="parent_start_{id_element}">']
     for _ in range(int(active_star)):
         elements.append('<i class ="rating__star rating_active"> </i>')
     for _ in range(inactive_star):
