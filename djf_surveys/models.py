@@ -136,9 +136,13 @@ class UserAnswer(BaseModel):
         return str(self.id)
 
     def get_user_photo(self):
+        default_photo = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
         if app_settings.SURVEY_USER_PHOTO_PROFILE:
-            return eval(app_settings.SURVEY_USER_PHOTO_PROFILE)
-        return "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            try:
+                return eval(app_settings.SURVEY_USER_PHOTO_PROFILE)
+            except:
+                return default_photo
+        return default_photo
 
 
 class Answer(BaseModel):
