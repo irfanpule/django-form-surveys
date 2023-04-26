@@ -1,5 +1,9 @@
-<div class="datepicker" data-mdb-toggle-button="false">
+<div 
+    data-te-datepicker-init
+    data-te-input-wrapper-init
+    class="datepicker">
     <input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %}
-           value="{{ widget.value }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}
-           data-mdb-toggle="datepicker"/>
+        value="{{ widget.value }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}
+        data-te-datepicker-toggle-ref
+        data-te-datepicker-toggle-button-ref/>
 </div>

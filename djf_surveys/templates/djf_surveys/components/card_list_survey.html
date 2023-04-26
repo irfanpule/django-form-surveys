@@ -21,8 +21,8 @@
             </a>
 
             <button class="button-delete z-30 block p-4 text-red-700 transition-all bg-red-100 border-2 border-white rounded-full hover:scale-110 focus:outline-none focus:ring active:bg-red-50"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalDelete"
+                    data-te-toggle="modal"
+                    data-te-target="#modalDelete"
                     data-mdb-object_name="{{ survey.name }}"
                     data-mdb-object_delete_url="{% url 'djf_surveys:admin_delete_survey' survey.slug %}">
                 {% include "djf_surveys/buttons/delete_button.html" %}
