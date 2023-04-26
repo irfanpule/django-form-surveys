@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Survey - {{ title }}</title>
     <link rel="stylesheet" href="{% static 'djf_surveys/te-starter/css/tw-elements.min.css' %}">
-    <script src="https://cdn.tailwindcss.com/3.3.1"></script>
-    <script src="https://cdn.tailwindcss.com/3.3.1?plugins=forms@0.5.3,typography@0.5.9,aspect-ratio@0.4.2"></script>
+    <script src="{% static 'djf_surveys/css/tailwindcss-3.3.1.js' %}"></script>
+    <script src="{% static 'djf_surveys/css/tailwindcss-plugin-3.3.1.js' %}"></script>
     {% block extra_css %}{% endblock %}
 </head>
 <body>
