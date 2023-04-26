@@ -1,35 +1,70 @@
 {% load i18n %}
-<div 
-    data-te-modal-init
-    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
-    id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-modal="true" role="dialog">
-    <div 
-        data-te-modal-dialog-ref
-        class="modal-dialog modal-dialog-centered relative w-auto pointer-events-none">
-        <div class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
-            <div class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
-                <h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalScrollableLabel">
-                    {% trans "Confirmation" %}
-                </h5>
-                <button type="button"
-                        class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
-                        data-bs-dismiss="modal" aria-label="{% trans "Close" %}"></button>
-            </div>
-            <div class="modal-body relative p-4">
-                <p>{% blocktrans with html='<span id="object_name" class="font-medium"/>' %}Are you sure to delete {{ html }}?{% endblocktrans %}</p>
-            </div>
-            <div
-                    class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-                <button type="button"
-                        class="inline-block px-6 py-2.5 bg-red-400 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
-                        data-bs-dismiss="modal">
-                    {% trans "Cancel" %}
-                </button>
-                <a id="confirmDeleteButton"
-                        class="inline-block px-6 py-2.5 bg-blue-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out ml-1">
-                    {% trans "Yes" %}
-                </a>
-            </div>
-        </div>
+
+<div
+  data-te-modal-init
+  class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+  id="modalDelete"
+  tabindex="-1"
+  aria-labelledby="modalDeleteLabel"
+  aria-hidden="true">
+  <div
+    data-te-modal-dialog-ref
+    class="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px]">
+    <div
+      class="min-[576px]:shadow-[0_0.5rem_1rem_rgba(#000, 0.15)] pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600">
+      <div
+        class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
+        <!--Modal title-->
+        <h5
+          class="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
+          id="modalDeleteLabel">
+          {% trans "Confirmation" %}
+        </h5>
+        <!--Close button-->
+        <button
+          type="button"
+          class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+          data-te-modal-dismiss
+          aria-label="Close">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="h-6 w-6">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!--Modal body-->
+      <div class="relative flex-auto p-4" data-te-modal-body-ref>
+        <p>{% blocktrans with html='<span id="object_name" class="font-medium"/>' %}Are you sure to delete {{ html }}?{% endblocktrans %}</p>
+      </div>
+
+      <!--Modal footer-->
+      <div
+        class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
+        <button
+          type="button"
+          class="inline-block px-6 py-2.5 bg-red-400 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
+          data-te-modal-dismiss
+          data-te-ripple-init
+          data-te-ripple-color="light">
+          {% trans "Cancel" %}
+        </button>
+        <a
+          id="confirmDeleteButton"
+          class="inline-block px-6 py-2.5 bg-blue-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out ml-1"
+          data-te-ripple-init
+          data-te-ripple-color="light">
+          {% trans "Yes" %}
+        </a>
+      </div>
     </div>
+  </div>
 </div>
