@@ -1,7 +1,8 @@
 {% extends get_master_template %}
+{% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+    <link rel="stylesheet" href="{% static 'djf_surveys/te-starter/css/tw-elements.min.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -28,6 +29,6 @@
 {% endblock %}
 
 {% block extra_js %}
-    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
+    <script src="{% static 'djf_surveys/te-starter/js/tw-elements.umd.min.js' %}"></script>
     {% include 'djf_surveys/components/modal_delete_js.html' %}
 {% endblock %}
