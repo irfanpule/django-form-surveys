@@ -3,6 +3,8 @@ from django.core.paginator import Paginator
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
+from djf_surveys import models
+
 
 def create_star(active_star: int, id_element: str = '') -> str:
     inactive_star = 5 - active_star
@@ -52,3 +54,58 @@ class NewPaginator(Paginator):
             yield from range(self.num_pages - on_ends + 1, self.num_pages + 1)
         else:
             yield from range(number + 1, self.num_pages + 1)
+
+
+def get_type_field():
+    return [
+        {
+            'id': models.TYPE_FIELD.text,
+            'label': _("Text"),
+            'icon': "fas fa-text"
+        },
+        {
+            'id': models.TYPE_FIELD.number,
+            'label': _("Number"),
+            'icon': ""
+        },
+        {
+            'id': models.TYPE_FIELD.radio,
+            'label': _("Radio"),
+            'icon': ""
+        },
+        {
+            'id': models.TYPE_FIELD.select,
+            'label': _("Select"),
+            'icon': ""
+        },
+        {
+            'id': models.TYPE_FIELD.multi_select,
+            'label': _("Multi Select"),
+            'icon': ""
+        },
+        {
+            'id': models.TYPE_FIELD.text_area,
+            'label': _("Text Area"),
+            'icon': ""
+        },
+        {
+            'id': models.TYPE_FIELD.url,
+            'label': _("URL"),
+            'icon': ""
+        },
+        {
+            'id': models.TYPE_FIELD.email,
+            'label': _("Email"),
+            'icon': ""
+        },
+        {
+            'id': models.TYPE_FIELD.date,
+            'label': _("Date"),
+            'icon': ""
+        },
+        {
+            'id': models.TYPE_FIELD.rating,
+            'label': _("Rating"),
+            'icon': ""
+        }
+    ]

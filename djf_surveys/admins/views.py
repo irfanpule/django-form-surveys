@@ -94,6 +94,9 @@ class AdminDeleteSurveyView(DetailView):
 
 @method_decorator(staff_member_required, name='dispatch')
 class AdminCreateQuestionView(ContextTitleMixin, CreateView):
+    """
+    Note: This class already has version 2
+    """
     model = Question
     template_name = 'djf_surveys/admins/question_form.html'
     success_url = reverse_lazy("djf_surveys:")
@@ -122,6 +125,9 @@ class AdminCreateQuestionView(ContextTitleMixin, CreateView):
 
 @method_decorator(staff_member_required, name='dispatch')
 class AdminUpdateQuestionView(ContextTitleMixin, UpdateView):
+    """
+    Note: This class already has version 2
+    """
     model = Question
     template_name = 'djf_surveys/admins/question_form.html'
     success_url = SURVEYS_ADMIN_BASE_PATH

@@ -1,0 +1,20 @@
+{% extends 'djf_surveys/admins/form.html' %}
+
+{% block extra_js %}
+    <script>
+        var choicesVal = {{ type_field_id }};
+        var elChoice = document.querySelector("#section_field_id_choices");
+
+        console.log(choicesVal, "dddd");
+        toggleChoices(choicesVal);
+
+
+        function toggleChoices(value) {
+            if (value == 2 || value == 3 || value == 4) {
+              elChoice.hidden = false;
+          } else {
+              elChoice.hidden = true;
+          }
+        }
+    </script>
+{% endblock %}
