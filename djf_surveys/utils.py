@@ -61,51 +61,51 @@ def get_type_field():
         {
             'id': models.TYPE_FIELD.text,
             'label': _("Text"),
-            'icon': "fas fa-text"
+            'icon': "bi bi-type"
         },
         {
             'id': models.TYPE_FIELD.number,
             'label': _("Number"),
-            'icon': ""
+            'icon': "bi bi-123"
         },
         {
             'id': models.TYPE_FIELD.radio,
             'label': _("Radio"),
-            'icon': ""
+            'icon': "bi bi-ui-radios"
         },
         {
             'id': models.TYPE_FIELD.select,
             'label': _("Select"),
-            'icon': ""
+            'icon': "bi bi-menu-button-wide-fill"
         },
         {
             'id': models.TYPE_FIELD.multi_select,
             'label': _("Multi Select"),
-            'icon': ""
+            'icon': "bi bi-ui-checks"
         },
         {
             'id': models.TYPE_FIELD.text_area,
             'label': _("Text Area"),
-            'icon': ""
+            'icon': "bi bi-textarea-resize"
         },
         {
             'id': models.TYPE_FIELD.url,
             'label': _("URL"),
-            'icon': ""
+            'icon': "bi bi-link"
         },
         {
             'id': models.TYPE_FIELD.email,
             'label': _("Email"),
-            'icon': ""
+            'icon': "bi bi-envelope"
         },
         {
             'id': models.TYPE_FIELD.date,
             'label': _("Date"),
-            'icon': ""
+            'icon': "bi bi-calendar-event"
         },
         {
             'id': models.TYPE_FIELD.rating,
             'label': _("Rating"),
-            'icon': ""
+            'icon': "bi bi-star"
         }
     ]
