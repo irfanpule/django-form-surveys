@@ -1,0 +1,75 @@
+{% load i18n %}
+  <!--Verically centered modal-->
+  <div
+    data-te-modal-init
+    class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+    id="addQuestion"
+    tabindex="-1"
+    aria-labelledby="addQuestionTitle"
+    aria-modal="true"
+    role="dialog">
+    <div
+      data-te-modal-dialog-ref
+      class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]">
+      <div
+        class="pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600">
+        <div
+          class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
+          <!--Modal title-->
+          <h5
+            class="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
+            id="exampleModalScrollableLabel">
+            {% trans "Type Field" %}
+          </h5>
+          <!--Close button-->
+          <button
+            type="button"
+            class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+            data-te-modal-dismiss
+            aria-label="Close">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-6 w-6">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+  
+        <!--Modal body-->
+        <div class="relative p-4">
+            <section>
+                <ul class="bg-slate-50 p-4 sm:px-8 sm:pt-6 sm:pb-8 lg:p-4 xl:px-8 xl:pt-6 xl:pb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4 text-sm leading-6">
+                    {% for type_field in get_type_field %}
+                    <li class="flex">
+                        <a href="{% url 'djf_surveys:admin_create_question' object.id type_field.id %}" class="hover:border-blue-500 hover:border-solid hover:bg-white hover:text-blue-500 group w-full flex flex-col items-center justify-center rounded-md border-2 border-slate-300 text-sm leading-6 text-slate-900 font-medium py-3">
+                            <i class="{{ type_field.icon }}"></i>
+                            {{ type_field.label }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+              </section>
+        </div>
+  
+        <!--Modal footer-->
+        <div
+          class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
+          <button
+            type="button"
+            class="inline-block rounded bg-primary-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+            data-te-modal-dismiss
+            data-te-ripple-init
+            data-te-ripple-color="light">
+            {% trans "Close" %}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -7,12 +7,16 @@
 
 {% block content %}
     <div class="flex py-1 fixed bottom-10 right-10">
-        <a href="{% url 'djf_surveys:admin_create_question' object.id %}"
-           class="z-20 block p-4 text-blue-100 transition-all bg-blue-700 border-2 border-white rounded-full active:bg-purple-50 hover:scale-110 focus:outline-none focus:ring"
-           type="button">
+        <button
+            class="z-20 block p-4 text-blue-100 transition-all bg-blue-700 border-2 border-white rounded-full active:bg-purple-50 hover:scale-110 focus:outline-none focus:ring"
+            data-te-toggle="modal"
+            data-te-target="#addQuestion"
+            data-te-ripple-init
+            data-te-ripple-color="light"
+            type="button">
             {% include "djf_surveys/buttons/add_button.html" with size=6 %}
             <span class="items-center float-right"> Question </span>
-        </a>
+        </button>
     </div>
 
     <div class="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
@@ -46,7 +50,7 @@
                 {% for field in form %}
                     <div class="ui-state-default" id="{{ field|get_id_field }}">
                         <div class="flex -space-x-4 hover:space-x-1 py-1">
-                            <a href="{% url 'djf_surveys:admin_edit_question' field|get_id_field %}"
+                            <a href="{% url 'djf_surveys:admin_edit_question' field|get_id_field  %}"
                                class="z-20 block p-4 text-blue-700 transition-all bg-blue-100 border-2 border-white rounded-full active:bg-blue-50 hover:scale-110 focus:outline-none focus:ring"
                                type="button">
                                 {% include "djf_surveys/buttons/edit_button.html" %}
@@ -88,6 +92,7 @@
         </div>
 
         {% include 'djf_surveys/components/modal_delete.html' %}
+        {% include 'djf_surveys/components/modal_choice_field_type.html' %}
     </div>
 
 {% endblock %}
