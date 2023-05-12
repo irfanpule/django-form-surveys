@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-07 01:06+0700\n"
+"POT-Creation-Date: 2023-05-12 04:31+0000\n"
 "PO-Revision-Date: 2022-11-06 19:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,38 +18,53 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: admins/views.py:32
-msgid "Add New Survey"
-msgstr "Add New Survey"
+#: admins/v2/forms.py:23
+msgid "Click Button Add to adding choice"
+msgstr "Click Button Add to adding choice"
 
-#: admins/views.py:39 admins/views.py:113 views.py:50
+#: admins/v2/views.py:25 admins/views.py:104 admins/views.py:135
+msgid "Add Question"
+msgstr "Add Question"
+
+#: admins/v2/views.py:50 admins/views.py:40 admins/views.py:117 views.py:51
 #, python-format
 msgid "%(page_action_name)s succeeded."
 msgstr "%(page_action_name)s succeeded."
 
-#: admins/views.py:53
+#: admins/v2/views.py:64 admins/v2/views.py:99
+#, python-format
+msgid "Type Field %s"
+msgstr ""
+
+#: admins/v2/views.py:72
+#, fuzzy
+#| msgid "Add Question"
+msgid "Edit Question"
+msgstr "Add Question"
+
+#: admins/views.py:33
+msgid "Add New Survey"
+msgstr "Add New Survey"
+
+#: admins/views.py:54
 msgid "Edit Survey"
 msgstr "Edit Survey"
 
-#: admins/views.py:90
+#: admins/views.py:91
 #, python-format
 msgid "Survey %(name)s succesfully deleted."
 msgstr "Survey %(name)s succesfully deleted."
 
-#: admins/views.py:100 admins/views.py:128
-msgid "Add Question"
-msgstr "Add Question"
-
-#: admins/views.py:153
+#: admins/views.py:160
 #, python-format
 msgid "Question %(name)s succesfully deleted."
 msgstr "Question %(name)s succesfully deleted."
 
-#: admins/views.py:168
+#: admins/views.py:175
 msgid "Update ordering of questions succeeded."
 msgstr "Update ordering of questions succeeded."
 
-#: admins/views.py:211 templates/djf_surveys/admins/summary.html:34
+#: admins/views.py:218 templates/djf_surveys/admins/summary.html:16
 msgid "Summary"
 msgstr "Summary"
 
@@ -113,43 +128,43 @@ msgstr "survey"
 msgid "surveys"
 msgstr "surveys"
 
-#: models.py:79
+#: models.py:79 utils.py:63
 msgid "Text"
 msgstr "Text"
 
-#: models.py:80
+#: models.py:80 utils.py:68
 msgid "Number"
 msgstr "Number"
 
-#: models.py:81
+#: models.py:81 utils.py:73
 msgid "Radio"
 msgstr "Radio"
 
-#: models.py:82
+#: models.py:82 utils.py:78
 msgid "Select"
 msgstr "Select"
 
-#: models.py:83
+#: models.py:83 utils.py:83
 msgid "Multi Select"
 msgstr "Multi Select"
 
-#: models.py:84
+#: models.py:84 utils.py:88
 msgid "Text Area"
 msgstr "Text Area"
 
-#: models.py:85
+#: models.py:85 utils.py:93
 msgid "URL"
 msgstr "URL"
 
-#: models.py:86
+#: models.py:86 utils.py:98
 msgid "Email"
 msgstr "Email"
 
-#: models.py:87
+#: models.py:87 utils.py:103
 msgid "Date"
 msgstr "Date"
 
-#: models.py:88
+#: models.py:88 utils.py:108
 msgid "Rating"
 msgstr "Rating"
 
@@ -209,7 +224,7 @@ msgstr "If True, the user must provide an answer to this question."
 msgid "Defines the question order within the surveys."
 msgstr "Defines the question order within the surveys."
 
-#: models.py:110 models.py:145
+#: models.py:110 models.py:149
 msgid "question"
 msgstr "question"
 
@@ -221,7 +236,7 @@ msgstr "questions"
 msgid "user"
 msgstr "user"
 
-#: models.py:131 models.py:147
+#: models.py:131 models.py:151
 msgid "user answer"
 msgstr "user answer"
 
@@ -229,24 +244,23 @@ msgstr "user answer"
 msgid "user answers"
 msgstr "user answers"
 
-#: models.py:146
+#: models.py:150
 msgid "value"
 msgstr "value"
 
-#: models.py:146
+#: models.py:150
 msgid "The value of the answer given by the user."
 msgstr "The value of the answer given by the user."
 
-#: models.py:150
+#: models.py:154
 msgid "answer"
 msgstr "answer"
 
-#: models.py:151
+#: models.py:155
 msgid "answers"
 msgstr "answers"
 
 #: summary.py:243
-#| msgid "Summary"
 msgid "No summary"
 msgstr "No summary"
 
@@ -255,7 +269,7 @@ msgstr "No summary"
 msgid "Summary is available only for input type: %(input_types)s"
 msgstr "Summary is available only for input type: %(input_types)s"
 
-#: templates/djf_surveys/admins/form.html:31 templates/djf_surveys/form.html:56
+#: templates/djf_surveys/admins/form.html:31 templates/djf_surveys/form.html:38
 msgid "Submit"
 msgstr "Submit"
 
@@ -263,7 +277,7 @@ msgstr "Submit"
 msgid "Create a survey"
 msgstr "Create a survey"
 
-#: templates/djf_surveys/answer_list.html:32
+#: templates/djf_surveys/answer_list.html:14
 msgid "Result"
 msgstr "Result"
 
@@ -289,34 +303,51 @@ msgstr "Surveys"
 msgid "About"
 msgstr "About"
 
-#: templates/djf_surveys/components/modal_delete.html:8
-msgid "Confirmation"
-msgstr "Confirmation"
+#: templates/djf_surveys/components/modal_choice_field_type.html:22
+msgid "Type Field"
+msgstr ""
 
-#: templates/djf_surveys/components/modal_delete.html:12
+#: templates/djf_surveys/components/modal_choice_field_type.html:70
+#: templates/djf_surveys/components/modal_delete.html:58
 msgid "Close"
 msgstr "Close"
 
-#: templates/djf_surveys/components/modal_delete.html:15
+#: templates/djf_surveys/components/modal_delete.html:21
+msgid "Confirmation"
+msgstr "Confirmation"
+
+#: templates/djf_surveys/components/modal_delete.html:46
 #, python-format
 msgid "Are you sure to delete %(html)s?"
 msgstr "Are you sure to delete %(html)s?"
 
-#: templates/djf_surveys/components/modal_delete.html:22
-msgid "Cancel"
-msgstr "Cancel"
-
-#: templates/djf_surveys/components/modal_delete.html:26
+#: templates/djf_surveys/components/modal_delete.html:65
 msgid "Yes"
 msgstr "Yes"
+
+#: templates/djf_surveys/components/search_form.html:7
+msgid "Search..."
+msgstr ""
+
+#: templates/djf_surveys/components/section_welcome.html:8
+msgid "Welcome to the Django Form Survey"
+msgstr "Welcome to the Django Form Survey"
+
+#: templates/djf_surveys/components/section_welcome.html:12
+msgid "Making forms easier"
+msgstr "Making forms easier"
 
 #: templates/djf_surveys/master.html:7
 msgid "Survey"
 msgstr "Survey"
 
+#: templates/djf_surveys/widgets/inline_choices.html:86
+msgid "at least two choices"
+msgstr "at least two choices"
+
 #. Translators: String used to replace omitted page numbers in elided page
 #. range generated by paginators, e.g. [1, 2, '…', 5, 6, 7, '…', 9, 10].
-#: utils.py:23
+#: utils.py:25
 msgid "…"
 msgstr "…"
 
@@ -333,38 +364,41 @@ msgstr "Value cannot be greater than 5."
 msgid "Value cannot be less than 1."
 msgstr "Value cannot be less than 1."
 
-#: views.py:53
+#: views.py:54
 msgid "Something went wrong."
 msgstr "Something went wrong."
 
-#: views.py:61
+#: views.py:62
 msgid "Add Survey"
 msgstr "Add Survey"
 
-#: views.py:67
+#: views.py:68
 msgid "Sorry, you must be logged in to fill out the survey."
 msgstr "Sorry, you must be logged in to fill out the survey."
 
-#: views.py:73
+#: views.py:74
 msgid "You have submitted out this survey."
 msgstr "You have submitted out this survey."
 
-#: views.py:104
+#: views.py:105
 msgid "You can't edit this survey. You don't have permission."
 msgstr "You can't edit this survey. You don't have permission."
 
-#: views.py:129
+#: views.py:130
 msgid "You can't delete this survey. You don't have permission."
 msgstr "You can't delete this survey. You don't have permission."
 
-#: views.py:136
+#: views.py:137
 msgid "Answer succesfully deleted."
 msgstr "Answer succesfully deleted."
 
-#: views.py:149 views.py:182
+#: views.py:150 views.py:183
 msgid "You can't access this page. You don't have permission."
 msgstr "You can't access this page. You don't have permission."
 
-#: views.py:168
+#: views.py:169
 msgid "Survey Result"
 msgstr "Survey Result"
+
+#~ msgid "Cancel"
+#~ msgstr "Cancel"
