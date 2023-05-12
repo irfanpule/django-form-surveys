@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-12 04:35+0000\n"
+"POT-Creation-Date: 2023-05-12 08:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,9 +27,10 @@ msgid "Add Question"
 msgstr "Tambah Pertanyaan"
 
 #: admins/v2/views.py:50 admins/views.py:40 admins/views.py:117 views.py:51
-#, python-format
+#, fuzzy, python-format
+#| msgid "%%(page_action_name)s succeeded."
 msgid "%(page_action_name)s succeeded."
-msgstr "%(page_action_name) berhasil."
+msgstr "%%(page_action_name) berhasil."
 
 #: admins/v2/views.py:64 admins/v2/views.py:99
 #, python-format
@@ -49,22 +50,26 @@ msgid "Edit Survey"
 msgstr "Sunting Survei"
 
 #: admins/views.py:91
-#, python-format
-msgid "Survey %(name)s succesfully deleted."
-msgstr "Survei %(name) berhasil dihapus."
+#, fuzzy, python-format
+#| msgid "Survey %(name)s succesfully deleted."
+msgid "Survey %ss succesfully deleted."
+msgstr "Survei %s berhasil dihapus."
 
 #: admins/views.py:160
-#, python-format
-msgid "Question %(name)s succesfully deleted."
-msgstr "Pertanyaan %(name) berhasil dihapus."
+#, fuzzy, python-format
+#| msgid "Question %(name)s succesfully deleted."
+msgid "Question %ss succesfully deleted."
+msgstr "Pertanyaan %s berhasil dihapus."
 
 #: admins/views.py:175
 msgid "Update ordering of questions succeeded."
 msgstr "Urutan pertanyaan berhasil diperbarui"
 
 #: admins/views.py:218 templates/djf_surveys/admins/summary.html:16
-msgid "Ringkasan"
-msgstr ""
+#, fuzzy
+#| msgid "No summary"
+msgid "Summary"
+msgstr "Tidak ada ringkasan"
 
 #: models.py:49
 msgid "name"
@@ -100,7 +105,7 @@ msgstr "Dapat menjawab lebih dari satu"
 
 #: models.py:54
 msgid "If True, user can resubmit."
-msgstr "Jika Benar, pengguna dapat menjawab ulang."
+msgstr "Jika cek, pengguna dapat menjawab ulang."
 
 #: models.py:55
 msgid "private response"
@@ -108,7 +113,7 @@ msgstr "tanggapan pribadi"
 
 #: models.py:55
 msgid "If True, only admin and owner can access."
-msgstr "Jika Benar, hanya admin dan pemilik yang dapat mengakses."
+msgstr "Jika cek, hanya admin dan pemilik yang dapat mengakses."
 
 #: models.py:56
 msgid "anonymous submission"
@@ -116,7 +121,7 @@ msgstr "menjawab dengan identitas anonim"
 
 #: models.py:56
 msgid "If True, user without authentatication can submit."
-msgstr "Jika Benar, pengguna tanpa autentikasi dapat menjawab."
+msgstr "Jika cek, pengguna tanpa autentikasi dapat menjawab."
 
 #: models.py:59 models.py:73 models.py:93 models.py:127
 msgid "survey"
@@ -199,8 +204,8 @@ msgid ""
 "If type of field is radio, select, or multi select, fill in the options "
 "separated by commas. Ex: Male, Female."
 msgstr ""
-"Jika jenis field radio, select, atau multi select, isikan pilihan "
-"dipisahkan dengan koma. Contoh: Pria, Wanita."
+"Jika jenis field radio, select, atau multi select, isikan pilihan dipisahkan "
+"dengan koma. Contoh: Pria, Wanita."
 
 #: models.py:102
 msgid "help text"
@@ -216,7 +221,7 @@ msgstr "wajib"
 
 #: models.py:106
 msgid "If True, the user must provide an answer to this question."
-msgstr "Jika Benar, pengguna wajib memberikan jawaban atas pertanyaan ini."
+msgstr "Jika cek, pengguna wajib memberikan jawaban atas pertanyaan ini."
 
 #: models.py:107
 msgid "Defines the question order within the surveys."
@@ -263,13 +268,24 @@ msgid "No summary"
 msgstr "Tidak ada ringkasan"
 
 #: summary.py:243
-#, python-format
-msgid "Summary is available only for input type: %(input_types)s"
-msgstr "Rangkuman hanya tersedia untuk jenis input: %(input_types)"
+#, fuzzy, python-format
+#| msgid "Summary is available only for input type: %(input_types)s"
+msgid "Summary is available only for input type: %ss"
+msgstr "Rangkuman hanya tersedia untuk jenis input: %s"
 
 #: templates/djf_surveys/admins/form.html:31 templates/djf_surveys/form.html:38
 msgid "Submit"
 msgstr "Kirim"
+
+#: templates/djf_surveys/admins/form_preview.html:18
+#, fuzzy
+#| msgid "question"
+msgid "Question"
+msgstr "Pertanyaan"
+
+#: templates/djf_surveys/admins/form_preview.html:122
+msgid "An error occured!"
+msgstr "Terjadi kesalahan"
 
 #: templates/djf_surveys/admins/survey_list.html:10
 msgid "Create a survey"
@@ -350,15 +366,16 @@ msgid "…"
 msgstr "…"
 
 #: validators.py:10
-#, python-format
-msgid "%(value)s is not a number."
-msgstr "%(value) bukan angka."
+#, fuzzy, python-format
+#| msgid "%(value)s is not a number."
+msgid "%ss is not a number."
+msgstr "%s bukan angka."
 
-#: validators.py:16
+#: validators.py:15
 msgid "Value cannot be greater than 5."
 msgstr "Nilai tidak boleh lebih besar dari 5."
 
-#: validators.py:21
+#: validators.py:20
 msgid "Value cannot be less than 1."
 msgstr "Nilai tidak boleh kurang dari 1."
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-12 04:31+0000\n"
+"POT-Creation-Date: 2023-05-12 08:35+0000\n"
 "PO-Revision-Date: 2022-11-06 19:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -51,14 +51,16 @@ msgid "Edit Survey"
 msgstr "Edit Survey"
 
 #: admins/views.py:91
-#, python-format
-msgid "Survey %(name)s succesfully deleted."
-msgstr "Survey %(name)s succesfully deleted."
+#, fuzzy, python-format
+#| msgid "Survey %(name)s succesfully deleted."
+msgid "Survey %ss succesfully deleted."
+msgstr "Survey %s succesfully deleted."
 
 #: admins/views.py:160
-#, python-format
-msgid "Question %(name)s succesfully deleted."
-msgstr "Question %(name)s succesfully deleted."
+#, fuzzy, python-format
+#| msgid "Question %(name)s succesfully deleted."
+msgid "Question %ss succesfully deleted."
+msgstr "Question %s succesfully deleted."
 
 #: admins/views.py:175
 msgid "Update ordering of questions succeeded."
@@ -265,13 +267,24 @@ msgid "No summary"
 msgstr "No summary"
 
 #: summary.py:243
-#, python-format
-msgid "Summary is available only for input type: %(input_types)s"
-msgstr "Summary is available only for input type: %(input_types)s"
+#, fuzzy, python-format
+#| msgid "Summary is available only for input type: %(input_types)s"
+msgid "Summary is available only for input type: %ss"
+msgstr "Summary is available only for input type: %s"
 
 #: templates/djf_surveys/admins/form.html:31 templates/djf_surveys/form.html:38
 msgid "Submit"
 msgstr "Submit"
+
+#: templates/djf_surveys/admins/form_preview.html:18
+#, fuzzy
+#| msgid "question"
+msgid "Question"
+msgstr "Question"
+
+#: templates/djf_surveys/admins/form_preview.html:122
+msgid "An error occured!"
+msgstr "An error occured!"
 
 #: templates/djf_surveys/admins/survey_list.html:10
 msgid "Create a survey"
@@ -352,15 +365,16 @@ msgid "…"
 msgstr "…"
 
 #: validators.py:10
-#, python-format
-msgid "%(value)s is not a number."
-msgstr "%(value)s is not a number."
+#, fuzzy, python-format
+#| msgid "%(value)s is not a number."
+msgid "%ss is not a number."
+msgstr "%s is not a number."
 
-#: validators.py:16
+#: validators.py:15
 msgid "Value cannot be greater than 5."
 msgstr "Value cannot be greater than 5."
 
-#: validators.py:21
+#: validators.py:20
 msgid "Value cannot be less than 1."
 msgstr "Value cannot be less than 1."
 

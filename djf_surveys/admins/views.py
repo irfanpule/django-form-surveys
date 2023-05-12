@@ -88,7 +88,7 @@ class AdminDeleteSurveyView(DetailView):
     def get(self, request, *args, **kwargs):
         survey = self.get_object()
         survey.delete()
-        messages.success(request, gettext("Survey %(name)s succesfully deleted.") % dict(name=survey.name))
+        messages.success(request, gettext("Survey %ss succesfully deleted.") % survey.name)
         return redirect("djf_surveys:admin_survey")
 
 
@@ -157,7 +157,7 @@ class AdminDeleteQuestionView(DetailView):
     def get(self, request, *args, **kwargs):
         question = self.get_object()
         question.delete()
-        messages.success(request, gettext("Question %(name)s succesfully deleted.") % dict(name=question.label))
+        messages.success(request, gettext("Question %ss succesfully deleted.") % question.label)
         return redirect("djf_surveys:admin_forms_survey", slug=self.survey.slug)
 
 

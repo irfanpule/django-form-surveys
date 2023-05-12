@@ -7,8 +7,7 @@ def validate_rating(value):
         rating = int(value)
     except (TypeError, ValueError):
         raise ValidationError(
-            _('%(value)s is not a number.'),
-            params={'value': value},
+            _('%ss is not a number.' % value)
         )
 
     if rating > 5:

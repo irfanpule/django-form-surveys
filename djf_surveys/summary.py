@@ -240,6 +240,6 @@ class SummaryResponse:
     <h1 class="text-2xl font-semibold">{}</h1>
     <h5 class="mb-0 mt-1 text-sm p-2">{}</h5>
 </div>
-""".format(gettext("No summary"), gettext("Summary is available only for input type: %(input_types)s") % dict(input_types=input_types))
+""".format(gettext("No summary"), gettext("Summary is available only for input type: %ss") % input_types)
 
         return " ".join(html_str)
