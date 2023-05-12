@@ -1,9 +1,10 @@
+{% load i18n %}
 <div class="flex space-x-4 mb-5">
       <form class="">
         <div class="relative">
           <input
             class="h-10 pr-10 text-sm placeholder-gray-300 border-gray-200 rounded-lg focus:z-10"
-            placeholder="Search..."
+            placeholder="{% trans 'Search...' %}"
             type="text",
             name="q"
           />

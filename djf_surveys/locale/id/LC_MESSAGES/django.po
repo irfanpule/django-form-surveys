@@ -3,33 +3,33 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-12 04:31+0000\n"
-"PO-Revision-Date: 2022-11-06 19:07+0100\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: en\n"
+"POT-Creation-Date: 2023-05-12 04:35+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: admins/v2/forms.py:23
 msgid "Click Button Add to adding choice"
-msgstr "Click Button Add to adding choice"
+msgstr "Klik tombol Tambah untuk menambahkan pilihan"
 
 #: admins/v2/views.py:25 admins/views.py:104 admins/views.py:135
 msgid "Add Question"
-msgstr "Add Question"
+msgstr "Tambah Pertanyaan"
 
 #: admins/v2/views.py:50 admins/views.py:40 admins/views.py:117 views.py:51
 #, python-format
 msgid "%(page_action_name)s succeeded."
-msgstr "%(page_action_name)s succeeded."
+msgstr "%(page_action_name) berhasil."
 
 #: admins/v2/views.py:64 admins/v2/views.py:99
 #, python-format
@@ -37,44 +37,42 @@ msgid "Type Field %s"
 msgstr ""
 
 #: admins/v2/views.py:72
-#, fuzzy
-#| msgid "Add Question"
 msgid "Edit Question"
-msgstr "Add Question"
+msgstr "Sunting Pertanyaan"
 
 #: admins/views.py:33
 msgid "Add New Survey"
-msgstr "Add New Survey"
+msgstr "Tambah Survei Baru"
 
 #: admins/views.py:54
 msgid "Edit Survey"
-msgstr "Edit Survey"
+msgstr "Sunting Survei"
 
 #: admins/views.py:91
 #, python-format
 msgid "Survey %(name)s succesfully deleted."
-msgstr "Survey %(name)s succesfully deleted."
+msgstr "Survei %(name) berhasil dihapus."
 
 #: admins/views.py:160
 #, python-format
 msgid "Question %(name)s succesfully deleted."
-msgstr "Question %(name)s succesfully deleted."
+msgstr "Pertanyaan %(name) berhasil dihapus."
 
 #: admins/views.py:175
 msgid "Update ordering of questions succeeded."
-msgstr "Update ordering of questions succeeded."
+msgstr "Urutan pertanyaan berhasil diperbarui"
 
 #: admins/views.py:218 templates/djf_surveys/admins/summary.html:16
-msgid "Summary"
-msgstr "Summary"
+msgid "Ringkasan"
+msgstr ""
 
 #: models.py:49
 msgid "name"
-msgstr "name"
+msgstr "nama"
 
 #: models.py:50
 msgid "description"
-msgstr "description"
+msgstr "deskripsi"
 
 #: models.py:51
 msgid "slug"
@@ -82,59 +80,59 @@ msgstr "slug"
 
 #: models.py:52
 msgid "editable"
-msgstr "editable"
+msgstr "dapat diedit"
 
 #: models.py:52
 msgid "If False, user can't edit record."
-msgstr "If False, user can't edit record."
+msgstr "Jika Tidak, pengguna tidak dapat mengedit jawaban"
 
 #: models.py:53
 msgid "deletable"
-msgstr "deletable"
+msgstr "dapat dihapus"
 
 #: models.py:53
 msgid "If False, user can't delete record."
-msgstr "If False, user can't delete record."
+msgstr "Jika Tidak, pengguna tidak dapat menghapus jawaban"
 
 #: models.py:54
 msgid "mutiple submissions"
-msgstr "mutiple submissions"
+msgstr "Dapat menjawab lebih dari satu"
 
 #: models.py:54
 msgid "If True, user can resubmit."
-msgstr "If True, user can resubmit."
+msgstr "Jika Benar, pengguna dapat menjawab ulang."
 
 #: models.py:55
 msgid "private response"
-msgstr "private response"
+msgstr "tanggapan pribadi"
 
 #: models.py:55
 msgid "If True, only admin and owner can access."
-msgstr "If True, only admin and owner can access."
+msgstr "Jika Benar, hanya admin dan pemilik yang dapat mengakses."
 
 #: models.py:56
 msgid "anonymous submission"
-msgstr "anonymous submission"
+msgstr "menjawab dengan identitas anonim"
 
 #: models.py:56
 msgid "If True, user without authentatication can submit."
-msgstr "If True, user without authentatication can submit."
+msgstr "Jika Benar, pengguna tanpa autentikasi dapat menjawab."
 
 #: models.py:59 models.py:73 models.py:93 models.py:127
 msgid "survey"
-msgstr "survey"
+msgstr "survei"
 
 #: models.py:60 models.py:74
 msgid "surveys"
-msgstr "surveys"
+msgstr "survei"
 
 #: models.py:79 utils.py:63
 msgid "Text"
-msgstr "Text"
+msgstr "Teks"
 
 #: models.py:80 utils.py:68
 msgid "Number"
-msgstr "Number"
+msgstr "Angkat"
 
 #: models.py:81 utils.py:73
 msgid "Radio"
@@ -162,23 +160,23 @@ msgstr "Email"
 
 #: models.py:87 utils.py:103
 msgid "Date"
-msgstr "Date"
+msgstr "Tanggal"
 
 #: models.py:88 utils.py:108
 msgid "Rating"
-msgstr "Rating"
+msgstr "Peringkat"
 
 #: models.py:91
 msgid "key"
-msgstr "key"
+msgstr "kunci"
 
 #: models.py:92
 msgid ""
 "Unique key for this question, fill in the blank if you want to use for "
 "automatic generation."
 msgstr ""
-"Unique key for this question, fill in the blank if you want to use for "
-"automatic generation."
+"Kunci sebagai identitas unik bidang ini. Kosongkan jika ingin terisi "
+"otomatis oleh sistem."
 
 #: models.py:94
 msgid "label"
@@ -186,164 +184,164 @@ msgstr "label"
 
 #: models.py:94
 msgid "Enter your question in here."
-msgstr "Enter your question in here."
+msgstr "Masukkan pertanyaan Anda di sini."
 
 #: models.py:95
 msgid "type of input field"
-msgstr "type of input field"
+msgstr "tipe dari input field"
 
 #: models.py:97 models.py:107
 msgid "choices"
-msgstr "choices"
+msgstr "pilihan"
 
 #: models.py:99
 msgid ""
 "If type of field is radio, select, or multi select, fill in the options "
 "separated by commas. Ex: Male, Female."
 msgstr ""
-"If type of field is radio, select, or multi select, fill in the options "
-"separated by commas. Ex: Male, Female."
+"Jika jenis field radio, select, atau multi select, isikan pilihan "
+"dipisahkan dengan koma. Contoh: Pria, Wanita."
 
 #: models.py:102
 msgid "help text"
-msgstr "help text"
+msgstr "teks bantuan / instruksi"
 
 #: models.py:104
 msgid "You can add a help text in here."
-msgstr "You can add a help text in here."
+msgstr "Anda dapat menambahkan teks bantuan / instruksi di sini."
 
 #: models.py:106
 msgid "required"
-msgstr "required"
+msgstr "wajib"
 
 #: models.py:106
 msgid "If True, the user must provide an answer to this question."
-msgstr "If True, the user must provide an answer to this question."
+msgstr "Jika Benar, pengguna wajib memberikan jawaban atas pertanyaan ini."
 
 #: models.py:107
 msgid "Defines the question order within the surveys."
-msgstr "Defines the question order within the surveys."
+msgstr "Menentukan urutan pertanyaan dalam survei."
 
 #: models.py:110 models.py:149
 msgid "question"
-msgstr "question"
+msgstr "pertanyaan"
 
 #: models.py:111
 msgid "questions"
-msgstr "questions"
+msgstr "pertanyaan"
 
 #: models.py:128
 msgid "user"
-msgstr "user"
+msgstr "pengguna"
 
 #: models.py:131 models.py:151
 msgid "user answer"
-msgstr "user answer"
+msgstr "jawaban pengguna"
 
 #: models.py:132
 msgid "user answers"
-msgstr "user answers"
+msgstr "jawaban pengguna"
 
 #: models.py:150
 msgid "value"
-msgstr "value"
+msgstr "nilai / isi"
 
 #: models.py:150
 msgid "The value of the answer given by the user."
-msgstr "The value of the answer given by the user."
+msgstr "Nilai jawaban yang diberikan oleh pengguna."
 
 #: models.py:154
 msgid "answer"
-msgstr "answer"
+msgstr "jawaban"
 
 #: models.py:155
 msgid "answers"
-msgstr "answers"
+msgstr "jawaban"
 
 #: summary.py:243
 msgid "No summary"
-msgstr "No summary"
+msgstr "Tidak ada ringkasan"
 
 #: summary.py:243
 #, python-format
 msgid "Summary is available only for input type: %(input_types)s"
-msgstr "Summary is available only for input type: %(input_types)s"
+msgstr "Rangkuman hanya tersedia untuk jenis input: %(input_types)"
 
 #: templates/djf_surveys/admins/form.html:31 templates/djf_surveys/form.html:38
 msgid "Submit"
-msgstr "Submit"
+msgstr "Kirim"
 
 #: templates/djf_surveys/admins/survey_list.html:10
 msgid "Create a survey"
-msgstr "Create a survey"
+msgstr "Buat survei"
 
 #: templates/djf_surveys/answer_list.html:14
 msgid "Result"
-msgstr "Result"
+msgstr "Hasil"
 
 #: templates/djf_surveys/components/empty_state.html:4
 msgid "There's nothing here..."
-msgstr "There's nothing here..."
+msgstr "Tidak ada apa-apa di sini..."
 
 #: templates/djf_surveys/components/empty_state.html:8
 msgid "Created survey will appear here, try creating one!"
-msgstr "Created survey will appear here, try creating one!"
+msgstr "Survei yang dibuat akan muncul di sini, coba buat!"
 
 #: templates/djf_surveys/components/header_nav.html:10
 msgid "Home"
-msgstr "Home"
+msgstr "Beranda"
 
 #: templates/djf_surveys/components/header_nav.html:15
 #: templates/djf_surveys/components/header_nav.html:50
 msgid "Surveys"
-msgstr "Surveys"
+msgstr "Survei"
 
 #: templates/djf_surveys/components/header_nav.html:16
 #: templates/djf_surveys/components/header_nav.html:53
 msgid "About"
-msgstr "About"
+msgstr "Tentang"
 
 #: templates/djf_surveys/components/modal_choice_field_type.html:22
 msgid "Type Field"
-msgstr ""
+msgstr "Jenis Field"
 
 #: templates/djf_surveys/components/modal_choice_field_type.html:70
 #: templates/djf_surveys/components/modal_delete.html:58
 msgid "Close"
-msgstr "Close"
+msgstr "Tutup"
 
 #: templates/djf_surveys/components/modal_delete.html:21
 msgid "Confirmation"
-msgstr "Confirmation"
+msgstr "Konfirmasi"
 
 #: templates/djf_surveys/components/modal_delete.html:46
 #, python-format
 msgid "Are you sure to delete %(html)s?"
-msgstr "Are you sure to delete %(html)s?"
+msgstr "Anda yakin ingin menghapus %(html)s?"
 
 #: templates/djf_surveys/components/modal_delete.html:65
 msgid "Yes"
-msgstr "Yes"
+msgstr "Ya"
 
 #: templates/djf_surveys/components/search_form.html:7
 msgid "Search..."
-msgstr ""
+msgstr "Cari..."
 
 #: templates/djf_surveys/components/section_welcome.html:8
 msgid "Welcome to the Django Form Survey"
-msgstr "Welcome to the Django Form Survey"
+msgstr "Selamat Datang di Django Form Survey"
 
 #: templates/djf_surveys/components/section_welcome.html:12
 msgid "Making forms easier"
-msgstr "Making forms easier"
+msgstr "Membuat Formulir Tanpa Ribet"
 
 #: templates/djf_surveys/master.html:7
 msgid "Survey"
-msgstr "Survey"
+msgstr "Survei"
 
 #: templates/djf_surveys/widgets/inline_choices.html:86
 msgid "at least two choices"
-msgstr "at least two choices"
+msgstr "Minimal dua pilihan"
 
 #. Translators: String used to replace omitted page numbers in elided page
 #. range generated by paginators, e.g. [1, 2, '…', 5, 6, 7, '…', 9, 10].
@@ -354,51 +352,48 @@ msgstr "…"
 #: validators.py:10
 #, python-format
 msgid "%(value)s is not a number."
-msgstr "%(value)s is not a number."
+msgstr "%(value) bukan angka."
 
 #: validators.py:16
 msgid "Value cannot be greater than 5."
-msgstr "Value cannot be greater than 5."
+msgstr "Nilai tidak boleh lebih besar dari 5."
 
 #: validators.py:21
 msgid "Value cannot be less than 1."
-msgstr "Value cannot be less than 1."
+msgstr "Nilai tidak boleh kurang dari 1."
 
 #: views.py:54
 msgid "Something went wrong."
-msgstr "Something went wrong."
+msgstr "Terjadi beberapa kesalahan."
 
 #: views.py:62
 msgid "Add Survey"
-msgstr "Add Survey"
+msgstr "Tambah Survei"
 
 #: views.py:68
 msgid "Sorry, you must be logged in to fill out the survey."
-msgstr "Sorry, you must be logged in to fill out the survey."
+msgstr "Maaf, Anda harus login untuk mengisi survei."
 
 #: views.py:74
 msgid "You have submitted out this survey."
-msgstr "You have submitted out this survey."
+msgstr "Anda telah mengirimkan survei."
 
 #: views.py:105
 msgid "You can't edit this survey. You don't have permission."
-msgstr "You can't edit this survey. You don't have permission."
+msgstr "Anda tidak dapat mengedit survei ini. Anda tidak memiliki izin."
 
 #: views.py:130
 msgid "You can't delete this survey. You don't have permission."
-msgstr "You can't delete this survey. You don't have permission."
+msgstr "Anda tidak dapat menghapus survei ini. Anda tidak memiliki izin."
 
 #: views.py:137
 msgid "Answer succesfully deleted."
-msgstr "Answer succesfully deleted."
+msgstr "Jawaban berhasil dihapus."
 
 #: views.py:150 views.py:183
 msgid "You can't access this page. You don't have permission."
-msgstr "You can't access this page. You don't have permission."
+msgstr "Anda tidak dapat mengakses halaman ini. Anda tidak memiliki izin."
 
 #: views.py:169
 msgid "Survey Result"
-msgstr "Survey Result"
-
-#~ msgid "Cancel"
-#~ msgstr "Cancel"
+msgstr "Hasil Survei"
