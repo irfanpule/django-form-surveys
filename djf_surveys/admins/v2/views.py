@@ -15,7 +15,7 @@ from django.http import Http404
 from djf_surveys.app_settings import SURVEYS_ADMIN_BASE_PATH
 from djf_surveys.models import Survey, Question, TYPE_FIELD
 from djf_surveys.mixin import ContextTitleMixin
-from djf_surveys.admins.v2.forms import QuestionForm
+from djf_surveys.admins.v2.forms import QuestionForm, QuestionWithChoicesForm
 
 
 @method_decorator(staff_member_required, name='dispatch')
@@ -23,7 +23,6 @@ class AdminCreateQuestionView(ContextTitleMixin, CreateView):
     template_name = 'djf_surveys/admins/question_form_v2.html'
     success_url = reverse_lazy("djf_surveys:")
     title_page = _("Add Question")
-    form_class = QuestionForm
     survey = None
     type_field_id = None
 
@@ -33,6 +32,13 @@ class AdminCreateQuestionView(ContextTitleMixin, CreateView):
         if self.type_field_id not in TYPE_FIELD:
             raise Http404
         return super().dispatch(request, *args, **kwargs)
+
+    def get_form_class(self):
+        choices = [TYPE_FIELD.multi_select, TYPE_FIELD.select, TYPE_FIELD.radio]
+        if self.type_field_id in choices:
+            return QuestionWithChoicesForm
+        else:
+            return QuestionForm
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
@@ -64,19 +70,25 @@ class AdminUpdateQuestionView(ContextTitleMixin, UpdateView):
     template_name = 'djf_surveys/admins/question_form_v2.html'
     success_url = SURVEYS_ADMIN_BASE_PATH
     title_page = _("Edit Question")
-    form_class = QuestionForm
     survey = None
     type_field_id = None
 
     def dispatch(self, request, *args, **kwargs):
         question = self.get_object()
+        self.type_field_id = question.type_field
         self.survey = question.survey
         return super().dispatch(request, *args, **kwargs)
 
+    def get_form_class(self):
+        choices = [TYPE_FIELD.multi_select, TYPE_FIELD.select, TYPE_FIELD.radio]
+        if self.type_field_id in choices:
+            return QuestionWithChoicesForm
+        else:
+            return QuestionForm
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        question = self.get_object()
-        context['type_field_id'] = question.type_field
+        context['type_field_id'] = self.type_field_id
         return context
 
     def get_success_url(self):

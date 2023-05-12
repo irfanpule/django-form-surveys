@@ -1,0 +1,112 @@
+{% load i18n %}
+
+<!-- hidden field -->
+<input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
+
+<!-- loop field value -->
+<div id="djf-wrapper-choice-field">
+{% for value in widget.choice_value %}
+    <div class="relative mb-2 djf-field-choice">
+        <input 
+            type="text" 
+            name="{{ widget.name }}_{{ forloop.counter }}"{% include "djf_surveys/widgets/attrs_exclude_id.html" %}
+            value="{{ value }}"
+            class="djf-input-field w-6 h-6 border border-gray-200 rounded-md mb-4"
+            oninput="updateWidgetValue()">
+        <div class="absolute top-2 right-2">
+            <button class="djf-btn-remove-field py-2 px-2 text-white rounded-lg bg-red-500 hover:bg-red-600" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 stroke-white hover:stroke-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">#}
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+{% endfor %}
+
+<!-- loop field extra -->
+{% for extra in widget.extra %}
+    <div class="relative mb-2 djf-field-choice">
+        <input 
+            type="text" 
+            name="{{ widget.name }}_{{ extra }}"{% include "djf_surveys/widgets/attrs_exclude_id.html" %}
+            class="djf-input-field w-6 h-6 border border-gray-200 rounded-md mb-4"
+            oninput="updateWidgetValue()">
+        <div class="absolute top-2 right-2">
+            <button class="djf-btn-remove-field py-2 px-2 text-white rounded-lg bg-red-500 hover:bg-red-600" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 stroke-white hover:stroke-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">#}
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+<button class="py-2 px-2 text-white rounded-lg bg-blue-500 hover:bg-blue-600" type="button" id="djf-btn-add-field">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 float-left" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+    </svg>
+</button>
+<span class="ml-3 font-medium">{{ widget.choice_label }}</span>
+
+<script>
+    let djfRemoveFieldButtons = [...document.getElementsByClassName("djf-btn-remove-field")];
+    let djfFieldChoice = [...document.getElementsByClassName("djf-field-choice")];
+    const djfBtnAddField = document.getElementById("djf-btn-add-field");
+    const wrapper = document.getElementById("djf-wrapper-choice-field");
+    const widgetName = "{{ widget.name }}";
+
+    function updateWidgetValue() {
+        // This function is used to update all fields then store the value in the hidden field
+        let values = [];
+        for (e of djfFieldChoice) {
+            const value = e.children[0].value;
+            values.push(value);
+        }
+        
+        let widgetValue = values.filter(function (el) {
+            return el != "";
+        });
+        console.log(widgetValue);
+        document.getElementById("id_" + widgetName).value = widgetValue.toString();
+    }
+
+    function removeField(removeFieldButtons) {
+        // This function is used to remove field
+        removeFieldButtons.map((removeBtn) => {
+            removeBtn.onclick = () => {
+                if (djfFieldChoice.length > 2) {
+                    console.log(removeBtn.parentElement.parentElement);
+                    removeBtn.parentElement.parentElement.remove();
+
+                    // update element count
+                    djfFieldChoice = [...document.getElementsByClassName("djf-field-choice")];
+                    updateWidgetValue();
+                } else {
+                    alert("{% trans 'at least two choices' %}");
+                }
+            };
+        });
+    }
+    removeField(djfRemoveFieldButtons);
+
+    djfBtnAddField.onclick = () => {
+        // This event is used to add field
+        const lastField = djfFieldChoice.slice(-1);
+        const fieldName = lastField[0].children[0].getAttribute("name");
+        const lastNumber = parseInt(fieldName.split("_")[1]);
+        const newLastNumer = lastNumber + 1;
+        const node = lastField[0].cloneNode(true);
+        node.children[0].setAttribute("name", "{{ widget.name }}_" + newLastNumer);
+        node.children[0].value = "";
+        document.getElementById("djf-wrapper-choice-field").appendChild(node);
+
+        // update element
+        djfRemoveFieldButtons = [...document.getElementsByClassName("djf-btn-remove-field")];
+        removeField(djfRemoveFieldButtons);
+
+        // update element count
+        djfFieldChoice = [...document.getElementsByClassName("djf-field-choice")];
+    }
+
+</script>
