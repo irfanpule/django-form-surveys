@@ -60,6 +60,7 @@ Django form survey is an application Django to easier create form survey and eas
     - `private reponse`: this option makes the answer list only visible to admin
     - `can anonymous user`: This option allows users without authentication to submit
 - Support many question type (type field): Available field types include:
+![image](https://user-images.githubusercontent.com/11069520/237864026-9f933369-4cf0-4292-a394-ac398eb1be9b.png)
     - Text 
     - Number
     - Radio 
