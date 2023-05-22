@@ -3,7 +3,7 @@ import re
 import sys
 from io import open
 
-from setuptools import find_packages, setup
+from setuptools import setup
 
 
 def read(f):
