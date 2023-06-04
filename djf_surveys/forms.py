@@ -45,8 +45,9 @@ class BaseSurveyForm(forms.Form):
                 )
             elif question.type_field == TYPE_FIELD.select:
                 choices = make_choices(question)
-                self.fields[field_name] = forms.ChoiceField(
-                    choices=choices, label=question.label
+                default_choice = [("", "Sélectionner !")]
+                choices = default_choice + choices
+                self.fields[field_name] = forms.ChoiceField(choices=choices, label=question.label
                 )
             elif question.type_field == TYPE_FIELD.number:
                 self.fields[field_name] = forms.IntegerField(label=question.label)
