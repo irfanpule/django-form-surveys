@@ -45,7 +45,7 @@ class BaseSurveyForm(forms.Form):
                 )
             elif question.type_field == TYPE_FIELD.select:
                 choices = make_choices(question)
-                default_choice = [("", "Sélectionner !")]
+                empty_choice = [("", "Select !")]
                 choices = default_choice + choices
                 self.fields[field_name] = forms.ChoiceField(choices=choices, label=question.label
                 )
