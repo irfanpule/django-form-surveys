@@ -4,7 +4,7 @@ from .models import Survey, Question, Answer, UserAnswer
 
 class AdminQuestion(admin.ModelAdmin):
     list_display = ('survey', 'label', 'type_field', 'help_text', 'required')
-    search_fields = ('survey', )
+    search_fields = ('survey__name', )
 
 
 class AdminAnswer(admin.ModelAdmin):
