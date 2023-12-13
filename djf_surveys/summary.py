@@ -121,25 +121,33 @@ const config%s = {
       y: {
         beginAtZero: true
       }
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: true,
+        text: '%s'
+      }
     }
   },
 };
 """
-        return script % (self.chart_id, self.chart_id)
+        return script % (self.chart_id, self.chart_id, self.chart_name)
 
     def _setup(self):
         script = """
 const data%s = {
   labels: %s,
   datasets: [{
-    label: '%s',
     data: %s,
     backgroundColor: %s,
     borderWidth: 1
   }]
 };
 """
-        return script % (self.chart_id, self.labels, self.chart_name, self.data, self.colors)
+        return script % (self.chart_id, self.labels, self.data, self.colors)
 
 
 class ChartBarRating(ChartBar):
