@@ -3,6 +3,7 @@ from typing import List, Tuple
 from django import forms
 from django.db import transaction
 from django.core.validators import MaxLengthValidator
+from django.utils.translation import gettext_lazy as _
 
 from djf_surveys.models import Answer, TYPE_FIELD, UserAnswer, Question
 from djf_surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey, DateSurvey, RatingSurvey
@@ -45,6 +46,8 @@ class BaseSurveyForm(forms.Form):
                 )
             elif question.type_field == TYPE_FIELD.select:
                 choices = make_choices(question)
+                empty_choice = [("", _("Choose"))]
+                choices = empty_choice + choices
                 self.fields[field_name] = forms.ChoiceField(
                     choices=choices, label=question.label
                 )

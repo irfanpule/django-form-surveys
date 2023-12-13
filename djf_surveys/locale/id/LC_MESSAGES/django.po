@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-12 08:35+0000\n"
+"POT-Creation-Date: 2023-12-13 10:47+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,6 +70,10 @@ msgstr "Urutan pertanyaan berhasil diperbarui"
 #| msgid "No summary"
 msgid "Summary"
 msgstr "Tidak ada ringkasan"
+
+#: forms.py:49
+msgid "Choose"
+msgstr "Pilih"
 
 #: models.py:49
 msgid "name"
@@ -137,7 +141,7 @@ msgstr "Teks"
 
 #: models.py:80 utils.py:68
 msgid "Number"
-msgstr "Angkat"
+msgstr "Angka"
 
 #: models.py:81 utils.py:73
 msgid "Radio"
@@ -145,7 +149,7 @@ msgstr "Radio"
 
 #: models.py:82 utils.py:78
 msgid "Select"
-msgstr "Select"
+msgstr ""
 
 #: models.py:83 utils.py:83
 msgid "Multi Select"

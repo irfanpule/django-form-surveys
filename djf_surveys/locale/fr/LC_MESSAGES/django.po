@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-12 08:35+0000\n"
+"POT-Creation-Date: 2023-12-13 10:49+0700\n"
 "PO-Revision-Date: 2022-11-06 19:06+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -69,6 +69,10 @@ msgstr "Mise à jour de l'ordre des questions réussie."
 #: admins/views.py:218 templates/djf_surveys/admins/summary.html:16
 msgid "Summary"
 msgstr "Résumé"
+
+#: forms.py:49
+msgid "Choose"
+msgstr ""
 
 #: models.py:49
 msgid "name"
