@@ -69,10 +69,6 @@ class Survey(BaseModel):
             self.slug = generate_unique_slug(Survey, self.name, self.id)
         super().save(*args, **kwargs)
 
-    class Meta:
-        verbose_name = _("survey")
-        verbose_name_plural = _("surveys")
-
 
 class Question(BaseModel):
     TYPE_FIELD = [
@@ -161,7 +157,7 @@ class Answer(BaseModel):
     @property
     def get_value(self):
         if self.question.type_field == TYPE_FIELD.rating:
-            return create_star(active_star=int(self.value))
+            return create_star(active_star=int(self.value) if self.value else 0)
         elif self.question.type_field == TYPE_FIELD.url:
             return mark_safe(f'<a href="{self.value}" target="_blank">{self.value}</a>')
         elif self.question.type_field == TYPE_FIELD.radio or self.question.type_field == TYPE_FIELD.select or\
