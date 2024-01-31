@@ -21,7 +21,7 @@ field_validators = {
     },
     'min_length': {
         'text_area': 100,
-        'text': 10
+        'text': 3
     }
 
 }
