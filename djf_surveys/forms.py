@@ -2,7 +2,7 @@ from typing import List, Tuple
 
 from django import forms
 from django.db import transaction
-from django.core.validators import MaxLengthValidator
+from django.core.validators import MaxLengthValidator, MinLengthValidator
 from django.utils.translation import gettext_lazy as _
 
 from djf_surveys.models import Answer, TYPE_FIELD, UserAnswer, Question
@@ -70,7 +70,8 @@ class BaseSurveyForm(forms.Form):
                 )
             elif question.type_field == TYPE_FIELD.text_area:
                 self.fields[field_name] = forms.CharField(
-                    label=question.label, widget=forms.Textarea
+                    label=question.label, widget=forms.Textarea,
+                    validators=[MinLengthValidator(SURVEY_FIELD_VALIDATORS['min_length']['text_area'])]
                 )
             elif question.type_field == TYPE_FIELD.rating:
                 self.fields[field_name] = forms.CharField(
@@ -80,7 +81,10 @@ class BaseSurveyForm(forms.Form):
             else:
                 self.fields[field_name] = forms.CharField(
                     label=question.label,
-                    validators=[MaxLengthValidator(SURVEY_FIELD_VALIDATORS['max_length']['text'])]
+                    validators=[
+                        MinLengthValidator(SURVEY_FIELD_VALIDATORS['min_length']['text']), 
+                        MaxLengthValidator(SURVEY_FIELD_VALIDATORS['max_length']['text'])
+                    ]
                 )
 
             self.fields[field_name].required = question.required

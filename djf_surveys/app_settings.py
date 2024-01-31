@@ -18,12 +18,21 @@ field_validators = {
         'email': 150,
         'text': 250,
         'url': 250
+    },
+    'min_length': {
+        'text_area': 100,
+        'text': 3
     }
+
 }
 if hasattr(settings, 'SURVEY_FIELD_VALIDATORS'):
     max_length = settings.SURVEY_FIELD_VALIDATORS.get('max_length')
     if max_length:
         field_validators['max_length'].update(max_length)
+    min_length = settings.SURVEY_FIELD_VALIDATORS.get("min_length")
+    if min_length:
+        field_validators['min_length'].update(min_length)
+
 SURVEY_FIELD_VALIDATORS = field_validators
 
 # charjs source
