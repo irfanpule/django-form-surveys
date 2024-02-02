@@ -27,11 +27,14 @@ class SurveyListView(ContextTitleMixin, UserPassesTestMixin, ListView):
         return app_settings.SURVEY_ANONYMOUS_VIEW_LIST or self.request.user.is_authenticated
 
     def get_queryset(self):
+        filter = {}
+        if app_settings.SURVEY_ANONYMOUS_VIEW_LIST and not self.request.user.is_authenticated:
+            filter["can_anonymous_user"] = True
         query = self.request.GET.get('q')
         if query:
-            object_list = self.model.objects.filter(name__icontains=query)
+            object_list = self.model.objects.filter(name__icontains=query, **filter)
         else:
-            object_list = self.model.objects.all()
+            object_list = self.model.objects.filter(**filter)
         return object_list
 
     def get_context_data(self, **kwargs):
