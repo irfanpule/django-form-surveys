@@ -15,7 +15,12 @@ class DateSurvey(forms.DateTimeInput):
 
 class RatingSurvey(forms.HiddenInput):
     template_name = 'djf_surveys/widgets/star_rating.html'
+    stars = 8
 
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        context['widget']['num_ratings'] = self.num_ratings
+        return context
 
 class InlineChoiceField(forms.HiddenInput):
     template_name = 'djf_surveys/widgets/inline_choices.html'

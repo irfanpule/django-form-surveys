@@ -6,8 +6,8 @@ from django.utils.translation import gettext_lazy as _
 from djf_surveys import models
 
 
-def create_star(active_star: int, id_element: str = '') -> str:
-    inactive_star = 5 - active_star
+def create_star(active_star: int, num_stars: int = 5, id_element: str = '') -> str:
+    inactive_star = num_stars - active_star
     elements = [f'<div class="flex content-center" id="parent_start_{id_element}">']
     for _ in range(int(active_star)):
         elements.append('<i class ="rating__star rating_active"> </i>')

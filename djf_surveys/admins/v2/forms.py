@@ -21,3 +21,16 @@ class QuestionWithChoicesForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['choices'].widget = InlineChoiceField()
         self.fields['choices'].help_text = _("Click Button Add to adding choice")
+
+class QuestionFormRatings(forms.ModelForm):
+    
+    class Meta:
+        model = Question
+        fields = ['label', 'key', 'choices', 'help_text', 'required']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['choices'].widget = forms.NumberInput()
+        self.fields['choices'].help_text = _("")
+        self.fields['choices'].label = _("Number of ratings")
+        self.fields['choices'].initial = 5

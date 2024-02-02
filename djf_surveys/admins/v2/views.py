@@ -15,7 +15,7 @@ from django.http import Http404
 from djf_surveys.app_settings import SURVEYS_ADMIN_BASE_PATH
 from djf_surveys.models import Survey, Question, TYPE_FIELD
 from djf_surveys.mixin import ContextTitleMixin
-from djf_surveys.admins.v2.forms import QuestionForm, QuestionWithChoicesForm
+from djf_surveys.admins.v2.forms import QuestionForm, QuestionWithChoicesForm, QuestionFormRatings
 
 
 @method_decorator(staff_member_required, name='dispatch')
@@ -37,6 +37,8 @@ class AdminCreateQuestionView(ContextTitleMixin, CreateView):
         choices = [TYPE_FIELD.multi_select, TYPE_FIELD.select, TYPE_FIELD.radio]
         if self.type_field_id in choices:
             return QuestionWithChoicesForm
+        elif self.type_field_id == TYPE_FIELD.rating:
+            return QuestionFormRatings
         else:
             return QuestionForm
 
@@ -83,8 +85,17 @@ class AdminUpdateQuestionView(ContextTitleMixin, UpdateView):
         choices = [TYPE_FIELD.multi_select, TYPE_FIELD.select, TYPE_FIELD.radio]
         if self.type_field_id in choices:
             return QuestionWithChoicesForm
+        elif self.type_field_id == TYPE_FIELD.rating:
+            return QuestionFormRatings
         else:
             return QuestionForm
+        
+    def get_object(self):
+        object = super(UpdateView, self).get_object(self.get_queryset())
+        if object.type_field == TYPE_FIELD.rating:
+            if object.choices == None: # use 5 as default for backward compatibility
+                object.choices = 5
+        return object
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -153,9 +153,10 @@ const data%s = {
 class ChartBarRating(ChartBar):
     height = 200
     rate_avg = 0
+    num_stars = 5
 
     def _base_element_html(self):
-        stars = create_star(active_star=int(self.rate_avg))
+        stars = create_star(active_star=int(self.rate_avg), num_stars=self.num_stars)
         self.element_html = f"""
 <div class="swiper-slide">
     <blockquote class="p-6 border border-gray-100 rounded-lg shadow-lg bg-white">
@@ -192,8 +193,12 @@ class SummaryResponse:
         return pie_chart.render()
     
     def _process_rating_type(self, question: Question):
+        if question.choices == None: # use 5 as default for backward compatibility
+          question.choices = 5
+
         bar_chart = ChartBarRating(chart_id=f"chartbar_{question.id}", chart_name=question.label)
-        labels = ['1', '2', '3', '4', '5']
+        bar_chart.num_stars = int(question.choices)
+        labels = [str(item+1) for item in range(int(question.choices))]
         
         data = []
         for label in labels:
