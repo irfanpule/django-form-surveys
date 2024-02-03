@@ -54,3 +54,7 @@ if hasattr(settings, 'SURVEY_PAGINATION_NUMBER'):
 SURVEY_PAGINATION_NUMBER = number_of_pagination
 
 SURVEYS_ADMIN_BASE_PATH = "dashboard/"
+
+# allow anonymous view of survey list
+SURVEY_ANONYMOUS_VIEW_LIST = settings.SURVEY_ANONYMOUS_VIEW_LIST \
+    if hasattr(settings, 'SURVEY_ANONYMOUS_VIEW_LIST') else False

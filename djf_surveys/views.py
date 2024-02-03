@@ -5,6 +5,7 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import FormMixin
 from django.views.generic.detail import DetailView
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.utils.decorators import method_decorator
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
@@ -16,19 +17,24 @@ from djf_surveys import app_settings
 from djf_surveys.utils import NewPaginator
 
 
-@method_decorator(login_required, name='dispatch')
-class SurveyListView(ContextTitleMixin, ListView):
+class SurveyListView(ContextTitleMixin, UserPassesTestMixin, ListView):
     model = Survey
     title_page = 'Survey List'
     paginate_by = app_settings.SURVEY_PAGINATION_NUMBER['survey_list']
     paginator_class = NewPaginator
 
+    def test_func(self):
+        return app_settings.SURVEY_ANONYMOUS_VIEW_LIST or self.request.user.is_authenticated
+
     def get_queryset(self):
+        filter = {}
+        if app_settings.SURVEY_ANONYMOUS_VIEW_LIST and not self.request.user.is_authenticated:
+            filter["can_anonymous_user"] = True
         query = self.request.GET.get('q')
         if query:
-            object_list = self.model.objects.filter(name__icontains=query)
+            object_list = self.model.objects.filter(name__icontains=query, **filter)
         else:
-            object_list = self.model.objects.all()
+            object_list = self.model.objects.filter(**filter)
         return object_list
 
     def get_context_data(self, **kwargs):
