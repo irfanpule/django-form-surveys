@@ -54,21 +54,22 @@ class SurveyFormView(FormMixin, DetailView):
         context = self.get_context_data(object=self.object)
 
         # use url/get parameters as initial parameters
-        questions = Question.objects.filter(survey=self.object)
-        for param in request.GET.keys(): # loop over all GET parameters
-            for question in questions:
-                if question.key == param: # find corresponding question
-                    field_key = f"field_survey_{question.id}"
-                    if field_key in context["form"].field_names:
-                        if question.type_field == TYPE_FIELD.rating:
-                            if question.choices == None:
-                                question.choices = 5
-                            context["form"][field_key].field.initial = max(0,min(int(request.GET[param]), int(question.choices) - 1))
-                        elif question.type_field == TYPE_FIELD.multi_select:
-                            context["form"][field_key].field.initial = request.GET[param].split(',')
-                        else:
-                            context["form"][field_key].field.initial = request.GET[param]
-                    break
+        if 'create' in request.path:
+            questions = Question.objects.filter(survey=self.object)
+            for param in request.GET.keys(): # loop over all GET parameters
+                for question in questions:
+                    if question.key == param: # find corresponding question
+                        field_key = f"field_survey_{question.id}"
+                        if field_key in context["form"].field_names:
+                            if question.type_field == TYPE_FIELD.rating:
+                                if question.choices == None:
+                                    question.choices = 5
+                                context["form"][field_key].field.initial = max(0,min(int(request.GET[param]), int(question.choices) - 1))
+                            elif question.type_field == TYPE_FIELD.multi_select:
+                                context["form"][field_key].field.initial = request.GET[param].split(',')
+                            else:
+                                context["form"][field_key].field.initial = request.GET[param]
+                        break
 
         return self.render_to_response(context)
 
