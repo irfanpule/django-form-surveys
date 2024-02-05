@@ -30,7 +30,7 @@ class QuestionFormRatings(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['choices'].widget = forms.NumberInput()
+        self.fields['choices'].widget = forms.NumberInput(attrs={'max':10, 'min':1})
         self.fields['choices'].help_text = _("Must be between 1 and 10")
         self.fields['choices'].label = _("Number of ratings")
         self.fields['choices'].initial = 5
