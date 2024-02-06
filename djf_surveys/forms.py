@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 from djf_surveys.models import Answer, TYPE_FIELD, UserAnswer, Question
 from djf_surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey, DateSurvey, RatingSurvey
 from djf_surveys.app_settings import DATE_INPUT_FORMAT, SURVEY_FIELD_VALIDATORS
-from djf_surveys.validators import validate_rating
+from djf_surveys.validators import RatingValidator
 
 
 def make_choices(question: Question) -> List[Tuple[str, str]]:
@@ -74,10 +74,13 @@ class BaseSurveyForm(forms.Form):
                     validators=[MinLengthValidator(SURVEY_FIELD_VALIDATORS['min_length']['text_area'])]
                 )
             elif question.type_field == TYPE_FIELD.rating:
+                if question.choices == None: # use 5 as default for backward compatibility
+                    question.choices = 5
                 self.fields[field_name] = forms.CharField(
                     label=question.label, widget=RatingSurvey,
-                    validators=[MaxLengthValidator(1), validate_rating]
+                    validators=[MaxLengthValidator(len(str(int(question.choices)))), RatingValidator(int(question.choices))]
                 )
+                self.fields[field_name].widget.num_ratings = int(question.choices)
             else:
                 self.fields[field_name] = forms.CharField(
                     label=question.label,

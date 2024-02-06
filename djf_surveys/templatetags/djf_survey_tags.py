@@ -14,6 +14,6 @@ def get_id_field(field):
     return parse[-1]
 
 
-@register.filter(name='create_star')
-def create_star(number, args):
-    return utils_create_star(active_star=int(number), id_element=args)
+@register.simple_tag
+def create_star(number, id_element, num_stars):
+    return utils_create_star(active_star=int(number), num_stars=num_stars, id_element=id_element)

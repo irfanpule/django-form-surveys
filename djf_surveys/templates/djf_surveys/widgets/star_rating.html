@@ -2,9 +2,9 @@
 
 <input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
 {% if widget.value != None %}
-    {{ widget.value|create_star:widget.attrs.id }}
+    {% create_star widget.value widget.attrs.id widget.num_ratings %}
 {% else %}
-    {{ "0"|create_star:widget.attrs.id }}
+    {% create_star "0" widget.attrs.id widget.num_ratings %}
 {% endif %}
 
 <script>

@@ -157,7 +157,9 @@ class Answer(BaseModel):
     @property
     def get_value(self):
         if self.question.type_field == TYPE_FIELD.rating:
-            return create_star(active_star=int(self.value) if self.value else 0)
+            if self.question.choices == None: # use 5 as default for backward compatibility
+                self.question.choices = 5
+            return create_star(active_star=int(self.value) if self.value else 0, num_stars=int(self.question.choices))
         elif self.question.type_field == TYPE_FIELD.url:
             return mark_safe(f'<a href="{self.value}" target="_blank">{self.value}</a>')
         elif self.question.type_field == TYPE_FIELD.radio or self.question.type_field == TYPE_FIELD.select or\

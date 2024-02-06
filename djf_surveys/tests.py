@@ -1,14 +1,17 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
-from djf_surveys.validators import validate_rating
+from djf_surveys.validators import RatingValidator
 
 
 class ValidationForm(TestCase):
     def test_validate_rating(self):
         with self.assertRaises(ValidationError):
-            validate_rating(0)
+            val = RatingValidator(10)
+            val(0)
 
         with self.assertRaises(ValidationError):
-            validate_rating(100)
+            val = RatingValidator(10)
+            val(100)
 
-        validate_rating(2)
+        val = RatingValidator(5)
+        val(2)
