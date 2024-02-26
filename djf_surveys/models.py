@@ -54,6 +54,7 @@ class Survey(BaseModel):
     duplicate_entry = models.BooleanField(_("mutiple submissions"), default=False, help_text=_("If True, user can resubmit."))
     private_response = models.BooleanField(_("private response"), default=False, help_text=_("If True, only admin and owner can access."))
     can_anonymous_user = models.BooleanField(_("anonymous submission"), default=False, help_text=_("If True, user without authentatication can submit."))
+    notification_to = models.TextField(_("Notification To"), blank=True, null=True, help_text=_("Enter your email to be notified when the form is submitted"))
 
     class Meta:
         verbose_name = _("survey")

@@ -5,8 +5,8 @@ from django.db import transaction
 from django.core.validators import MaxLengthValidator, MinLengthValidator
 from django.utils.translation import gettext_lazy as _
 
-from djf_surveys.models import Answer, TYPE_FIELD, UserAnswer, Question
-from djf_surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey, DateSurvey, RatingSurvey
+from djf_surveys.models import Answer, TYPE_FIELD, UserAnswer, Question, Survey
+from djf_surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey, DateSurvey, RatingSurvey, InlineChoiceField
 from djf_surveys.app_settings import DATE_INPUT_FORMAT, SURVEY_FIELD_VALIDATORS
 from djf_surveys.validators import RatingValidator
 
@@ -129,6 +129,22 @@ class CreateSurveyForm(BaseSurveyForm):
             Answer.objects.create(
                 question=question, value=value, user_answer=user_answer
             )
+
+
+class SurveyWithChoicesForm(forms.ModelForm):
+    
+    class Meta:
+        model = Survey
+        fields = [
+            'name', 'description', 'editable', 'deletable', 
+            'duplicate_entry', 'private_response', 'can_anonymous_user',
+            'notification_to'
+        ]
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['notification_to'].widget = InlineChoiceField()
+        self.fields['notification_to'].help_text = _("Click Button Add to adding notification to")
 
 
 class EditSurveyForm(BaseSurveyForm):

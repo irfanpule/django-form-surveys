@@ -18,18 +18,14 @@ from djf_surveys.app_settings import SURVEYS_ADMIN_BASE_PATH
 from djf_surveys.models import Survey, Question, UserAnswer
 from djf_surveys.mixin import ContextTitleMixin
 from djf_surveys.views import SurveyListView
-from djf_surveys.forms import BaseSurveyForm
+from djf_surveys.forms import BaseSurveyForm, CreateSurveyForm, SurveyWithChoicesForm
 from djf_surveys.summary import SummaryResponse
 
 
 @method_decorator(staff_member_required, name='dispatch')
 class AdminCrateSurveyView(ContextTitleMixin, CreateView):
-    model = Survey
     template_name = 'djf_surveys/admins/form.html'
-    fields = [
-        'name', 'description', 'editable', 'deletable', 
-        'duplicate_entry', 'private_response', 'can_anonymous_user'
-    ]
+    form_class = SurveyWithChoicesForm
     title_page = _("Add New Survey")
 
     def post(self, request, *args, **kwargs):
@@ -46,11 +42,8 @@ class AdminCrateSurveyView(ContextTitleMixin, CreateView):
 @method_decorator(staff_member_required, name='dispatch')
 class AdminEditSurveyView(ContextTitleMixin, UpdateView):
     model = Survey
+    form_class = SurveyWithChoicesForm
     template_name = 'djf_surveys/admins/form.html'
-    fields = [
-        'name', 'description', 'editable', 'deletable', 
-        'duplicate_entry', 'private_response', 'can_anonymous_user'
-    ]
     title_page = _("Edit Survey")
 
     def get_success_url(self):
