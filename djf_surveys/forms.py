@@ -2,12 +2,13 @@ from typing import List, Tuple
 
 from django import forms
 from django.db import transaction
+from django.core.mail import send_mail
 from django.core.validators import MaxLengthValidator, MinLengthValidator
 from django.utils.translation import gettext_lazy as _
 
 from djf_surveys.models import Answer, TYPE_FIELD, UserAnswer, Question, Survey
 from djf_surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey, DateSurvey, RatingSurvey, InlineChoiceField
-from djf_surveys.app_settings import DATE_INPUT_FORMAT, SURVEY_FIELD_VALIDATORS
+from djf_surveys.app_settings import DATE_INPUT_FORMAT, SURVEY_FIELD_VALIDATORS, EMAIL_FROM
 from djf_surveys.validators import RatingValidator
 
 
@@ -129,6 +130,16 @@ class CreateSurveyForm(BaseSurveyForm):
             Answer.objects.create(
                 question=question, value=value, user_answer=user_answer
             )
+
+        user_answer_count = UserAnswer.objects.filter(survey=self.survey).count()
+        
+        send_mail(
+            f"Notification {self.survey.name}",
+            f"You get one new respondent. The total number of respondents is currently {user_answer_count}",
+            'EMAIL_FROM',
+            self.survey.notification_to.split(","),
+            fail_silently=False,
+        )
 
 
 class SurveyWithChoicesForm(forms.ModelForm):
