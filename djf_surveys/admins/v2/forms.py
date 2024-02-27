@@ -1,6 +1,6 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from djf_surveys.models import Question
+from djf_surveys.models import Question, Survey
 from djf_surveys.widgets import InlineChoiceField
 
 
@@ -22,6 +22,7 @@ class QuestionWithChoicesForm(forms.ModelForm):
         self.fields['choices'].widget = InlineChoiceField()
         self.fields['choices'].help_text = _("Click Button Add to adding choice")
 
+
 class QuestionFormRatings(forms.ModelForm):
     
     class Meta:
@@ -34,3 +35,18 @@ class QuestionFormRatings(forms.ModelForm):
         self.fields['choices'].help_text = _("Must be between 1 and 10")
         self.fields['choices'].label = _("Number of ratings")
         self.fields['choices'].initial = 5
+
+
+class SurveyForm(forms.ModelForm):
+    
+    class Meta:
+        model = Survey
+        fields = [
+            'name', 'description', 'editable', 'deletable', 
+            'duplicate_entry', 'private_response', 'can_anonymous_user',
+            'notification_to'
+        ]
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['notification_to'].widget = InlineChoiceField()

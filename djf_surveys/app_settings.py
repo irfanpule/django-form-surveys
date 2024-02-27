@@ -58,3 +58,7 @@ SURVEYS_ADMIN_BASE_PATH = "dashboard/"
 # allow anonymous view of survey list
 SURVEY_ANONYMOUS_VIEW_LIST = settings.SURVEY_ANONYMOUS_VIEW_LIST \
     if hasattr(settings, 'SURVEY_ANONYMOUS_VIEW_LIST') else False
+
+# email address which the notification is sent
+EMAIL_FROM = settings.EMAIL_FROM \
+    if hasattr(settings, 'EMAIL_FROM') else False
