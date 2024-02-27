@@ -2,7 +2,7 @@ from typing import List, Tuple
 
 from django import forms
 from django.db import transaction
-from django.core.mail import send_mail
+from django.core.mail import send_mail, BadHeaderError
 from django.core.validators import MaxLengthValidator, MinLengthValidator
 from django.utils.translation import gettext_lazy as _
 
@@ -131,15 +131,18 @@ class CreateSurveyForm(BaseSurveyForm):
                 question=question, value=value, user_answer=user_answer
             )
 
-        if self.survey.notification_to:
-            user_answer_count = UserAnswer.objects.filter(survey=self.survey).count()
-            send_mail(
-                _('Notification {survey_name}').format(survey_name=self.survey.name),
-                _('You have received one new response. The total number of responses is currently {count}').format(count=user_answer_count),
-                EMAIL_FROM,
-                self.survey.notification_to.split(","),
-                fail_silently=False,
-            )
+        if self.survey.notification_to and EMAIL_FROM:
+            try:
+                user_answer_count = UserAnswer.objects.filter(survey=self.survey).count()
+                send_mail(
+                    _('Notification {survey_name}').format(survey_name=self.survey.name),
+                    _('You have received one new response. The total number of responses is currently {count}').format(count=user_answer_count),
+                    EMAIL_FROM,
+                    self.survey.notification_to.split(","),
+                    fail_silently=False,
+                )
+            except (BadHeaderError, ConnectionError) as e:
+                print(e) 
 
 
 class EditSurveyForm(BaseSurveyForm):
