@@ -131,31 +131,15 @@ class CreateSurveyForm(BaseSurveyForm):
                 question=question, value=value, user_answer=user_answer
             )
 
-        user_answer_count = UserAnswer.objects.filter(survey=self.survey).count()
-        
-        send_mail(
-            f"Notification {self.survey.name}",
-            f"You get one new respondent. The total number of respondents is currently {user_answer_count}",
-            'EMAIL_FROM',
-            self.survey.notification_to.split(","),
-            fail_silently=False,
-        )
-
-
-class SurveyWithChoicesForm(forms.ModelForm):
-    
-    class Meta:
-        model = Survey
-        fields = [
-            'name', 'description', 'editable', 'deletable', 
-            'duplicate_entry', 'private_response', 'can_anonymous_user',
-            'notification_to'
-        ]
-    
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['notification_to'].widget = InlineChoiceField()
-        self.fields['notification_to'].help_text = _("Click Button Add to adding notification to")
+        if self.survey.notification_to:
+            user_answer_count = UserAnswer.objects.filter(survey=self.survey).count()
+            send_mail(
+                _('Notification {survey_name}').format(survey_name=self.survey.name),
+                _('You have received one new response. The total number of responses is currently {count}').format(count=user_answer_count),
+                EMAIL_FROM,
+                self.survey.notification_to.split(","),
+                fail_silently=False,
+            )
 
 
 class EditSurveyForm(BaseSurveyForm):
