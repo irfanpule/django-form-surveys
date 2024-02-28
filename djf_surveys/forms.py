@@ -6,8 +6,8 @@ from django.core.mail import send_mail, BadHeaderError
 from django.core.validators import MaxLengthValidator, MinLengthValidator
 from django.utils.translation import gettext_lazy as _
 
-from djf_surveys.models import Answer, TYPE_FIELD, UserAnswer, Question, Survey
-from djf_surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey, DateSurvey, RatingSurvey, InlineChoiceField
+from djf_surveys.models import Answer, TYPE_FIELD, UserAnswer, Question
+from djf_surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey, DateSurvey, RatingSurvey
 from djf_surveys.app_settings import DATE_INPUT_FORMAT, SURVEY_FIELD_VALIDATORS, EMAIL_FROM
 from djf_surveys.validators import RatingValidator
 
@@ -136,7 +136,8 @@ class CreateSurveyForm(BaseSurveyForm):
                 user_answer_count = UserAnswer.objects.filter(survey=self.survey).count()
                 send_mail(
                     _('Notification {survey_name}').format(survey_name=self.survey.name),
-                    _('You have received one new response. The total number of responses is currently {count}').format(count=user_answer_count),
+                    _('You have received one new response. '
+                    'The total number of responses is currently {count}').format(count=user_answer_count),
                     EMAIL_FROM,
                     self.survey.notification_to.split(","),
                     fail_silently=False,
