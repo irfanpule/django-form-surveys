@@ -2,13 +2,23 @@
 
 Django form survey is an application Django to easier create form survey and easy integrated for your project.
 
-![image](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/dashboard-index.png)
-![summary](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/chart_summary.png)
+![image](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/gif/djf_submit_survey_edit.gif)
+
 ## Table of content
 - Installation
 - Features
+    - Manage Surveys
+    - Option Config
+    - Question Types
+    - Easy Sort
+    - Change Master Template
+    - Summary Respondents
+    - Download Report
+    - Notification
 - Configuration
- 
+- For Contributor
+
+
 ## Installation
 - Install django-form-surveys using:
     ```
@@ -75,11 +85,11 @@ Django form survey is an application Django to easier create form survey and eas
 - Easy sorting question: You can drag and drop to sort question
   ![image](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/gif/djf_drag_n_drop_edit.gif)
 - Change master template: look section `Configuration`
-- Duplicate entry: look section `Configuration`
 - Download respondent report
   ![download_report](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/download_report_respondent_button.png)
 - Summary: You can see the survey summary in a charts. Summary just calculate type field "radio, select, multi_select, rating"
   ![summary](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/chart_summary.png)
+- Notification: You can send an email notification when the survey is submitted. To make sure it works look section `Configuration`
 
 
 ## Configuration
@@ -123,13 +133,10 @@ There are several configurations that you can write on `settings.py`
       'survey_list': 2
   }
   ```
+- `SURVEY_EMAIL_FROM`, -> `str`: Enter your email from and then don't forget to define your SMTP
 
 
-### Thanks!
-![image](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/gif/djf_submit_survey_edit.gif)
-
-
-### For Contributor
+## For Contributor
 - clone project
 - symlink app to `demo`
   ```bash
@@ -139,3 +146,7 @@ There are several configurations that you can write on `settings.py`
 - active `env`
 - enter directory `demo`
 - now, you can access all command `manage.py`
+
+
+### Thanks!
+

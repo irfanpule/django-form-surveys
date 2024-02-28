@@ -60,5 +60,5 @@ SURVEY_ANONYMOUS_VIEW_LIST = settings.SURVEY_ANONYMOUS_VIEW_LIST \
     if hasattr(settings, 'SURVEY_ANONYMOUS_VIEW_LIST') else False
 
 # email address which the notification is sent
-EMAIL_FROM = settings.EMAIL_FROM \
-    if hasattr(settings, 'EMAIL_FROM') else False
+SURVEY_EMAIL_FROM = settings.SURVEY_EMAIL_FROM \
+    if hasattr(settings, 'SURVEY_EMAIL_FROM') else False
