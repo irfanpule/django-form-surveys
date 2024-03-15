@@ -19,6 +19,7 @@ Django form survey is an application Django to easier create form survey and eas
     - [User Photo Profile](#user-photo-profile)
     - [Field Validators](#field-validators)
     - [Email From](#email-from)
+    - [Anonymous Access](#anonymous-access-surveys)
 - [For Contributor](#for-contributor)
 
 
@@ -157,6 +158,8 @@ SURVEY_PAGINATION_NUMBER = {
 #### Email From
 `SURVEY_EMAIL_FROM`, -> `str`: Enter your email from and then don't forget to define your SMTP
 
+#### Anonymous Access Surveys
+`SURVEY_ANONYMOUS_VIEW_LIST`, -> `bool`: This configuration allows anonymous access to the survey page. The survey that appears has an `Anonymous submission` option.
 
 ## For Contributor
 - clone project
