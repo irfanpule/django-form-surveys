@@ -103,11 +103,12 @@ You can download report as csv
 
 #### Notification
 You can send an email notification when the survey is submitted. To make sure it works look section `Configuration`
-  ![notification](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/notification_to.png)
+![notification](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/notification_to.png)
 
 ### Success Page Content
 You can change the content of the success page to provide specific instructions or a special message.
-
+![success_page](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/success-page-content.png)
+![success_page](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/success-page.png)
 
 ### Configuration
 There are several configurations that you can write on `settings.py`
