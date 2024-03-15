@@ -88,7 +88,6 @@ class SurveyFormView(FormMixin, DetailView):
 class CreateSurveyFormView(ContextTitleMixin, SurveyFormView):
     model = Survey
     form_class = CreateSurveyForm
-    success_url = reverse_lazy("djf_surveys:index")
     title_page = _("Add Survey")
 
     def dispatch(self, request, *args, **kwargs):
@@ -115,6 +114,9 @@ class CreateSurveyFormView(ContextTitleMixin, SurveyFormView):
 
     def get_sub_title_page(self):
         return self.get_object().description
+
+    def get_success_url(self):
+        return reverse("djf_surveys:success", kwargs={"slug": self.get_object().slug})
 
 
 @method_decorator(login_required, name='dispatch')
