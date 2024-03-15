@@ -171,7 +171,7 @@ class DeleteSurveyAnswerView(DetailView):
 class DetailSurveyView(ContextTitleMixin, DetailView):
     model = Survey
     template_name = "djf_surveys/answer_list.html"
-    title_page = "Survey Detail"
+    title_page = _("Survey Detail")
     paginate_by = app_settings.SURVEY_PAGINATION_NUMBER['answer_list']
 
     def dispatch(self, request, *args, **kwargs):
@@ -229,3 +229,9 @@ def share_link(request, slug):
         if user_answer:
             return redirect(reverse_lazy("djf_surveys:edit", kwargs={'pk': user_answer.id}))
     return redirect(reverse_lazy("djf_surveys:create", kwargs={'slug': survey.slug}))
+
+
+class SuccessPageSurveyView(ContextTitleMixin, DetailView):
+    model = Survey
+    template_name = "djf_surveys/success-page.html"
+    title_page = _("Submitted Successfully")
