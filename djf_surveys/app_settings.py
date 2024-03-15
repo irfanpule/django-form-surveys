@@ -53,6 +53,7 @@ if hasattr(settings, 'SURVEY_PAGINATION_NUMBER'):
         number_of_pagination['answer_list'] = answer_list
 SURVEY_PAGINATION_NUMBER = number_of_pagination
 
+# override group url for admin
 SURVEYS_ADMIN_BASE_PATH = "dashboard/"
 
 # allow anonymous view of survey list
@@ -62,3 +63,7 @@ SURVEY_ANONYMOUS_VIEW_LIST = settings.SURVEY_ANONYMOUS_VIEW_LIST \
 # email address which the notification is sent
 SURVEY_EMAIL_FROM = settings.SURVEY_EMAIL_FROM \
     if hasattr(settings, 'SURVEY_EMAIL_FROM') else False
+
+# to set link back button on success page
+SURVEY_LINK_BACK_ON_SUCCESS_PAGE = settings.SURVEY_LINK_BACK_ON_SUCCESS_PAGE \
+    if hasattr(settings, 'SURVEY_LINK_BACK_ON_SUCCESS_PAGE') else "/"

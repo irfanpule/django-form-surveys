@@ -10,7 +10,6 @@ from django.utils.translation import gettext_lazy as _
 from djf_surveys import app_settings
 from djf_surveys.utils import create_star
 
-
 TYPE_FIELD = namedtuple(
     'TYPE_FIELD', 'text number radio select multi_select text_area url email date rating'
 )._make(range(10))
@@ -37,6 +36,7 @@ def generate_unique_slug(klass, field, id, identifier='slug'):
         obj = klass.objects.filter(**mapping).first()
     return unique_slug
 
+
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -49,12 +49,22 @@ class Survey(BaseModel):
     name = models.CharField(_("name"), max_length=200)
     description = models.TextField(_("description"), default='')
     slug = models.SlugField(_("slug"), max_length=225, default='')
-    editable = models.BooleanField(_("editable"), default=True, help_text=_("If False, user can't edit record."))
-    deletable = models.BooleanField(_("deletable"), default=True, help_text=_("If False, user can't delete record."))
-    duplicate_entry = models.BooleanField(_("mutiple submissions"), default=False, help_text=_("If True, user can resubmit."))
-    private_response = models.BooleanField(_("private response"), default=False, help_text=_("If True, only admin and owner can access."))
-    can_anonymous_user = models.BooleanField(_("anonymous submission"), default=False, help_text=_("If True, user without authentatication can submit."))
-    notification_to = models.TextField(_("Notification To"), blank=True, null=True, help_text=_("Enter your email to be notified when the form is submitted"))
+    editable = models.BooleanField(_("editable"), default=True,
+                                   help_text=_("If False, user can't edit record."))
+    deletable = models.BooleanField(_("deletable"), default=True,
+                                    help_text=_("If False, user can't delete record."))
+    duplicate_entry = models.BooleanField(_("mutiple submissions"), default=False,
+                                          help_text=_("If True, user can resubmit."))
+    private_response = models.BooleanField(_("private response"), default=False,
+                                           help_text=_("If True, only admin and owner can access."))
+    can_anonymous_user = models.BooleanField(_("anonymous submission"), default=False,
+                                             help_text=_("If True, user without authentatication can submit."))
+    notification_to = models.TextField(_("Notification To"), blank=True, null=True,
+                                       help_text=_("Enter your email to be notified when the form is submitted"))
+    success_page_content = models.TextField(
+        _("Success Page Content"), blank=True, null=True,
+        help_text=_("You can override success page content at here. Support HTML syntax")
+    )
 
     class Meta:
         verbose_name = _("survey")
@@ -85,23 +95,29 @@ class Question(BaseModel):
         (TYPE_FIELD.rating, _("Rating"))
     ]
 
-    key = models.CharField(_("key"), max_length=225, unique=True, null=True, blank=True,
-                           help_text=_("Unique key for this question, fill in the blank if you want to use for automatic generation."))
+    key = models.CharField(
+        _("key"), max_length=225, unique=True, null=True, blank=True,
+        help_text=_("Unique key for this question, fill in the blank if you want to use for automatic generation.")
+    )
     survey = models.ForeignKey(Survey, related_name='questions', on_delete=models.CASCADE, verbose_name=_("survey"))
     label = models.CharField(_("label"), max_length=500, help_text=_("Enter your question in here."))
     type_field = models.PositiveSmallIntegerField(_("type of input field"), choices=TYPE_FIELD)
     choices = models.TextField(
         _("choices"),
         blank=True, null=True,
-        help_text=_("If type of field is radio, select, or multi select, fill in the options separated by commas. Ex: Male, Female.")
+        help_text=_(
+            "If type of field is radio, select, or multi select, fill in the options separated "
+            "by commas. Ex: Male, Female.")
     )
     help_text = models.CharField(
         _("help text"),
         max_length=200, blank=True, null=True,
         help_text=_("You can add a help text in here.")
     )
-    required = models.BooleanField(_("required"), default=True, help_text=_("If True, the user must provide an answer to this question."))
-    ordering = models.PositiveIntegerField(_("choices"), default=0, help_text=_("Defines the question order within the surveys."))
+    required = models.BooleanField(_("required"), default=True,
+                                   help_text=_("If True, the user must provide an answer to this question."))
+    ordering = models.PositiveIntegerField(_("choices"), default=0,
+                                           help_text=_("Defines the question order within the surveys."))
 
     class Meta:
         verbose_name = _("question")
@@ -116,14 +132,14 @@ class Question(BaseModel):
             self.key = generate_unique_slug(Question, self.key, self.id, "key")
         else:
             self.key = generate_unique_slug(Question, self.label, self.id, "key")
-            
+
         super(Question, self).save(*args, **kwargs)
 
 
 class UserAnswer(BaseModel):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE, verbose_name=_("survey"))
     user = models.ForeignKey(get_user_model(), blank=True, null=True, on_delete=models.CASCADE, verbose_name=_("user"))
-    
+
     class Meta:
         verbose_name = _("user answer")
         verbose_name_plural = _("user answers")
@@ -158,20 +174,20 @@ class Answer(BaseModel):
     @property
     def get_value(self):
         if self.question.type_field == TYPE_FIELD.rating:
-            if self.question.choices == None: # use 5 as default for backward compatibility
+            if self.question.choices == None:  # use 5 as default for backward compatibility
                 self.question.choices = 5
             return create_star(active_star=int(self.value) if self.value else 0, num_stars=int(self.question.choices))
         elif self.question.type_field == TYPE_FIELD.url:
             return mark_safe(f'<a href="{self.value}" target="_blank">{self.value}</a>')
-        elif self.question.type_field == TYPE_FIELD.radio or self.question.type_field == TYPE_FIELD.select or\
+        elif self.question.type_field == TYPE_FIELD.radio or self.question.type_field == TYPE_FIELD.select or \
                 self.question.type_field == TYPE_FIELD.multi_select:
             return self.value.strip().replace("_", " ").capitalize()
         else:
             return self.value
-    
+
     @property
     def get_value_for_csv(self):
-        if self.question.type_field == TYPE_FIELD.radio or self.question.type_field == TYPE_FIELD.select or\
+        if self.question.type_field == TYPE_FIELD.radio or self.question.type_field == TYPE_FIELD.select or \
                 self.question.type_field == TYPE_FIELD.multi_select:
             return self.value.strip().replace("_", " ").capitalize()
         else:

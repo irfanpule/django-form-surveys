@@ -44,7 +44,7 @@ class SurveyForm(forms.ModelForm):
         fields = [
             'name', 'description', 'editable', 'deletable', 
             'duplicate_entry', 'private_response', 'can_anonymous_user',
-            'notification_to'
+            'notification_to', 'success_page_content'
         ]
     
     def __init__(self, *args, **kwargs):

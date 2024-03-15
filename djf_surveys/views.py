@@ -88,7 +88,6 @@ class SurveyFormView(FormMixin, DetailView):
 class CreateSurveyFormView(ContextTitleMixin, SurveyFormView):
     model = Survey
     form_class = CreateSurveyForm
-    success_url = reverse_lazy("djf_surveys:index")
     title_page = _("Add Survey")
 
     def dispatch(self, request, *args, **kwargs):
@@ -115,6 +114,9 @@ class CreateSurveyFormView(ContextTitleMixin, SurveyFormView):
 
     def get_sub_title_page(self):
         return self.get_object().description
+
+    def get_success_url(self):
+        return reverse("djf_surveys:success", kwargs={"slug": self.get_object().slug})
 
 
 @method_decorator(login_required, name='dispatch')
@@ -171,7 +173,7 @@ class DeleteSurveyAnswerView(DetailView):
 class DetailSurveyView(ContextTitleMixin, DetailView):
     model = Survey
     template_name = "djf_surveys/answer_list.html"
-    title_page = "Survey Detail"
+    title_page = _("Survey Detail")
     paginate_by = app_settings.SURVEY_PAGINATION_NUMBER['answer_list']
 
     def dispatch(self, request, *args, **kwargs):
@@ -229,3 +231,9 @@ def share_link(request, slug):
         if user_answer:
             return redirect(reverse_lazy("djf_surveys:edit", kwargs={'pk': user_answer.id}))
     return redirect(reverse_lazy("djf_surveys:create", kwargs={'slug': survey.slug}))
+
+
+class SuccessPageSurveyView(ContextTitleMixin, DetailView):
+    model = Survey
+    template_name = "djf_surveys/success-page.html"
+    title_page = _("Submitted Successfully")

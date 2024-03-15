@@ -20,6 +20,7 @@ Django form survey is an application Django to easier create form survey and eas
     - [Field Validators](#field-validators)
     - [Email From](#email-from)
     - [Anonymous Access](#anonymous-access-surveys)
+    - [Link Back Button On Succes Page](#link-back-button-on-success-page)
 - [For Contributor](#for-contributor)
 
 
@@ -104,6 +105,9 @@ You can download report as csv
 You can send an email notification when the survey is submitted. To make sure it works look section `Configuration`
   ![notification](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/notification_to.png)
 
+### Success Page Content
+You can change the content of the success page to provide specific instructions or a special message.
+
 
 ### Configuration
 There are several configurations that you can write on `settings.py`
@@ -161,6 +165,9 @@ SURVEY_PAGINATION_NUMBER = {
 #### Anonymous Access Surveys
 `SURVEY_ANONYMOUS_VIEW_LIST`, -> `bool`: This configuration allows anonymous access to the survey page. The survey that appears has an `Anonymous submission` option.
 
+
+#### Link Back Button On Success Page
+`SURVEY_LINK_BACK_ON_SUCCESS_PAGE` -> `str`: This configuration is to change default link back on success page
 ## For Contributor
 - clone project
 - symlink app to `demo`
