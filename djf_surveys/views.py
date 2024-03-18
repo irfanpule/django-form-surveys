@@ -56,15 +56,16 @@ class SurveyFormView(FormMixin, DetailView):
         # use url/get parameters as initial parameters
         if 'create' in request.path:
             questions = Question.objects.filter(survey=self.object)
-            for param in request.GET.keys(): # loop over all GET parameters
+            for param in request.GET.keys():  # loop over all GET parameters
                 for question in questions:
-                    if question.key == param: # find corresponding question
+                    if question.key == param:  # find corresponding question
                         field_key = f"field_survey_{question.id}"
                         if field_key in context["form"].field_names:
                             if question.type_field == TYPE_FIELD.rating:
-                                if question.choices == None:
+                                if not question.choices:
                                     question.choices = 5
-                                context["form"][field_key].field.initial = max(0,min(int(request.GET[param]), int(question.choices) - 1))
+                                context["form"][field_key].field.initial = max(0, min(int(request.GET[param]),
+                                                                                      int(question.choices) - 1))
                             elif question.type_field == TYPE_FIELD.multi_select:
                                 context["form"][field_key].field.initial = request.GET[param].split(',')
                             else:
@@ -78,7 +79,8 @@ class SurveyFormView(FormMixin, DetailView):
         self.object = self.get_object()
         if form.is_valid():
             form.save()
-            messages.success(self.request, gettext("%(page_action_name)s succeeded.") % dict(page_action_name=capfirst(self.title_page.lower())))
+            messages.success(self.request, gettext("%(page_action_name)s succeeded.") % dict(
+                page_action_name=capfirst(self.title_page.lower())))
             return self.form_valid(form)
         else:
             messages.error(self.request, gettext("Something went wrong."))
