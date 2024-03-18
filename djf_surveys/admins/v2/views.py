@@ -1,14 +1,10 @@
-import csv
-from io import StringIO
-
 from django.utils.text import capfirst
 from django.utils.translation import gettext, gettext_lazy as _
 from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic.detail import DetailView
 from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse, reverse_lazy
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.http import Http404
 
@@ -49,7 +45,8 @@ class AdminCreateQuestionView(ContextTitleMixin, CreateView):
             question.survey = self.survey
             question.type_field = self.type_field_id
             question.save()
-            messages.success(self.request, gettext("%(page_action_name)s succeeded.") % dict(page_action_name=capfirst(self.title_page.lower())))
+            messages.success(self.request, gettext("%(page_action_name)s succeeded.") % dict(
+                page_action_name=capfirst(self.title_page.lower())))
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
@@ -89,11 +86,11 @@ class AdminUpdateQuestionView(ContextTitleMixin, UpdateView):
             return QuestionFormRatings
         else:
             return QuestionForm
-        
+
     def get_object(self):
         object = super(UpdateView, self).get_object(self.get_queryset())
         if object.type_field == TYPE_FIELD.rating:
-            if object.choices == None: # use 5 as default for backward compatibility
+            if not object.choices:  # use 5 as default for backward compatibility
                 object.choices = 5
         return object
 

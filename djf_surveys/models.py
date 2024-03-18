@@ -174,7 +174,7 @@ class Answer(BaseModel):
     @property
     def get_value(self):
         if self.question.type_field == TYPE_FIELD.rating:
-            if self.question.choices == None:  # use 5 as default for backward compatibility
+            if not self.question.choices:  # use 5 as default for backward compatibility
                 self.question.choices = 5
             return create_star(active_star=int(self.value) if self.value else 0, num_stars=int(self.question.choices))
         elif self.question.type_field == TYPE_FIELD.url:

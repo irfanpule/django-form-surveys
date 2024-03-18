@@ -75,18 +75,19 @@ class BaseSurveyForm(forms.Form):
                     validators=[MinLengthValidator(SURVEY_FIELD_VALIDATORS['min_length']['text_area'])]
                 )
             elif question.type_field == TYPE_FIELD.rating:
-                if question.choices == None: # use 5 as default for backward compatibility
+                if not question.choices:  # use 5 as default for backward compatibility
                     question.choices = 5
                 self.fields[field_name] = forms.CharField(
                     label=question.label, widget=RatingSurvey,
-                    validators=[MaxLengthValidator(len(str(int(question.choices)))), RatingValidator(int(question.choices))]
+                    validators=[MaxLengthValidator(len(str(int(question.choices)))),
+                                RatingValidator(int(question.choices))]
                 )
                 self.fields[field_name].widget.num_ratings = int(question.choices)
             else:
                 self.fields[field_name] = forms.CharField(
                     label=question.label,
                     validators=[
-                        MinLengthValidator(SURVEY_FIELD_VALIDATORS['min_length']['text']), 
+                        MinLengthValidator(SURVEY_FIELD_VALIDATORS['min_length']['text']),
                         MaxLengthValidator(SURVEY_FIELD_VALIDATORS['max_length']['text'])
                     ]
                 )
@@ -137,13 +138,13 @@ class CreateSurveyForm(BaseSurveyForm):
                 send_mail(
                     _('Notification {survey_name}').format(survey_name=self.survey.name),
                     _('You have received one new response. '
-                    'The total number of responses is currently {count}').format(count=user_answer_count),
+                      'The total number of responses is currently {count}').format(count=user_answer_count),
                     SURVEY_EMAIL_FROM,
                     self.survey.notification_to.split(","),
                     fail_silently=False,
                 )
             except (BadHeaderError, ConnectionError) as e:
-                print(e) 
+                print(e)
 
 
 class EditSurveyForm(BaseSurveyForm):
