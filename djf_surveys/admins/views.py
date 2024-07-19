@@ -29,15 +29,11 @@ class AdminCrateSurveyView(ContextTitleMixin, CreateView):
     form_class = SurveyForm
     title_page = _("Add New Survey")
 
-    def post(self, request, *args, **kwargs):
-        form = self.get_form()
-        if form.is_valid():
-            survey = form.save()
-            self.success_url = reverse("djf_surveys:admin_forms_survey", args=[survey.slug])
-            messages.success(self.request, gettext("%(page_action_name)s succeeded.") % dict(page_action_name=capfirst(self.title_page.lower())))
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
+    def get_success_url(self):
+        survey = self.object
+        messages.success(self.request, gettext("%(page_action_name)s succeeded.") % dict(
+            page_action_name=capfirst(self.title_page.lower())))
+        return reverse("djf_surveys:admin_forms_survey", args=[survey.slug])
 
 
 @method_decorator(staff_member_required, name='dispatch')
@@ -48,7 +44,9 @@ class AdminEditSurveyView(ContextTitleMixin, UpdateView):
     title_page = _("Edit Survey")
 
     def get_success_url(self):
-        survey = self.get_object()
+        survey = self.object
+        messages.success(self.request, gettext("%(page_action_name)s succeeded.") % dict(
+                        page_action_name=capfirst(self.title_page.lower())))
         return reverse("djf_surveys:admin_forms_survey", args=[survey.slug])
 
 

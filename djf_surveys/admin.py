@@ -24,7 +24,7 @@ class AdminUserAnswer(admin.ModelAdmin):
 
 class AdminSurvey(admin.ModelAdmin):
     list_display = ('name', 'slug')
-    exclude = ['slug']
+    search_fields = ('name', 'slug')
 
 
 admin.site.register(Survey, AdminSurvey)

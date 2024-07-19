@@ -44,14 +44,26 @@ class SurveyForm(forms.ModelForm):
     class Meta:
         model = Survey
         fields = [
-            'name', 'description', 'editable', 'deletable', 
+            'name', 'slug', 'description', 'editable', 'deletable',
             'duplicate_entry', 'private_response', 'can_anonymous_user',
             'notification_to', 'success_page_content'
         ]
         widgets = {
             'success_page_content': TinyMCE(mce_attrs=SURVEY_TINYMCE_DEFAULT_CONFIG)
         }
-    
+        help_texts = {
+            'slug': _("Leave the field blank if you want the slug to be generated automatically"),
+        }
+
+    def clean_slug(self):
+        slug = self.cleaned_data['slug']
+        if self.instance and self.instance.slug != slug and Survey.objects.filter(slug=slug).exists():
+            raise forms.ValidationError(_('Slug already exists'))
+        if not self.instance and slug and Survey.objects.filter(slug=slug).exists():
+            raise forms.ValidationError(_('Slug already exists'))
+        return slug
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['notification_to'].widget = InlineChoiceField()
+        self.fields['slug'].required = False

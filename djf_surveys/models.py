@@ -72,9 +72,7 @@ class Survey(BaseModel):
         return self.name
 
     def save(self, *args, **kwargs):
-        if self.slug:
-            self.slug = generate_unique_slug(Survey, self.slug, self.id)
-        else:
+        if not self.slug:
             self.slug = generate_unique_slug(Survey, self.name, self.id)
         super().save(*args, **kwargs)
 
