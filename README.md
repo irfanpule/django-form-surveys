@@ -107,8 +107,11 @@ You can send an email notification when the survey is submitted. To make sure it
 
 ### Success Page Content
 You can change the content of the success page to provide specific instructions or a special message.
-![success_page](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/success-page-content.png)
 ![success_page](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/success-page.png)
+![success_page](https://raw.githubusercontent.com/irfanpule/django-form-surveys/master/docs/screnshots/success-page-content.png)
+This use `django-tinycme`. For advanced config toolbar you can see the [Documentation](https://django-tinymce.readthedocs.io/en/latest/index.html)
+
+
 
 ### Configuration
 There are several configurations that you can write on `settings.py`
@@ -160,6 +163,7 @@ SURVEY_PAGINATION_NUMBER = {
 }
 ```
 
+#### Email From
 #### Email From
 `SURVEY_EMAIL_FROM`, -> `str`: Enter your email from and then don't forget to define your SMTP
 
