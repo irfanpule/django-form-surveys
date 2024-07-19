@@ -2,6 +2,8 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 from djf_surveys.models import Question, Survey
 from djf_surveys.widgets import InlineChoiceField
+from tinymce.widgets import TinyMCE
+from djf_surveys.app_settings import SURVEY_TINYMCE_DEFAULT_CONFIG
 
 
 class QuestionForm(forms.ModelForm):
@@ -46,6 +48,9 @@ class SurveyForm(forms.ModelForm):
             'duplicate_entry', 'private_response', 'can_anonymous_user',
             'notification_to', 'success_page_content'
         ]
+        widgets = {
+            'success_page_content': TinyMCE(mce_attrs=SURVEY_TINYMCE_DEFAULT_CONFIG)
+        }
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'djf_surveys',
     'demo',
+    'tinymce'
 ]
 
 MIDDLEWARE = [

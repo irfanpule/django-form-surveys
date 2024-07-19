@@ -1,6 +1,6 @@
 import random, string
 from collections import namedtuple
-
+from tinymce.models import HTMLField
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 
 from djf_surveys import app_settings
 from djf_surveys.utils import create_star
+
 
 TYPE_FIELD = namedtuple(
     'TYPE_FIELD', 'text number radio select multi_select text_area url email date rating'
@@ -61,10 +62,7 @@ class Survey(BaseModel):
                                              help_text=_("If True, user without authentatication can submit."))
     notification_to = models.TextField(_("Notification To"), blank=True, null=True,
                                        help_text=_("Enter your email to be notified when the form is submitted"))
-    success_page_content = models.TextField(
-        _("Success Page Content"), blank=True, null=True,
-        help_text=_("You can override success page content at here. Support HTML syntax")
-    )
+    success_page_content = HTMLField(_("Success Page Content"), blank=True, null=True)
 
     class Meta:
         verbose_name = _("survey")

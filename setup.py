@@ -69,7 +69,7 @@ setup(
     author_email='irfan.pule2@gmail.com',
     packages=get_packages('djf_surveys'),
     include_package_data=True,
-    install_requires=["django>=2.2", "pytz"],
+    install_requires=["django>=2.2", "pytz", "django-tinymce>=4.1.0"],
     python_requires=">=3.6",
     zip_safe=False,
     classifiers=[

@@ -67,3 +67,18 @@ SURVEY_EMAIL_FROM = settings.SURVEY_EMAIL_FROM \
 # to set link back button on success page
 SURVEY_LINK_BACK_ON_SUCCESS_PAGE = settings.SURVEY_LINK_BACK_ON_SUCCESS_PAGE \
     if hasattr(settings, 'SURVEY_LINK_BACK_ON_SUCCESS_PAGE') else "/"
+
+
+# to set tinymce default config
+SURVEY_TINYMCE_DEFAULT_CONFIG = settings.TINYMCE_DEFAULT_CONFIG \
+    if hasattr(settings, 'TINYMCE_DEFAULT_CONFIG') else {
+    "menubar": "edit view insert format tools table",
+    "plugins": "advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code "
+    "fullscreen insertdatetime media table paste code help wordcount spellchecker",
+    "toolbar": "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft "
+    "aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor "
+    "backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | "
+    "fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | "
+    "a11ycheck ltr rtl | showcomments addcomment code",
+    "custom_undo_redo_levels": 10,
+}
