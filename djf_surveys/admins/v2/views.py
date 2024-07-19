@@ -38,18 +38,14 @@ class AdminCreateQuestionView(ContextTitleMixin, CreateView):
         else:
             return QuestionForm
 
-    def post(self, request, *args, **kwargs):
-        form = self.get_form()
-        if form.is_valid():
-            question = form.save(commit=False)
-            question.survey = self.survey
-            question.type_field = self.type_field_id
-            question.save()
-            messages.success(self.request, gettext("%(page_action_name)s succeeded.") % dict(
-                page_action_name=capfirst(self.title_page.lower())))
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
+    def form_valid(self, form):
+        question = form.save(commit=False)
+        question.survey = self.survey
+        question.type_field = self.type_field_id
+        self.object = question.save()
+        messages.success(self.request, gettext("%(page_action_name)s succeeded.") % dict(
+                         page_action_name=capfirst(self.title_page.lower())))
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
