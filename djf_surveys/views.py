@@ -152,6 +152,9 @@ class EditSurveyFormView(ContextTitleMixin, SurveyFormView):
     def get_sub_title_page(self):
         return self.get_object().survey.description
 
+    def get_success_url(self):
+        return reverse("djf_surveys:success", kwargs={"slug": self.get_object().survey.slug})
+
 
 @method_decorator(login_required, name='dispatch')
 class DeleteSurveyAnswerView(DetailView):
