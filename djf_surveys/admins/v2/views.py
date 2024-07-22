@@ -12,9 +12,10 @@ from djf_surveys.app_settings import SURVEYS_ADMIN_BASE_PATH
 from djf_surveys.models import Survey, Question, TYPE_FIELD, TermsValidators
 from djf_surveys.mixin import ContextTitleMixin
 from djf_surveys.admins.v2.forms import (
-    QuestionForm, QuestionWithChoicesForm, QuestionFormRatings, QuestionEmailForm
+    QuestionForm, QuestionWithChoicesForm, QuestionFormRatings, QuestionEmailForm, QuestionTextForm,
+    QuestionTextAreaForm, QuestionNumberForm
 )
-from djf_surveys.validators import TermsEmailValidator
+from djf_surveys.validators import TermsEmailValidator, TermsTextValidator, TermsTextAreaValidator, TermsNumberValidator
 
 
 @method_decorator(staff_member_required, name='dispatch')
@@ -40,6 +41,12 @@ class AdminCreateQuestionView(ContextTitleMixin, CreateView):
             return QuestionFormRatings
         elif self.type_field_id == TYPE_FIELD.email:
             return QuestionEmailForm
+        elif self.type_field_id == TYPE_FIELD.text:
+            return QuestionTextForm
+        elif self.type_field_id == TYPE_FIELD.text_area:
+            return QuestionTextAreaForm
+        elif self.type_field_id == TYPE_FIELD.number:
+            return QuestionNumberForm
         else:
             return QuestionForm
 
@@ -53,6 +60,21 @@ class AdminCreateQuestionView(ContextTitleMixin, CreateView):
         if self.type_field_id == TYPE_FIELD.email:
             terms = TermsEmailValidator(
                 type_filter=form.cleaned_data['type_filter'], email_domain=form.cleaned_data['email_domain']
+            )
+            TermsValidators.objects.create(question=question, terms=terms.to_dict())
+        elif self.type_field_id == TYPE_FIELD.text:
+            terms = TermsTextValidator(
+                min_length=form.cleaned_data['min_length'], max_length=form.cleaned_data['max_length']
+            )
+            TermsValidators.objects.create(question=question, terms=terms.to_dict())
+        elif self.type_field_id == TYPE_FIELD.text_area:
+            terms = TermsTextAreaValidator(
+                min_length=form.cleaned_data['min_length'], max_length=form.cleaned_data['max_length']
+            )
+            TermsValidators.objects.create(question=question, terms=terms.to_dict())
+        elif self.type_field_id == TYPE_FIELD.number:
+            terms = TermsNumberValidator(
+                min_value=form.cleaned_data['min_value'], max_value=form.cleaned_data['max_value']
             )
             TermsValidators.objects.create(question=question, terms=terms.to_dict())
 
@@ -95,6 +117,12 @@ class AdminUpdateQuestionView(ContextTitleMixin, UpdateView):
             return QuestionFormRatings
         elif self.type_field_id == TYPE_FIELD.email:
             return QuestionEmailForm
+        elif self.type_field_id == TYPE_FIELD.text:
+            return QuestionTextForm
+        elif self.type_field_id == TYPE_FIELD.text_area:
+            return QuestionTextAreaForm
+        elif self.type_field_id == TYPE_FIELD.number:
+            return QuestionNumberForm
         else:
             return QuestionForm
 
@@ -109,10 +137,23 @@ class AdminUpdateQuestionView(ContextTitleMixin, UpdateView):
         initial = super().get_initial()
 
         # initial data for TermsValidators
-        if hasattr(self.object, 'termsvalidators') and self.type_field_id == TYPE_FIELD.email:
-            terms = TermsEmailValidator.to_object(self.object.termsvalidators.terms)
-            initial['type_filter'] = terms.type_filter
-            initial['email_domain'] = terms.email_domain
+        if hasattr(self.object, 'termsvalidators'):
+            if self.type_field_id == TYPE_FIELD.email:
+                terms = TermsEmailValidator.to_object(self.object.termsvalidators.terms)
+                initial['type_filter'] = terms.type_filter
+                initial['email_domain'] = terms.email_domain
+            elif self.type_field_id == TYPE_FIELD.text:
+                terms = TermsTextValidator.to_object(self.object.termsvalidators.terms)
+                initial['min_length'] = terms.min_length
+                initial['max_length'] = terms.max_length
+            elif self.type_field_id == TYPE_FIELD.text_area:
+                terms = TermsTextAreaValidator.to_object(self.object.termsvalidators.terms)
+                initial['min_length'] = terms.min_length
+                initial['max_length'] = terms.max_length
+            elif self.type_field_id == TYPE_FIELD.number:
+                terms = TermsNumberValidator.to_object(self.object.termsvalidators.terms)
+                initial['min_value'] = terms.min_value
+                initial['max_value'] = terms.max_value
         return initial
 
     def form_valid(self, form):
@@ -125,6 +166,24 @@ class AdminUpdateQuestionView(ContextTitleMixin, UpdateView):
         if self.type_field_id == TYPE_FIELD.email:
             terms = TermsEmailValidator(
                 type_filter=form.cleaned_data['type_filter'], email_domain=form.cleaned_data['email_domain']
+            )
+            TermsValidators.objects.update_or_create(
+                question=question, defaults={"terms": terms.to_dict(), "question": question})
+        elif self.type_field_id == TYPE_FIELD.text:
+            terms = TermsTextValidator(
+                min_length=form.cleaned_data['min_length'], max_length=form.cleaned_data['max_length']
+            )
+            TermsValidators.objects.update_or_create(
+                question=question, defaults={"terms": terms.to_dict(), "question": question})
+        elif self.type_field_id == TYPE_FIELD.text_area:
+            terms = TermsTextAreaValidator(
+                min_length=form.cleaned_data['min_length'], max_length=form.cleaned_data['max_length']
+            )
+            TermsValidators.objects.update_or_create(
+                question=question, defaults={"terms": terms.to_dict(), "question": question})
+        elif self.type_field_id == TYPE_FIELD.number:
+            terms = TermsNumberValidator(
+                min_value=form.cleaned_data['min_value'], max_value=form.cleaned_data['max_value']
             )
             TermsValidators.objects.update_or_create(
                 question=question, defaults={"terms": terms.to_dict(), "question": question})

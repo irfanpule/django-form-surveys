@@ -20,6 +20,51 @@ class TermsEmailValidator(object):
         return cls
 
 
+class TermsTextValidator:
+    max_length = 200
+    min_length = 5
+
+    def __init__(self, max_length: int = 0, min_length: int = 0):
+        if max_length:
+            self.max_length = max_length
+        if min_length:
+            self.min_length = min_length
+
+    def to_dict(self) -> dict:
+        return self.__dict__
+
+    @classmethod
+    def to_object(cls, data: dict):
+        cls.max_length = data.get("max_length")
+        cls.min_length = data.get("min_length")
+        return cls
+
+
+class TermsTextAreaValidator(TermsTextValidator):
+    max_length = 1000
+    min_length = 100
+
+
+class TermsNumberValidator(TermsTextValidator):
+    max_value = 1000
+    min_value = 5
+
+    def __init__(self, max_value: int = 0, min_value: int = 0):
+        if max_value:
+            self.max_value = max_value
+        if min_value:
+            self.min_value = min_value
+
+    def to_dict(self) -> dict:
+        return self.__dict__
+
+    @classmethod
+    def to_object(cls, data: dict):
+        cls.max_value = data.get("max_value")
+        cls.min_value = data.get("min_value")
+        return cls
+
+
 class RatingValidator(object):
     def __init__(self, max):
         self.max = max
