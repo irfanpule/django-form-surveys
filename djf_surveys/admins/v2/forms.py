@@ -61,6 +61,45 @@ class QuestionEmailForm(forms.ModelForm):
         fields = ['label', 'key', 'help_text', 'required', 'type_filter', 'email_domain']
 
 
+class QuestionTextForm(forms.ModelForm):
+    max_length = forms.IntegerField(
+        label=_("Max. Length"), min_value=3, max_value=220, initial=200, help_text=_("Max. Length: Text input"),
+    )
+    min_length = forms.IntegerField(
+        label=_("Min. Length"), min_value=3, max_value=200, initial=5, help_text=_("Min. Length: Text input"),
+    )
+
+    class Meta:
+        model = Question
+        fields = ['label', 'key', 'help_text', 'required', 'max_length', 'min_length']
+
+
+class QuestionNumberForm(forms.ModelForm):
+    max_value = forms.IntegerField(
+        label=_("Max. Value"), min_value=1, initial=1000, help_text=_("Max. value: Number"),
+    )
+    min_value = forms.IntegerField(
+        label=_("Min. Value"), min_value=1, initial=1, help_text=_("Min. value: Number"),
+    )
+
+    class Meta:
+        model = Question
+        fields = ['label', 'key', 'help_text', 'required', 'max_value', 'min_value']
+
+
+class QuestionTextAreaForm(forms.ModelForm):
+    max_length = forms.IntegerField(
+        label=_("Max. Length"), min_value=10, initial=1000, max_value=1000, help_text=_("Max. Length: Text input"),
+    )
+    min_length = forms.IntegerField(
+        label=_("Min. Length"), min_value=3, initial=100, max_value=100, help_text=_("Min. Length: Text input"),
+    )
+
+    class Meta:
+        model = Question
+        fields = ['label', 'key', 'help_text', 'required', 'max_length', 'min_length']
+
+
 class SurveyForm(forms.ModelForm):
     
     class Meta:

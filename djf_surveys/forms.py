@@ -3,13 +3,16 @@ from typing import List, Tuple
 from django import forms
 from django.db import transaction
 from django.core.mail import send_mail, BadHeaderError
-from django.core.validators import MaxLengthValidator, MinLengthValidator
+from django.core.validators import MaxLengthValidator, MinLengthValidator, MaxValueValidator, MinValueValidator
 from django.utils.translation import gettext_lazy as _
 
 from djf_surveys.models import Answer, TYPE_FIELD, UserAnswer, Question
 from djf_surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey, DateSurvey, RatingSurvey
 from djf_surveys.app_settings import DATE_INPUT_FORMAT, SURVEY_FIELD_VALIDATORS, SURVEY_EMAIL_FROM
-from djf_surveys.validators import RatingValidator, SurveyEmailValidator, TermsEmailValidator
+from djf_surveys.validators import (
+    RatingValidator, SurveyEmailValidator, TermsEmailValidator, TermsTextValidator, TermsTextAreaValidator,
+    TermsNumberValidator
+)
 
 
 def make_choices(question: Question) -> List[Tuple[str, str]]:
@@ -53,7 +56,18 @@ class BaseSurveyForm(forms.Form):
                     choices=choices, label=question.label
                 )
             elif question.type_field == TYPE_FIELD.number:
-                self.fields[field_name] = forms.IntegerField(label=question.label)
+                # add other terms validator
+                validators = []
+                if hasattr(question, 'termsvalidators'):
+                    terms = TermsNumberValidator.to_object(question.termsvalidators.terms)
+                    validators.append(MinValueValidator(terms.min_value))
+                    validators.append(MaxValueValidator(terms.max_value))
+                else:
+                    terms = TermsNumberValidator()
+                    validators.append(MinValueValidator(terms.min_value))
+                    validators.append(MaxValueValidator(terms.max_value))
+
+                self.fields[field_name] = forms.IntegerField(label=question.label, validators=validators)
             elif question.type_field == TYPE_FIELD.url:
                 self.fields[field_name] = forms.URLField(
                     label=question.label,
@@ -67,20 +81,28 @@ class BaseSurveyForm(forms.Form):
                     terms = TermsEmailValidator.to_object(question.termsvalidators.terms)
                     validators.append(SurveyEmailValidator(terms))
 
-                self.fields[field_name] = forms.EmailField(
-                    label=question.label,
-                    validators=validators
-                )
+                self.fields[field_name] = forms.EmailField(label=question.label, validators=validators)
+
             elif question.type_field == TYPE_FIELD.date:
                 self.fields[field_name] = forms.DateField(
                     label=question.label, widget=DateSurvey(),
                     input_formats=DATE_INPUT_FORMAT
                 )
             elif question.type_field == TYPE_FIELD.text_area:
+                # add other terms validator
+                validators = []
+                if hasattr(question, 'termsvalidators'):
+                    terms = TermsTextValidator.to_object(question.termsvalidators.terms)
+                    validators.append(MinLengthValidator(terms.min_length))
+                    validators.append(MaxLengthValidator(terms.max_length))
+                else:
+                    terms = TermsTextValidator()
+                    validators.append(MinLengthValidator(terms.min_length))
+                    validators.append(MaxLengthValidator(terms.max_length))
+
                 self.fields[field_name] = forms.CharField(
-                    label=question.label, widget=forms.Textarea,
-                    validators=[MinLengthValidator(SURVEY_FIELD_VALIDATORS['min_length']['text_area'])]
-                )
+                    label=question.label, widget=forms.Textarea, validators=validators)
+
             elif question.type_field == TYPE_FIELD.rating:
                 if not question.choices:  # use 5 as default for backward compatibility
                     question.choices = 5
