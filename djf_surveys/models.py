@@ -188,3 +188,11 @@ class Answer(BaseModel):
             return self.value.strip().replace("_", " ").capitalize()
         else:
             return self.value.strip()
+
+
+class TermsValidators(BaseModel):
+    question = models.OneToOneField(Question, on_delete=models.CASCADE, verbose_name=_("question"))
+    terms = models.JSONField(_("terms"), default=dict)
+
+    def __str__(self):
+        return f"{self.question}"

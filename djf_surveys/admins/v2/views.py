@@ -9,9 +9,12 @@ from django.contrib import messages
 from django.http import Http404
 
 from djf_surveys.app_settings import SURVEYS_ADMIN_BASE_PATH
-from djf_surveys.models import Survey, Question, TYPE_FIELD
+from djf_surveys.models import Survey, Question, TYPE_FIELD, TermsValidators
 from djf_surveys.mixin import ContextTitleMixin
-from djf_surveys.admins.v2.forms import QuestionForm, QuestionWithChoicesForm, QuestionFormRatings
+from djf_surveys.admins.v2.forms import (
+    QuestionForm, QuestionWithChoicesForm, QuestionFormRatings, QuestionEmailForm
+)
+from djf_surveys.validators import TermsEmailValidator
 
 
 @method_decorator(staff_member_required, name='dispatch')
@@ -35,6 +38,8 @@ class AdminCreateQuestionView(ContextTitleMixin, CreateView):
             return QuestionWithChoicesForm
         elif self.type_field_id == TYPE_FIELD.rating:
             return QuestionFormRatings
+        elif self.type_field_id == TYPE_FIELD.email:
+            return QuestionEmailForm
         else:
             return QuestionForm
 
@@ -43,6 +48,14 @@ class AdminCreateQuestionView(ContextTitleMixin, CreateView):
         question.survey = self.survey
         question.type_field = self.type_field_id
         self.object = question.save()
+
+        # save terms validator
+        if self.type_field_id == TYPE_FIELD.email:
+            terms = TermsEmailValidator(
+                type_filter=form.cleaned_data['type_filter'], email_domain=form.cleaned_data['email_domain']
+            )
+            TermsValidators.objects.create(question=question, terms=terms.to_dict())
+
         messages.success(self.request, gettext("%(page_action_name)s succeeded.") % dict(
                          page_action_name=capfirst(self.title_page.lower())))
         return super().form_valid(form)
@@ -80,6 +93,8 @@ class AdminUpdateQuestionView(ContextTitleMixin, UpdateView):
             return QuestionWithChoicesForm
         elif self.type_field_id == TYPE_FIELD.rating:
             return QuestionFormRatings
+        elif self.type_field_id == TYPE_FIELD.email:
+            return QuestionEmailForm
         else:
             return QuestionForm
 
@@ -89,6 +104,34 @@ class AdminUpdateQuestionView(ContextTitleMixin, UpdateView):
             if not object.choices:  # use 5 as default for backward compatibility
                 object.choices = 5
         return object
+
+    def get_initial(self):
+        initial = super().get_initial()
+
+        # initial data for TermsValidators
+        if hasattr(self.object, 'termsvalidators') and self.type_field_id == TYPE_FIELD.email:
+            terms = TermsEmailValidator.to_object(self.object.termsvalidators.terms)
+            initial['type_filter'] = terms.type_filter
+            initial['email_domain'] = terms.email_domain
+        return initial
+
+    def form_valid(self, form):
+        question = form.save(commit=False)
+        question.survey = self.survey
+        question.type_field = self.type_field_id
+        self.object = question.save()
+
+        # save terms validator
+        if self.type_field_id == TYPE_FIELD.email:
+            terms = TermsEmailValidator(
+                type_filter=form.cleaned_data['type_filter'], email_domain=form.cleaned_data['email_domain']
+            )
+            TermsValidators.objects.update_or_create(
+                question=question, defaults={"terms": terms.to_dict(), "question": question})
+
+        messages.success(self.request, gettext("%(page_action_name)s succeeded.") % dict(
+                         page_action_name=capfirst(self.title_page.lower())))
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

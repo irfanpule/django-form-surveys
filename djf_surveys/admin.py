@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Survey, Question, Answer, UserAnswer
+from .models import Survey, Question, Answer, UserAnswer, TermsValidators
 
 
 class AdminQuestion(admin.ModelAdmin):
@@ -27,7 +27,12 @@ class AdminSurvey(admin.ModelAdmin):
     search_fields = ('name', 'slug')
 
 
+class AdminTermsValidator(admin.ModelAdmin):
+    list_display = ('question', 'terms')
+
+
 admin.site.register(Survey, AdminSurvey)
 admin.site.register(Question, AdminQuestion)
 admin.site.register(Answer, AdminAnswer)
 admin.site.register(UserAnswer, AdminUserAnswer)
+admin.site.register(TermsValidators, AdminTermsValidator)

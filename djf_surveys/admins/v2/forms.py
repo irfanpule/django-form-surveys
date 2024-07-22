@@ -39,6 +39,28 @@ class QuestionFormRatings(forms.ModelForm):
         self.fields['choices'].initial = 5
 
 
+class QuestionEmailForm(forms.ModelForm):
+    type_filter = forms.ChoiceField(
+        label=_("Type Filter"),
+        choices=(
+            ('', _('--- Choices ---')),
+            ('whitelist', 'Whitelist'),
+            ('blacklist', 'Blacklist'),
+        ),
+        widget=forms.Select(),
+        required=False,
+        help_text=_("Filter type to accept allowed email domains"),
+    )
+    email_domain = forms.CharField(
+        label='Email Domains', help_text=_('Click Button Add to adding data'),
+        widget=InlineChoiceField()
+    )
+
+    class Meta:
+        model = Question
+        fields = ['label', 'key', 'help_text', 'required', 'type_filter', 'email_domain']
+
+
 class SurveyForm(forms.ModelForm):
     
     class Meta:

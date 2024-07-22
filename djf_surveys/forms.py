@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from djf_surveys.models import Answer, TYPE_FIELD, UserAnswer, Question
 from djf_surveys.widgets import CheckboxSelectMultipleSurvey, RadioSelectSurvey, DateSurvey, RatingSurvey
 from djf_surveys.app_settings import DATE_INPUT_FORMAT, SURVEY_FIELD_VALIDATORS, SURVEY_EMAIL_FROM
-from djf_surveys.validators import RatingValidator
+from djf_surveys.validators import RatingValidator, SurveyEmailValidator, TermsEmailValidator
 
 
 def make_choices(question: Question) -> List[Tuple[str, str]]:
@@ -60,9 +60,16 @@ class BaseSurveyForm(forms.Form):
                     validators=[MaxLengthValidator(SURVEY_FIELD_VALIDATORS['max_length']['url'])]
                 )
             elif question.type_field == TYPE_FIELD.email:
+                validators = [MaxLengthValidator(SURVEY_FIELD_VALIDATORS['max_length']['email'])]
+
+                # add other terms validator
+                if hasattr(question, 'termsvalidators'):
+                    terms = TermsEmailValidator.to_object(question.termsvalidators.terms)
+                    validators.append(SurveyEmailValidator(terms))
+
                 self.fields[field_name] = forms.EmailField(
                     label=question.label,
-                    validators=[MaxLengthValidator(SURVEY_FIELD_VALIDATORS['max_length']['email'])]
+                    validators=validators
                 )
             elif question.type_field == TYPE_FIELD.date:
                 self.fields[field_name] = forms.DateField(
