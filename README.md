@@ -30,13 +30,14 @@ Django form survey is an application Django to easier create form survey and eas
     pip install django-form-surveys
     ```
 
-- Add `djf_surveys` to your `INSTALLED_APPS` setting like this
-    ```
-    INSTALLED_APPS = [
-        ...
-        'djf_surveys',
-    ]
-    ```
+  - Add `djf_surveys` to your `INSTALLED_APPS` setting like this
+      ```
+      INSTALLED_APPS = [
+          ...
+          'djf_surveys',
+          'tinymce',  # dependency
+      ]
+      ```
 
 - Add context processor `'djf_surveys.context_processors.surveys_context'`
     ```
