@@ -133,7 +133,8 @@ SURVEY_FIELD_VALIDATORS = {
     'max_length': {
         'email': 150,
         'text': 250,
-        'url': 250
+        'url': 250,
+        'text_area': 1000
     },
     'min_length': {
         'text_area': 100,

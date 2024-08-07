@@ -17,13 +17,13 @@ field_validators = {
     'max_length': {
         'email': 150,
         'text': 250,
-        'url': 250
+        'url': 250,
+        'text_area': 1000,
     },
     'min_length': {
         'text_area': 100,
         'text': 3
     }
-
 }
 if hasattr(settings, 'SURVEY_FIELD_VALIDATORS'):
     max_length = settings.SURVEY_FIELD_VALIDATORS.get('max_length')
