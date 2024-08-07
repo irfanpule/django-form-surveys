@@ -92,11 +92,11 @@ class BaseSurveyForm(forms.Form):
                 # add other terms validator
                 validators = []
                 if hasattr(question, 'termsvalidators'):
-                    terms = TermsTextValidator.to_object(question.termsvalidators.terms)
+                    terms = TermsTextAreaValidator.to_object(question.termsvalidators.terms)
                     validators.append(MinLengthValidator(terms.min_length))
                     validators.append(MaxLengthValidator(terms.max_length))
                 else:
-                    terms = TermsTextValidator()
+                    terms = TermsTextAreaValidator()
                     validators.append(MinLengthValidator(terms.min_length))
                     validators.append(MaxLengthValidator(terms.max_length))
 
@@ -113,13 +113,19 @@ class BaseSurveyForm(forms.Form):
                 )
                 self.fields[field_name].widget.num_ratings = int(question.choices)
             else:
+                # add other terms validator
+                validators = []
+                if hasattr(question, 'termsvalidators'):
+                    terms = TermsTextValidator.to_object(question.termsvalidators.terms)
+                    validators.append(MinLengthValidator(terms.min_length))
+                    validators.append(MaxLengthValidator(terms.max_length))
+                else:
+                    terms = TermsTextValidator()
+                    validators.append(MinLengthValidator(terms.min_length))
+                    validators.append(MaxLengthValidator(terms.max_length))
+
                 self.fields[field_name] = forms.CharField(
-                    label=question.label,
-                    validators=[
-                        MinLengthValidator(SURVEY_FIELD_VALIDATORS['min_length']['text']),
-                        MaxLengthValidator(SURVEY_FIELD_VALIDATORS['max_length']['text'])
-                    ]
-                )
+                    label=question.label, validators=validators)
 
             self.fields[field_name].required = question.required
             self.fields[field_name].help_text = question.help_text

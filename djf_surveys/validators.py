@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from djf_surveys.app_settings import field_validators
 
 
 class TermsEmailValidator(object):
@@ -21,8 +22,8 @@ class TermsEmailValidator(object):
 
 
 class TermsTextValidator:
-    max_length = 200
-    min_length = 5
+    max_length = field_validators['max_length']['text']
+    min_length = field_validators['min_length']['text']
 
     def __init__(self, max_length: int = 0, min_length: int = 0):
         if max_length:
@@ -41,8 +42,8 @@ class TermsTextValidator:
 
 
 class TermsTextAreaValidator(TermsTextValidator):
-    max_length = 1000
-    min_length = 100
+    max_length = field_validators['max_length']['text_area']
+    min_length = field_validators['max_length']['text_area']
 
 
 class TermsNumberValidator(TermsTextValidator):

@@ -4,6 +4,7 @@ from djf_surveys.models import Question, Survey
 from djf_surveys.widgets import InlineChoiceField
 from tinymce.widgets import TinyMCE
 from djf_surveys.app_settings import SURVEY_TINYMCE_DEFAULT_CONFIG
+from djf_surveys.app_settings import field_validators
 
 
 class QuestionForm(forms.ModelForm):
@@ -63,10 +64,14 @@ class QuestionEmailForm(forms.ModelForm):
 
 class QuestionTextForm(forms.ModelForm):
     max_length = forms.IntegerField(
-        label=_("Max. Length"), min_value=3, max_value=220, initial=200, help_text=_("Max. Length: Text input"),
+        label=_("Max. Length"),
+        min_value=3, max_value=250,
+        initial=field_validators['max_length']['text'], help_text=_("Max. Length: Text input"),
     )
     min_length = forms.IntegerField(
-        label=_("Min. Length"), min_value=3, max_value=200, initial=5, help_text=_("Min. Length: Text input"),
+        label=_("Min. Length"),
+        min_value=3, max_value=200,
+        initial=field_validators['min_length']['text'], help_text=_("Min. Length: Text input"),
     )
 
     class Meta:
@@ -89,10 +94,16 @@ class QuestionNumberForm(forms.ModelForm):
 
 class QuestionTextAreaForm(forms.ModelForm):
     max_length = forms.IntegerField(
-        label=_("Max. Length"), min_value=10, initial=1000, max_value=1000, help_text=_("Max. Length: Text input"),
+        label=_("Max. Length"),
+        min_value=10, max_value=1000,
+        initial=field_validators['max_length']['text_area'],
+        help_text=_("Max. Length: Text input"),
     )
     min_length = forms.IntegerField(
-        label=_("Min. Length"), min_value=3, initial=100, max_value=100, help_text=_("Min. Length: Text input"),
+        label=_("Min. Length"),
+        min_value=3, max_value=100,
+        initial=field_validators['min_length']['text_area'],
+        help_text=_("Min. Length: Text input"),
     )
 
     class Meta:
