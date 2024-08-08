@@ -43,7 +43,7 @@ class TermsTextValidator:
 
 class TermsTextAreaValidator(TermsTextValidator):
     max_length = field_validators['max_length']['text_area']
-    min_length = field_validators['max_length']['text_area']
+    min_length = field_validators['min_length']['text_area']
 
 
 class TermsNumberValidator(TermsTextValidator):
