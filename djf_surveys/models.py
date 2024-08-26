@@ -48,7 +48,7 @@ class BaseModel(models.Model):
 
 class Survey(BaseModel):
     name = models.CharField(_("name"), max_length=200)
-    description = models.TextField(_("description"), default='')
+    description = HTMLField(_("description"), default='')
     slug = models.SlugField(_("slug"), max_length=225, default='')
     editable = models.BooleanField(_("editable"), default=True,
                                    help_text=_("If False, user can't edit record."))
