@@ -121,6 +121,7 @@ class SurveyForm(forms.ModelForm):
             'notification_to', 'success_page_content'
         ]
         widgets = {
+            'description': TinyMCE(mce_attrs=SURVEY_TINYMCE_DEFAULT_CONFIG),
             'success_page_content': TinyMCE(mce_attrs=SURVEY_TINYMCE_DEFAULT_CONFIG)
         }
         help_texts = {
