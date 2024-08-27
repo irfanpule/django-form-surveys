@@ -1,0 +1,20 @@
+/* Reset styles for headings and list items */
+.no-tailwindcss-base h1,
+.no-tailwindcss-base h2,
+.no-tailwindcss-base h3,
+.no-tailwindcss-base h4 {
+    font-size: revert;
+    font-weight: revert;
+}
+
+.no-tailwindcss-base ul,
+.no-tailwindcss-base ol {
+    list-style: revert;
+    margin: revert;
+    padding: revert;
+}
+
+.no-tailwindcss-base li {
+    margin: revert;
+    padding: revert;
+}
