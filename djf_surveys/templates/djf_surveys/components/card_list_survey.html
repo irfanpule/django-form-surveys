@@ -41,7 +41,7 @@
         </div>
 
         <div class="no-tailwindcss-base mt-4 sm:pr-8">
-            {{ survey.description|safe }}
+            {{ survey.description|safe|truncatechars:30 }}
         </div>
     </a>
 </div>
