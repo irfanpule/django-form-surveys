@@ -182,7 +182,6 @@ class DetailSurveyView(ContextTitleMixin, DetailView):
     paginate_by = app_settings.SURVEY_PAGINATION_NUMBER['answer_list']
 
     def dispatch(self, request, *args, **kwargs):
-        import ipdb; ipdb.set_trace()
         survey = self.get_object()
         if not self.request.user.is_superuser and survey.private_response:
             messages.warning(request, gettext("You can't access this page. You don't have permission."))
