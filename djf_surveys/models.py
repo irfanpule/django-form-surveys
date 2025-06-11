@@ -56,6 +56,7 @@ class Survey(BaseModel):
                                     help_text=_("If False, user can't delete record."))
     duplicate_entry = models.BooleanField(_("mutiple submissions"), default=False,
                                           help_text=_("If True, user can resubmit."))
+    cycle_survey = models.BooleanField(_("Cycle the survey"), default=False, help_text=_("If True, success page returns to survey"))
     private_response = models.BooleanField(_("private response"), default=False,
                                            help_text=_("If True, only admin and owner can access."))
     can_anonymous_user = models.BooleanField(_("anonymous submission"), default=False,

@@ -182,6 +182,7 @@ class DetailSurveyView(ContextTitleMixin, DetailView):
     paginate_by = app_settings.SURVEY_PAGINATION_NUMBER['answer_list']
 
     def dispatch(self, request, *args, **kwargs):
+        import ipdb; ipdb.set_trace()
         survey = self.get_object()
         if not self.request.user.is_superuser and survey.private_response:
             messages.warning(request, gettext("You can't access this page. You don't have permission."))
@@ -242,3 +243,10 @@ class SuccessPageSurveyView(ContextTitleMixin, DetailView):
     model = Survey
     template_name = "djf_surveys/success-page.html"
     title_page = _("Submitted Successfully")
+
+    def get_context_data(self, **kwargs) -> dict[str, any]:
+        context = super().get_context_data(**kwargs)
+        survey = self.get_object()
+        if survey.cycle_survey == True:
+            context["link_back_on_success_page"] = reverse_lazy("djf_surveys:create", kwargs={'slug': survey.slug})
+        return context
