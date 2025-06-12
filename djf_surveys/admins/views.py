@@ -24,7 +24,7 @@ from djf_surveys.admins.v2.forms import SurveyForm
 
 
 @method_decorator(staff_member_required, name='dispatch')
-class AdminCrateSurveyView(ContextTitleMixin, CreateView):
+class AdminCreateSurveyView(ContextTitleMixin, CreateView):
     template_name = 'djf_surveys/admins/form.html'
     form_class = SurveyForm
     title_page = _("Add New Survey")
@@ -42,7 +42,7 @@ class AdminEditSurveyView(ContextTitleMixin, UpdateView):
     form_class = SurveyForm
     template_name = 'djf_surveys/admins/form.html'
     title_page = _("Edit Survey")
-
+        
     def get_success_url(self):
         survey = self.object
         messages.success(self.request, gettext("%(page_action_name)s succeeded.") % dict(

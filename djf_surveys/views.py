@@ -242,3 +242,10 @@ class SuccessPageSurveyView(ContextTitleMixin, DetailView):
     model = Survey
     template_name = "djf_surveys/success-page.html"
     title_page = _("Submitted Successfully")
+
+    def get_context_data(self, **kwargs) -> dict[str, any]:
+        context = super().get_context_data(**kwargs)
+        survey = self.get_object()
+        if survey.cycle_survey == True:
+            context["link_back_on_success_page"] = reverse_lazy("djf_surveys:create", kwargs={'slug': survey.slug})
+        return context

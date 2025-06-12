@@ -117,7 +117,7 @@ class SurveyForm(forms.ModelForm):
         model = Survey
         fields = [
             'name', 'slug', 'description', 'editable', 'deletable',
-            'duplicate_entry', 'private_response', 'can_anonymous_user',
+            'duplicate_entry', 'cycle_survey', 'private_response', 'can_anonymous_user',
             'notification_to', 'success_page_content'
         ]
         widgets = {
